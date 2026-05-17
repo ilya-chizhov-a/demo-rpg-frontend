@@ -9,7 +9,7 @@ the pages connect.
 | Group                  | Routes                                                                                                                                                                             | Navigation role                                                          |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | Entry                  | `/`                                                                                                                                                                                | Codex home and capability routing.                                       |
-| Architecture           | `/about`                                                                                                                                                                           | Primary app-shell explanation route.                                     |
+| Architecture           | `/about`                                                                                                                                                                           | Explanation route reached from Guides active state and footer links.     |
 | Game database catalogs | `/regions`, `/heroes`, `/items`, `/monsters`, `/quests`, `/parties`, `/factions`, `/npcs`, `/locations`, `/classes`, `/abilities`, `/item-types`, `/stats`, `/effects`, `/dialogs` | Browse game-facing entity collections.                                   |
 | Game database details  | `/regions/[id]`, `/heroes/[id]`, `/items/[id]`, `/monsters/[id]`, `/quests/[id]`, `/parties/[id]`, `/factions/[id]`, `/npcs/[id]`, `/locations/[id]`                               | Inspect rich entities, related content, files, formulas, and federation. |
 | Discovery              | `/search`                                                                                                                                                                          | Search across data and CMS.                                              |
@@ -19,17 +19,20 @@ the pages connect.
 
 ## Primary Navigation
 
-Top-level navigation v1 has no section dropdowns. It uses direct icon-labelled
-route links only, plus a compact language switch and source/schema widget:
+Top-level navigation v1 has no section dropdowns. It uses eight direct
+icon-labelled route links, plus a compact language switch and source/schema
+widget:
 
 | Nav item | Target        | Notes                                                                                              |
 | -------- | ------------- | -------------------------------------------------------------------------------------------------- |
 | Home     | `/`           | Home route; the brand mark also links here without a mouse-click outline.                          |
-| Data     | `/regions`    | Routes to the current regions data proof until a dedicated `/data` index exists; highlights secondary data catalogs without their own primary item. |
-| Regions  | `/regions`    | World family proof route and active atlas/catalog entry.                                           |
-| Classes  | `/classes`    | Small reference table and FK-target proof route.                                                   |
+| Heroes   | `/heroes`     | Heroes family entry; highlights heroes, classes, abilities, NPCs, and parties.                    |
+| Items    | `/items`      | Items family entry; highlights items, item types, stats, and effects.                             |
+| Monsters | `/monsters`   | Monsters catalog entry.                                                                           |
+| World    | `/regions`    | World family entry; highlights regions, locations, and factions.                                  |
+| Quests   | `/quests`     | Quests family entry; highlights quests and dialogs.                                               |
+| Guides   | `/blog`       | Guides and updates entry; highlights blog, news, balance patch, and architecture explainer routes. |
 | Search   | `/search`     | Global search entry once implemented.                                                              |
-| About    | `/about`      | Architecture and product explanation route.                                                        |
 | Language | Header menu   | Icon button; click opens `EN`, `RU`, and `ZH` language choices.                                    |
 | Source   | Header widget | Opens Revisium source/schema links for regions, CMS, implemented tables, and other proof surfaces. |
 

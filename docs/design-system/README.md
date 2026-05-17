@@ -53,8 +53,9 @@ Core rules:
 | Explainer control | Required on data pages; compact floating trigger with an overlay panel that does not reserve page layout space.                                  |
 | Footer            | Architecture chip and source links.                                                                                                              |
 
-The top nav uses the primary destinations from the site map: Home, Data,
-Regions, Classes, Search, About, a language icon menu, and a source/schema widget.
+The top nav uses the primary destinations from the site map: Home, Heroes,
+Items, Monsters, World, Quests, Guides, Search, a language icon menu, and a
+source/schema widget.
 It does not use route-navigation dropdowns in v1. Secondary dictionary routes
 are reachable from section subnav, page content, or stubs, not from header
 menus. The language control is an icon button that opens language choices on

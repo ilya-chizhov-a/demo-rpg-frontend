@@ -83,7 +83,7 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         <Container maxW="1440px" px={{ base: '4', md: '6', lg: '8' }} py="2">
           <Flex
             align="center"
-            gap={{ base: '3', xl: '5' }}
+            gap={{ base: '2', '2xl': '4' }}
             justify="space-between"
             wrap="nowrap"
           >
@@ -131,7 +131,7 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
               }}
             >
               <HStack
-                gap={{ base: '1', md: '2' }}
+                gap="1"
                 justify="center"
                 minW="max-content"
               >
@@ -148,10 +148,10 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
                           : 'none'
                       }
                       color={item.isActive ? '#67e8f9' : '#9aa7b1'}
-                      h="44px"
+                      h="40px"
                       key={item.id}
                       minW="0"
-                      px={{ base: '3', md: '4' }}
+                      px={{ base: '2', '2xl': '3' }}
                       size="sm"
                       variant="ghost"
                       _hover={{
@@ -161,9 +161,9 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
                       }}
                     >
                       <RouterLink aria-current={item.isActive ? 'page' : undefined} to={item.to}>
-                        <Flex align="center" as="span" gap="2">
-                          <HeaderNavIcon name={item.icon} />
-                          <Text as="span" fontWeight="semibold">
+                        <Flex align="center" as="span" gap="1.5">
+                          <HeaderNavIcon name={item.icon} size={22} />
+                          <Text as="span" fontSize="sm" fontWeight="semibold">
                             {item.label}
                           </Text>
                         </Flex>

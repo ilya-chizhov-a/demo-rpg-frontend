@@ -40,11 +40,6 @@ export function SourceSchemaMenu({
           size="sm"
           variant="outline"
           w="44px"
-          css={{
-            '--revisium-logo-bg': '#ffffff',
-            '--revisium-logo-primary': '#000000',
-            '--revisium-logo-secondary': '#d9d9d9',
-          }}
           _focus={{
             boxShadow: 'none',
             outline: 'none',

@@ -49,6 +49,27 @@ export function HeaderNavIcon({ name, size = 26 }: HeaderNavIconProps) {
     );
   }
 
+  if (name === 'heroes') {
+    return (
+      <svg {...iconProps}>
+        <circle cx="12" cy="7.2" r="3.1" stroke="currentColor" strokeWidth="1.8" />
+        <path
+          d="M5.2 20.2c.8-4 3.2-6.1 6.8-6.1s6 2.1 6.8 6.1"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M18.2 8.8c1.6.4 2.7 1.8 2.7 3.4M5.8 8.8c-1.6.4-2.7 1.8-2.7 3.4"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.5"
+        />
+      </svg>
+    );
+  }
+
   if (name === 'data') {
     return (
       <svg {...iconProps}>
@@ -56,6 +77,45 @@ export function HeaderNavIcon({ name, size = 26 }: HeaderNavIconProps) {
         <path
           d="M5.5 6v6c0 1.7 2.9 3 6.5 3s6.5-1.3 6.5-3V6M5.5 12v6c0 1.7 2.9 3 6.5 3s6.5-1.3 6.5-3v-6"
           stroke="currentColor"
+          strokeWidth="1.8"
+        />
+      </svg>
+    );
+  }
+
+  if (name === 'items') {
+    return (
+      <svg {...iconProps}>
+        <path
+          d="M8 4.2h8l3.2 4.2L12 20 4.8 8.4 8 4.2Z"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M4.8 8.4h14.4M9 8.4 12 20l3-11.6"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+      </svg>
+    );
+  }
+
+  if (name === 'monsters') {
+    return (
+      <svg {...iconProps}>
+        <path
+          d="M6.2 5.4c2.2.4 3.7 1.5 4.5 3.2h2.6c.8-1.7 2.3-2.8 4.5-3.2-.4 2.3-1.2 4-2.5 5.1.6.9.9 2 .9 3.2 0 3.1-1.8 5.2-4.2 5.2s-4.2-2.1-4.2-5.2c0-1.2.3-2.3.9-3.2-1.3-1.1-2.1-2.8-2.5-5.1Z"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M10 13.1h.01M14 13.1h.01M10.4 16.1c1 .7 2.2.7 3.2 0"
+          stroke="currentColor"
+          strokeLinecap="round"
           strokeWidth="1.8"
         />
       </svg>
@@ -76,6 +136,10 @@ export function HeaderNavIcon({ name, size = 26 }: HeaderNavIconProps) {
     );
   }
 
+  if (name === 'world') {
+    return <HeaderNavIcon name="regions" size={size} />;
+  }
+
   if (name === 'classes') {
     return (
       <svg {...iconProps}>
@@ -90,6 +154,44 @@ export function HeaderNavIcon({ name, size = 26 }: HeaderNavIconProps) {
           stroke="currentColor"
           strokeLinecap="round"
           strokeWidth="1.6"
+        />
+      </svg>
+    );
+  }
+
+  if (name === 'quests') {
+    return (
+      <svg {...iconProps}>
+        <path
+          d="M7 4.5h8.7A2.3 2.3 0 0 1 18 6.8v12.7H7A2.5 2.5 0 0 1 4.5 17V7A2.5 2.5 0 0 1 7 4.5Z"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M8.5 9h6M8.5 12h4.7M8.5 15h3.2"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.6"
+        />
+      </svg>
+    );
+  }
+
+  if (name === 'guides') {
+    return (
+      <svg {...iconProps}>
+        <path
+          d="M5 5.6h6.2c1.1 0 2 .9 2 2v12c0-1.1-.9-2-2-2H5V5.6ZM19 5.6h-5.8v14c0-1.1.9-2 2-2H19V5.6Z"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M8 9.2h2.4M8 12.2h2.4M15.6 9.2H17M15.6 12.2H17"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.5"
         />
       </svg>
     );
@@ -137,14 +239,14 @@ export function RevisiumSourceIcon() {
       viewBox="0 0 64 64"
       width="44"
     >
-      <rect fill="var(--revisium-logo-bg, currentColor)" height="64" rx="12" width="64" />
+      <rect fill="var(--revisium-logo-bg, black)" height="64" rx="12" width="64" />
       <path
         d="M45.2706 28.7332C45.2706 25.7854 42.8292 23.3959 39.8175 23.3959C39.8175 23.3959 37.1795 23.3962 34.0664 23.3959C32.4999 23.3957 30.9418 21.4895 30.9418 19.5834C30.9418 18.4395 31.3313 17.2961 32.5084 17.2961C36.0108 17.296 39.8175 17.2961 39.8175 17.2961C46.2711 17.2961 51.5028 22.4166 51.5028 28.7332C51.5028 33.9379 47.9504 38.3294 43.0895 39.7145L52.342 49.5456C53.3637 50.6312 52.613 52.4139 51.1224 52.4414L48.1866 52.4958C47.219 52.5137 46.2886 52.1228 45.6242 51.4191L35.0026 40.1702C35.0026 40.1702 34.9057 40.1701 33.7372 40.1702C32.1791 40.1702 30.6211 38.2644 30.6211 36.3577C30.6211 35.214 31.0106 34.0704 32.1791 34.0703C34.5162 34.07 39.8175 34.0705 39.8175 34.0705C42.8292 34.0705 45.2706 31.6809 45.2706 28.7332Z"
-        fill="var(--revisium-logo-secondary, currentColor)"
+        fill="var(--revisium-logo-secondary, #404040)"
       />
       <path
         d="M31.4898 25.8883C31.4898 22.5666 28.797 19.8738 25.4753 19.8738C25.4753 19.8738 16.8798 19.8741 13.4462 19.8738C11.7184 19.8736 10 17.7256 10 15.5776C10 14.2886 10.4296 13.0001 11.7278 13.0001C15.5908 12.9999 25.4753 13.0001 25.4753 13.0001C32.5932 13.0001 38.3635 18.7703 38.3635 25.8883C38.3635 31.7534 34.4454 36.7022 29.0841 38.263L39.632 49.7138C40.6359 50.8036 39.8821 52.5681 38.4006 52.5961L34.5725 52.6685C33.5915 52.6871 32.6494 52.2855 31.9835 51.5649L20.1647 38.7765C20.1647 38.7765 18.1626 38.7764 16.8737 38.7765C15.1553 38.7765 13.4369 36.6289 13.4369 34.4803C13.4369 33.1915 13.8665 31.9028 15.1553 31.9026C17.7329 31.9023 25.4753 31.9028 25.4753 31.9028C28.797 31.9028 31.4898 29.21 31.4898 25.8883Z"
-        fill="var(--revisium-logo-primary, currentColor)"
+        fill="var(--revisium-logo-primary, white)"
       />
     </svg>
   );

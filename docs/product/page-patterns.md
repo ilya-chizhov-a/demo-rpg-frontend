@@ -8,8 +8,8 @@ requirements, but should not silently weaken these patterns.
 - Persistent top navigation with a brand link to `/` and direct `Home` link to `/`.
 - The brand link must not show a rectangular mouse-click focus outline; keyboard
   focus may use a non-framed text/icon state.
-- Primary navigation exposes direct icon-labelled links only: Home, Data,
-  Regions, Classes, Search, and About.
+- Primary navigation exposes eight direct icon-labelled route links:
+  Home, Heroes, Items, Monsters, World, Quests, Guides, and Search.
 - At `<= 1200px`, the shell keeps brand, language, source/schema, and burger
   controls in the header; route links move into a fullscreen dialog with
   icon-labelled rows, `1px` gray dividers, no framed row buttons, and cyan active

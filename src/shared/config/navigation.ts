@@ -3,11 +3,33 @@ export interface NavigationItem {
   readonly to: string;
 }
 
-export type PrimaryNavigationIcon = 'about' | 'classes' | 'data' | 'home' | 'regions' | 'search';
+export type PrimaryNavigationIcon =
+  | 'about'
+  | 'classes'
+  | 'data'
+  | 'guides'
+  | 'heroes'
+  | 'home'
+  | 'items'
+  | 'monsters'
+  | 'quests'
+  | 'regions'
+  | 'search'
+  | 'world';
+
+export type PrimaryNavigationId =
+  | 'guides'
+  | 'heroes'
+  | 'home'
+  | 'items'
+  | 'monsters'
+  | 'quests'
+  | 'search'
+  | 'world';
 
 export interface PrimaryNavigationItem extends NavigationItem {
   readonly activeTargets?: readonly string[];
-  readonly id: PrimaryNavigationIcon;
+  readonly id: PrimaryNavigationId;
   readonly icon: PrimaryNavigationIcon;
 }
 
@@ -15,40 +37,25 @@ export type ActiveNavigationItem<TItem extends NavigationItem = NavigationItem> 
   readonly isActive: boolean;
 };
 
-const dataPrimaryActiveTargets = [
-  '/abilities',
-  '/dialogs',
-  '/effects',
-  '/heroes',
-  '/items',
-  '/item-types',
-  '/monsters',
-  '/npcs',
-  '/parties',
-  '/quests',
-  '/stats',
-] as const;
-
 export const primaryNavItems: readonly PrimaryNavigationItem[] = [
   { icon: 'home', id: 'home', label: 'Home', to: '/' },
-  {
-    activeTargets: dataPrimaryActiveTargets,
-    icon: 'data',
-    id: 'data',
-    label: 'Data',
-    to: '/regions',
-  },
-  { icon: 'regions', id: 'regions', label: 'Regions', to: '/regions' },
-  { icon: 'classes', id: 'classes', label: 'Classes', to: '/classes' },
+  { icon: 'heroes', id: 'heroes', label: 'Heroes', to: '/heroes' },
+  { icon: 'items', id: 'items', label: 'Items', to: '/items' },
+  { icon: 'monsters', id: 'monsters', label: 'Monsters', to: '/monsters' },
+  { icon: 'world', id: 'world', label: 'World', to: '/regions' },
+  { icon: 'quests', id: 'quests', label: 'Quests', to: '/quests' },
+  { icon: 'guides', id: 'guides', label: 'Guides', to: '/blog' },
   { icon: 'search', id: 'search', label: 'Search', to: '/search' },
-  { icon: 'about', id: 'about', label: 'About', to: '/about' },
 ] as const;
 
 const primaryActiveRoutes = {
   '/': ['/'],
-  '/about': ['/about', '/blog', '/news', '/balance-patch'],
-  '/classes': ['/classes'],
+  '/blog': ['/about', '/balance-patch', '/blog', '/news'],
+  '/heroes': ['/abilities', '/classes', '/heroes', '/npcs', '/parties'],
+  '/items': ['/effects', '/items', '/item-types', '/stats'],
+  '/monsters': ['/monsters'],
   '/regions': ['/regions', '/locations', '/factions'],
+  '/quests': ['/dialogs', '/quests'],
   '/search': ['/search'],
 } as const satisfies Record<string, readonly string[]>;
 
