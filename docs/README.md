@@ -37,6 +37,7 @@ the same PR explicitly changes them.
 
 The broader product source of truth remains `demo-rpg-docs`:
 
+- `https://github.com/revisium/demo-rpg-docs/blob/master/README.md#source-of-truth-boundaries` defines repo ownership boundaries.
 - `https://github.com/revisium/demo-rpg-docs/blob/master/requirements/BR-0003-frontend-showcase.md` defines the business requirement.
 - `https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/revisium-feature-coverage.md` defines the Revisium capability coverage.
 - `https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/messaging.md` defines the public narrative.

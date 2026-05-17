@@ -4,7 +4,8 @@ The Explainer Widget is a product feature. It turns each page into a live
 Revisium example by showing what the page requested, what came back, which
 subgraph owns each field, and where the source data lives.
 
-The broader UX spec lives in `https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/explainer-widget.md`.
+The product-level evidence contract lives in
+`https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/explainer-widget.md`.
 This file is the frontend implementation contract.
 
 ## Required On

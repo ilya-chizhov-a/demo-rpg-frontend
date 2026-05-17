@@ -72,7 +72,8 @@ foreign keys while displaying localized names and computed display labels.
 ## Responsive Rules
 
 - Phone: filters as bottom sheet; portrait cards one column.
-- Tablet/Desktop: filter controls stay visible; widget side-docked.
+- Tablet/Desktop: filter controls stay visible; widget uses the shared floating
+  trigger and overlay panel contract.
 
 ## Architecture Notes
 

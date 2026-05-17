@@ -68,7 +68,8 @@ summaries derived from embedded drop arrays.
 ## Responsive Rules
 
 - Phone: image thumbnails use fixed aspect ratio.
-- Tablet/Desktop: cards or table depending on density; widget side-docked.
+- Tablet/Desktop: cards or table depending on density; widget uses the shared
+  floating trigger and overlay panel contract.
 
 ## Architecture Notes
 

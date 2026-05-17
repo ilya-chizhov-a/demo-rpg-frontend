@@ -49,8 +49,8 @@ Run before opening a PR:
 npm run verify
 ```
 
-`npm run verify` runs `markdown:lint`, `skills:lint`, `ts:check`, `lint:ci`,
-`fsd:check`, and `build`. CI mirrors these. The `vite-plugin-checker` plugin
+`npm run verify` runs `markdown:lint`, `skills:lint`, `ui:lint`, `ts:check`,
+`lint:ci`, `fsd:check`, and `build`. CI mirrors these. The `vite-plugin-checker` plugin
 also surfaces tsc errors during `npm run dev`.
 
 Before handoff or PR update, run the repo-local
@@ -73,5 +73,6 @@ committed), `.env/.env.<mode>.local` (uncommitted overrides). Only
 ## Related repos
 
 - `../demo-rpg-backend` — NestJS subgraph (regions, federation entrypoint)
-- `../demo-rpg-docs` — public DevRel docs
+- `../demo-rpg-docs` — project identity, architecture, BRs, capability coverage,
+  messaging, and bootstrap data
 - `../../infrastructure` — Argo CD apps and Helm charts for the dev stand
