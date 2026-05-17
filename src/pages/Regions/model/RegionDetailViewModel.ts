@@ -12,6 +12,7 @@ import {
   isRefreshing,
   type PreparedImageSlot,
 } from 'src/shared/lib';
+import { LocaleService } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { RegionDetailDataSource, type RegionDetailNode } from '../api/RegionDetailDataSource';
 import type { RegionLocale } from './RegionItemViewModel';
@@ -55,10 +56,18 @@ export class RegionDetailViewModel implements IViewModel {
   private readonly cloudRegionsBaseHref =
     'https://cloud.revisium.io/app/revisium/demo-rpg-data/master/draft/regions';
   public id = '';
-  public locale: RegionLocale = 'en';
 
-  constructor(public readonly dataSource: RegionDetailDataSource) {
-    makeAutoObservable(this, {}, { autoBind: true });
+  constructor(
+    public readonly dataSource: RegionDetailDataSource,
+    private readonly localeService: LocaleService,
+  ) {
+    makeAutoObservable<this, 'localeService'>(
+      this,
+      {
+        localeService: false,
+      },
+      { autoBind: true },
+    );
   }
 
   public setup(id?: unknown): void {
@@ -170,8 +179,12 @@ export class RegionDetailViewModel implements IViewModel {
     };
   }
 
+  public get locale(): RegionLocale {
+    return this.localeService.locale;
+  }
+
   public setLocale(locale: RegionLocale): void {
-    this.locale = locale;
+    this.localeService.setLocale(locale);
   }
 
   public async retry(): Promise<void> {
@@ -234,6 +247,6 @@ export class RegionDetailViewModel implements IViewModel {
 
 container.register(
   RegionDetailViewModel,
-  () => new RegionDetailViewModel(container.get(RegionDetailDataSource)),
+  () => new RegionDetailViewModel(container.get(RegionDetailDataSource), container.get(LocaleService)),
   { scope: 'transient' },
 );

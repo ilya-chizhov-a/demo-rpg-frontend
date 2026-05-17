@@ -9,7 +9,7 @@ the pages connect.
 | Group                  | Routes                                                                                                                                                                             | Navigation role                                                          |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | Entry                  | `/`                                                                                                                                                                                | Codex home and capability routing.                                       |
-| Architecture           | `/about`                                                                                                                                                                           | Secondary technical explanation route, not a primary nav item.           |
+| Architecture           | `/about`                                                                                                                                                                           | Primary app-shell explanation route.                                     |
 | Game database catalogs | `/regions`, `/heroes`, `/items`, `/monsters`, `/quests`, `/parties`, `/factions`, `/npcs`, `/locations`, `/classes`, `/abilities`, `/item-types`, `/stats`, `/effects`, `/dialogs` | Browse game-facing entity collections.                                   |
 | Game database details  | `/regions/[id]`, `/heroes/[id]`, `/items/[id]`, `/monsters/[id]`, `/quests/[id]`, `/parties/[id]`, `/factions/[id]`, `/npcs/[id]`, `/locations/[id]`                               | Inspect rich entities, related content, files, formulas, and federation. |
 | Discovery              | `/search`                                                                                                                                                                          | Search across data and CMS.                                              |
@@ -19,25 +19,32 @@ the pages connect.
 
 ## Primary Navigation
 
-Top-level navigation v1 has no section dropdowns. It uses direct route links
-only, plus a compact language button:
+Top-level navigation v1 has no section dropdowns. It uses direct icon-labelled
+route links only, plus a compact language switch and source/schema widget:
 
-| Nav item | Target        | Notes                                                                                          |
-| -------- | ------------- | ---------------------------------------------------------------------------------------------- |
-| Home     | `/`           | Brand link.                                                                                    |
-| Heroes   | `/heroes`     | Top-level hero catalog.                                                                        |
-| Items    | `/items`      | Top-level item catalog.                                                                        |
-| Monsters | `/monsters`   | Top-level monster catalog.                                                                     |
-| World    | `/regions`    | World family entry point.                                                                      |
-| Quests   | `/quests`     | Quest catalog.                                                                                 |
-| Guides   | `/blog`       | Guide/article catalog backed by `cms.blog_posts`; do not claim news is implemented.            |
-| Search   | `/search`     | Global search entry once implemented.                                                          |
-| Language | Header button | Shows the current language, for example `EN`, `RU`, or `ZH`; may open a compact language menu. |
+| Nav item | Target        | Notes                                                                                              |
+| -------- | ------------- | -------------------------------------------------------------------------------------------------- |
+| Home     | `/`           | Home route; the brand mark also links here without a mouse-click outline.                          |
+| Data     | `/regions`    | Routes to the current regions data proof until a dedicated `/data` index exists; highlights secondary data catalogs without their own primary item. |
+| Regions  | `/regions`    | World family proof route and active atlas/catalog entry.                                           |
+| Classes  | `/classes`    | Small reference table and FK-target proof route.                                                   |
+| Search   | `/search`     | Global search entry once implemented.                                                              |
+| About    | `/about`      | Architecture and product explanation route.                                                        |
+| Language | Header menu   | Icon button; click opens `EN`, `RU`, and `ZH` language choices.                                    |
+| Source   | Header widget | Opens Revisium source/schema links for regions, CMS, implemented tables, and other proof surfaces. |
 
 Do not add top-nav dropdowns for route navigation in v1. Detail pages and
 secondary catalogs are reached from catalogs, search, related links, or section
 subnav. The language menu is not a route-navigation dropdown and must not become
-a technical settings panel.
+a technical settings panel. The source/schema widget is allowed to reveal
+external Revisium Cloud links because it is a proof/source control, not route
+navigation.
+
+At viewport widths `<= 1200px`, the header keeps the brand link on the left and
+language, source/schema, and burger controls on the right. The direct route
+links move into a fullscreen navigation dialog. Dialog route rows keep the same
+icons, use `1px` gray dividers instead of framed buttons, and mark the active
+route in cyan.
 
 ## Section Subnav
 
@@ -62,7 +69,7 @@ visible.
 
 | From          | Trigger                        | To                                                |
 | ------------- | ------------------------------ | ------------------------------------------------- |
-| Any page      | Brand click                    | `/`                                               |
+| Any page      | Brand or Home nav click        | `/`                                               |
 | Any page      | About/footer architecture link | `/about`                                          |
 | Any page      | Search submit                  | `/search?q=...` once query params are implemented |
 | Any data page | Cloud link in widget           | External `cloud.revisium.io` table/row/schema     |

@@ -3,28 +3,51 @@ export interface NavigationItem {
   readonly to: string;
 }
 
-export interface ActiveNavigationItem extends NavigationItem {
-  readonly isActive: boolean;
+export type PrimaryNavigationIcon = 'about' | 'classes' | 'data' | 'home' | 'regions' | 'search';
+
+export interface PrimaryNavigationItem extends NavigationItem {
+  readonly activeTargets?: readonly string[];
+  readonly id: PrimaryNavigationIcon;
+  readonly icon: PrimaryNavigationIcon;
 }
 
-export const primaryNavItems: readonly NavigationItem[] = [
-  { label: 'Home', to: '/' },
-  { label: 'Heroes', to: '/heroes' },
-  { label: 'Items', to: '/items' },
-  { label: 'Monsters', to: '/monsters' },
-  { label: 'World', to: '/regions' },
-  { label: 'Quests', to: '/quests' },
-  { label: 'Guides', to: '/blog' },
-  { label: 'Search', to: '/search' },
+export type ActiveNavigationItem<TItem extends NavigationItem = NavigationItem> = TItem & {
+  readonly isActive: boolean;
+};
+
+const dataPrimaryActiveTargets = [
+  '/abilities',
+  '/dialogs',
+  '/effects',
+  '/heroes',
+  '/items',
+  '/item-types',
+  '/monsters',
+  '/npcs',
+  '/parties',
+  '/quests',
+  '/stats',
+] as const;
+
+export const primaryNavItems: readonly PrimaryNavigationItem[] = [
+  { icon: 'home', id: 'home', label: 'Home', to: '/' },
+  {
+    activeTargets: dataPrimaryActiveTargets,
+    icon: 'data',
+    id: 'data',
+    label: 'Data',
+    to: '/regions',
+  },
+  { icon: 'regions', id: 'regions', label: 'Regions', to: '/regions' },
+  { icon: 'classes', id: 'classes', label: 'Classes', to: '/classes' },
+  { icon: 'search', id: 'search', label: 'Search', to: '/search' },
+  { icon: 'about', id: 'about', label: 'About', to: '/about' },
 ] as const;
 
 const primaryActiveRoutes = {
   '/': ['/'],
-  '/blog': ['/blog', '/news', '/balance-patch'],
-  '/heroes': ['/heroes', '/classes', '/abilities', '/npcs', '/parties'],
-  '/items': ['/items', '/item-types', '/stats', '/effects'],
-  '/monsters': ['/monsters'],
-  '/quests': ['/quests', '/dialogs'],
+  '/about': ['/about', '/blog', '/news', '/balance-patch'],
+  '/classes': ['/classes'],
   '/regions': ['/regions', '/locations', '/factions'],
   '/search': ['/search'],
 } as const satisfies Record<string, readonly string[]>;
@@ -76,11 +99,11 @@ export function withActiveNavigationItems(
 
 export function withActivePrimaryNavigationItems(
   pathname: string,
-): readonly ActiveNavigationItem[] {
+): readonly ActiveNavigationItem<PrimaryNavigationItem>[] {
   return primaryNavItems.map((item) => ({
     ...item,
-    isActive: (primaryActiveRoutesByTarget[item.to] ?? [item.to]).some((target) =>
-      isRouteActive(pathname, target),
+    isActive: (item.activeTargets ?? primaryActiveRoutesByTarget[item.to] ?? [item.to]).some(
+      (target) => isRouteActive(pathname, target),
     ),
   }));
 }

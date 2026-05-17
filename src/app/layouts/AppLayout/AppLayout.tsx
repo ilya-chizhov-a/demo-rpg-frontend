@@ -1,20 +1,14 @@
-import {
-  Badge,
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  Link,
-  Menu,
-  Portal,
-  Text,
-} from '@chakra-ui/react';
+import { Badge, Box, Button, Container, Flex, HStack, Link, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import { Link as RouterLink, useLocation } from 'react-router';
 
 import { useViewModel } from 'src/shared/lib';
 import { AppLayoutViewModel } from './AppLayoutViewModel';
+import { HeaderNavIcon } from './AppLayoutIcons';
+import { HeaderBrandContent } from './HeaderBrand';
+import { HeaderLanguageMenu } from './HeaderLanguageMenu';
+import { HeaderNavigationDialog } from './HeaderNavigationDialog';
+import { SourceSchemaMenu } from './SourceSchemaMenu';
 
 interface AppLayoutProps {
   readonly children: React.ReactNode;
@@ -23,6 +17,7 @@ interface AppLayoutProps {
 export const AppLayout = observer(function AppLayout({ children }: AppLayoutProps) {
   const location = useLocation();
   const vm = useViewModel(AppLayoutViewModel);
+  const primaryNavItems = vm.getPrimaryNavItems(location.pathname);
 
   return (
     <Box
@@ -76,128 +71,138 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
 
       <Box
         as="header"
-        bg="rgba(7, 11, 16, 0.9)"
-        backdropFilter="blur(14px)"
+        bg="rgba(5, 10, 15, 0.94)"
+        backdropFilter="blur(18px)"
         borderBottomColor="rgba(103, 232, 249, 0.16)"
         borderBottomWidth="1px"
+        boxShadow="0 16px 44px rgba(0, 0, 0, 0.24)"
         position="sticky"
         top="0"
         zIndex="sticky"
       >
-        <Container maxW="1440px" px={{ base: '4', md: '6', lg: '8' }} py="3">
-          <Flex align="center" gap="4" justify="space-between" wrap="wrap">
+        <Container maxW="1440px" px={{ base: '4', md: '6', lg: '8' }} py="2">
+          <Flex
+            align="center"
+            gap={{ base: '3', xl: '5' }}
+            justify="space-between"
+            wrap="nowrap"
+          >
             <Link
               asChild
               color="#f4f7f8"
-              fontSize="lg"
+              flex="0 0 auto"
+              fontSize={{ base: 'md', md: 'lg' }}
               fontWeight="bold"
               letterSpacing="0"
-              _hover={{ textDecoration: 'none' }}
+              css={{
+                '&:focus:not(:focus-visible)': {
+                  boxShadow: 'none',
+                  outline: 'none',
+                },
+              }}
+              _focus={{
+                boxShadow: 'none',
+                outline: 'none',
+              }}
+              _focusVisible={{
+                boxShadow: 'none',
+                color: '#67e8f9',
+                outline: 'none',
+                textDecoration: 'underline',
+                textUnderlineOffset: '5px',
+              }}
+              _hover={{ color: '#67e8f9', textDecoration: 'none' }}
             >
-              <RouterLink to="/">
-                <Flex align="center" gap="3">
-                  <Box
-                    alignItems="center"
-                    bg="#22d3ee"
-                    borderColor="rgba(244, 247, 248, 0.24)"
-                    borderRadius="sm"
-                    borderWidth="1px"
-                    boxSize="9"
-                    color="var(--color-text-on-accent)"
-                    display="inline-flex"
-                    fontSize="sm"
-                    fontWeight="black"
-                    justifyContent="center"
-                  >
-                    BT
-                  </Box>
-                  <Text as="span">Branching Tales</Text>
-                </Flex>
+              <RouterLink aria-label="Branching Tales home" to="/">
+                <HeaderBrandContent />
               </RouterLink>
             </Link>
 
-            <HStack gap="3" wrap="wrap">
-              <HStack as="nav" gap="2" aria-label="Primary navigation" wrap="wrap">
-                {vm.getPrimaryNavItems(location.pathname).map((item) => {
+            <Box
+              as="nav"
+              aria-label="Primary navigation"
+              flex="1 1 auto"
+              minW="0"
+              overflowX="visible"
+              css={{
+                '@media (max-width: 1200px)': {
+                  display: 'none',
+                },
+              }}
+            >
+              <HStack
+                gap={{ base: '1', md: '2' }}
+                justify="center"
+                minW="max-content"
+              >
+                {primaryNavItems.map((item) => {
                   return (
                     <Button
                       asChild
-                      bg={item.isActive ? 'rgba(34, 211, 238, 0.16)' : 'transparent'}
-                      borderColor={item.isActive ? 'rgba(103, 232, 249, 0.65)' : 'transparent'}
+                      bg={item.isActive ? 'rgba(34, 211, 238, 0.13)' : 'transparent'}
+                      borderColor={item.isActive ? 'rgba(34, 211, 238, 0.55)' : 'transparent'}
                       borderWidth="1px"
-                      color={item.isActive ? '#f4f7f8' : '#9aa7b1'}
-                      key={item.to}
+                      boxShadow={
+                        item.isActive
+                          ? 'inset 0 -2px 0 #22d3ee, 0 0 22px rgba(34, 211, 238, 0.12)'
+                          : 'none'
+                      }
+                      color={item.isActive ? '#67e8f9' : '#9aa7b1'}
+                      h="44px"
+                      key={item.id}
+                      minW="0"
+                      px={{ base: '3', md: '4' }}
                       size="sm"
                       variant="ghost"
                       _hover={{
-                        bg: item.isActive ? 'rgba(34, 211, 238, 0.2)' : 'rgba(23, 33, 43, 0.78)',
+                        bg: item.isActive ? 'rgba(34, 211, 238, 0.18)' : 'rgba(23, 33, 43, 0.72)',
+                        borderColor: 'rgba(103, 232, 249, 0.4)',
                         color: '#f4f7f8',
                       }}
                     >
                       <RouterLink aria-current={item.isActive ? 'page' : undefined} to={item.to}>
-                        {item.label}
+                        <Flex align="center" as="span" gap="2">
+                          <HeaderNavIcon name={item.icon} />
+                          <Text as="span" fontWeight="semibold">
+                            {item.label}
+                          </Text>
+                        </Flex>
                       </RouterLink>
                     </Button>
                   );
                 })}
               </HStack>
-              <Menu.Root positioning={{ placement: 'bottom-end' }}>
-                <Menu.Trigger asChild>
-                  <Button
-                    aria-label={`Language: ${vm.currentLocaleName}`}
-                    bg="rgba(18, 24, 32, 0.86)"
-                    borderColor="rgba(103, 232, 249, 0.32)"
-                    borderWidth="1px"
-                    color="#f4f7f8"
-                    minH="44px"
-                    minW="52px"
-                    size="sm"
-                    variant="outline"
-                    _hover={{ bg: 'rgba(34, 211, 238, 0.12)', borderColor: '#67e8f9' }}
-                  >
-                    {vm.currentLocaleLabel}
-                  </Button>
-                </Menu.Trigger>
-                <Portal>
-                  <Menu.Positioner>
-                    <Menu.Content
-                      bg="#121820"
-                      borderColor="rgba(103, 232, 249, 0.24)"
-                      borderWidth="1px"
-                      minW="140px"
-                      shadow="0 18px 42px rgba(0, 0, 0, 0.32)"
-                    >
-                      {vm.localeOptions.map((option) => {
-                        const isSelected = vm.isLocaleSelected(option.value);
+            </Box>
 
-                        return (
-                          <Menu.Item
-                            aria-checked={isSelected}
-                            bg={isSelected ? 'rgba(34, 211, 238, 0.16)' : 'transparent'}
-                            color="#f4f7f8"
-                            key={option.value}
-                            onClick={() => vm.setLocale(option.value)}
-                            role="menuitemradio"
-                            value={option.value}
-                            _highlighted={{ bg: 'rgba(34, 211, 238, 0.12)' }}
-                          >
-                            <Flex align="center" gap="3" justify="space-between" w="100%">
-                              <Text as="span">
-                                {option.label} - {option.nativeLabel}
-                              </Text>
-                              {isSelected ? (
-                                <Badge colorPalette="cyan" size="sm" variant="subtle">
-                                  Current
-                                </Badge>
-                              ) : null}
-                            </Flex>
-                          </Menu.Item>
-                        );
-                      })}
-                    </Menu.Content>
-                  </Menu.Positioner>
-                </Portal>
-              </Menu.Root>
+            <HStack flex="0 0 auto" gap="2">
+              <HeaderLanguageMenu
+                currentLocale={vm.currentLocale}
+                currentLocaleName={vm.currentLocaleName}
+                isOpen={vm.isLanguageMenuOpen}
+                onChange={(locale) => vm.setLocale(locale)}
+                onOpenChange={(isOpen) => vm.setLanguageMenuOpen(isOpen)}
+                options={vm.localeOptions}
+              />
+              <SourceSchemaMenu
+                links={vm.sourceSchemaLinks}
+                menuDescription={vm.sourceSchemaMenuDescription}
+                menuTitle={vm.sourceSchemaMenuTitle}
+                onOpen={() => vm.closeLanguageMenu()}
+              />
+              <Box
+                css={{
+                  '@media (min-width: 1201px)': {
+                    display: 'none',
+                  },
+                }}
+              >
+                <HeaderNavigationDialog
+                  isOpen={vm.isNavigationDialogOpen}
+                  items={primaryNavItems}
+                  onOpenChange={(isOpen) => vm.setNavigationDialogOpen(isOpen)}
+                  onSelectItem={() => vm.closeNavigationDialog()}
+                />
+              </Box>
             </HStack>
           </Flex>
         </Container>

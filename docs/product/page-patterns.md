@@ -5,16 +5,24 @@ requirements, but should not silently weaken these patterns.
 
 ## App Shell
 
-- Persistent top navigation with brand link to `/`.
-- Primary navigation exposes direct game-database links only: Home, Heroes,
-  Items, Monsters, World, Quests, Guides, and Search.
+- Persistent top navigation with a brand link to `/` and direct `Home` link to `/`.
+- The brand link must not show a rectangular mouse-click focus outline; keyboard
+  focus may use a non-framed text/icon state.
+- Primary navigation exposes direct icon-labelled links only: Home, Data,
+  Regions, Classes, Search, and About.
+- At `<= 1200px`, the shell keeps brand, language, source/schema, and burger
+  controls in the header; route links move into a fullscreen dialog with
+  icon-labelled rows, `1px` gray dividers, no framed row buttons, and cyan active
+  state.
 - Top navigation v1 does not use dropdowns for route navigation. Secondary
   routes live in section subnav on catalog/detail pages.
 - Footer chip appears on every page except full-screen error pages.
 - Footer chip links to `/about` and shows subgraph composition in compact text.
 - Global locale switcher is visible in the shell once localization is
-  implemented; it may use a compact language menu and must not become a
-  technical settings panel.
+  implemented; it uses an icon button that opens a compact language menu on
+  click and remains keyboard accessible.
+- A header source/schema widget may open Revisium Cloud schema/table links; it
+  is a proof control, not route navigation.
 - Shell must be SSR-rendered and usable before hydration.
 - The shell follows the Dark Tactical Atlas direction from the design system:
   dark midnight surface, cyan active state, minimal one-tone or two-tone icons,
@@ -31,7 +39,7 @@ Functional blocks:
 - horizontal section subnav for sibling catalogs;
 - catalog/detail content;
 - related entity sections written as player-facing relationships;
-- Explainer Widget as the primary technical source/proof layer.
+- Explainer Widget as the primary page-level technical source/proof layer.
 
 Rules:
 
@@ -43,8 +51,9 @@ Rules:
 - Detail pages should group relationships by meaning, for example:
   "Dropped by monsters", "Used by heroes", "Quest rewards", "Related type",
   and "Related stat".
-- Raw FK, array FK, formula, source table, schema, row, REST, and MCP
-  explanations belong in the Explainer Widget.
+- Page-specific raw FK, array FK, formula, source table, schema, row, REST, and
+  MCP explanations belong in the Explainer Widget. The app shell may still keep
+  a compact Revisium source/schema shortcut for global proof links.
 - JSON filter/sort previews may remain in page controls when a page spec
   requires them; the Explainer Widget still owns the complete variables,
   response sample, and source links.
@@ -165,7 +174,8 @@ Rules:
 The widget is required on every catalog, detail, search, branching, blog, and
 news page. See [Explainer Widget](./explainer-widget.md) for the full contract.
 It starts collapsed as a floating Revisium trigger so the page content remains
-primary; the full source-reference panel opens only after user intent.
+primary; the full page-level source-reference panel opens only after user
+intent.
 
 Minimum descriptor per page:
 

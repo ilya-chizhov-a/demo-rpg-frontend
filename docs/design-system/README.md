@@ -45,22 +45,28 @@ Core rules:
 
 ## Layout System
 
-| Area              | Requirement                                                                                                     |
-| ----------------- | --------------------------------------------------------------------------------------------------------------- |
-| App shell         | Sticky top nav, brand link, direct route links, compact language button/menu, footer chip.                      |
-| Page header       | Title, one-sentence purpose, capability chips, optional primary CTA.                                            |
-| Main content      | Catalog grid/table or detail content.                                                                           |
-| Explainer control | Required on data pages; compact floating trigger with an overlay panel that does not reserve page layout space. |
-| Footer            | Architecture chip and source links.                                                                             |
+| Area              | Requirement                                                                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| App shell         | Sticky top nav, brand link without mouse-click outline, icon-labelled direct route links, language icon menu, source/schema widget, footer chip. |
+| Page header       | Title, one-sentence purpose, capability chips, optional primary CTA.                                                                             |
+| Main content      | Catalog grid/table or detail content.                                                                                                            |
+| Explainer control | Required on data pages; compact floating trigger with an overlay panel that does not reserve page layout space.                                  |
+| Footer            | Architecture chip and source links.                                                                                                              |
 
-The top nav uses the primary destinations from the site map: Home, Heroes,
-Items, Monsters, World, Quests, Guides, Search, and a language button. It does
-not use route-navigation dropdowns in v1. Secondary dictionary routes are
-reachable from section subnav, page content, or stubs, not from header menus.
-The language button may open a compact language menu, but it is not a route
-dropdown or a technical settings panel.
+The top nav uses the primary destinations from the site map: Home, Data,
+Regions, Classes, Search, About, a language icon menu, and a source/schema widget.
+It does not use route-navigation dropdowns in v1. Secondary dictionary routes
+are reachable from section subnav, page content, or stubs, not from header
+menus. The language control is an icon button that opens language choices on
+click and keyboard activation; it is not a route dropdown or a technical settings
+panel. The source/schema widget may open Revisium Cloud regions schema and table
+links because it is a proof/source surface rather than route navigation.
 The top nav remains pinned to the top edge while pages scroll so route changes
 and primary navigation stay available on long catalog/detail pages.
+At `<= 1200px`, the top nav switches to compact shell navigation: brand on the
+left; language, source/schema, and burger controls on the right; and direct route
+links in a fullscreen dialog. Dialog route rows are unframed, separated by `1px`
+gray dividers, and use cyan for the active route.
 The page keeps native scrolling and browser scrollbar affordance. Internal code
 and JSON panels may expose their own scroll affordance when needed.
 The app shell uses a dark midnight surface over the page atlas background.
@@ -70,7 +76,8 @@ between active and inactive states.
 Current implementation order:
 
 1. App Shell owns the dark atlas page background, sticky dark midnight top nav,
-   compact brand mark, cyan active navigation, skip link, and footer chip.
+   compact cyan/slate brand mark, icon-labelled navigation, language icon menu,
+   source/schema widget, skip link, and footer chip.
 2. Shared page wrappers inherit shell foreground/background instead of forcing a
    light page color.
 3. Individual pages may then migrate cards, panels, filters, and data widgets
@@ -84,6 +91,7 @@ Current implementation order:
 | `<= 480px`     | Single column, floating widget trigger, filter bottom sheet, 16px page gutters.  |
 | `481px-1023px` | Main content column with floating widget trigger, 24px gutters.                  |
 | `>= 1024px`    | Main content, floating widget trigger, max content width `1440px`, 32px gutters. |
+| `<= 1200px`    | App shell route links move from top nav into a fullscreen burger dialog.         |
 
 No page-level horizontal scroll. Fixed-format widgets use stable dimensions via
 grid tracks, min/max widths, or aspect ratios.

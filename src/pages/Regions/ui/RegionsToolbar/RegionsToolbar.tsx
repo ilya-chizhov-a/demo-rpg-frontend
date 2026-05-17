@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 
-import { LocaleSwitch, ResultSummary } from 'src/shared/ui';
+import { ResultSummary } from 'src/shared/ui';
 import type { RegionsViewModel } from '../../model/RegionsViewModel';
 
 interface RegionsToolbarProps {
@@ -10,13 +10,7 @@ interface RegionsToolbarProps {
 
 export const RegionsToolbar = observer(({ vm }: RegionsToolbarProps) => {
   return (
-    <Flex
-      align="flex-start"
-      gap="4"
-      justify="space-between"
-      mb="5"
-      wrap={{ base: 'wrap', sm: 'nowrap' }}
-    >
+    <Flex align="flex-start" gap="4" mb="5" wrap="wrap">
       <Box>
         <ResultSummary
           entityLabel="regions"
@@ -49,8 +43,6 @@ export const RegionsToolbar = observer(({ vm }: RegionsToolbarProps) => {
           </Flex>
         ) : null}
       </Box>
-
-      <LocaleSwitch onChange={(locale) => vm.setLocale(locale)} value={vm.locale} />
     </Flex>
   );
 });

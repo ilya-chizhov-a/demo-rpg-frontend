@@ -2,7 +2,6 @@ import { Badge, Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react'
 import { observer } from 'mobx-react-lite';
 import { Link as RouterLink } from 'react-router';
 
-import { LocaleSwitch } from 'src/shared/ui';
 import type { RegionDetailViewModel } from '../../model/RegionDetailViewModel';
 import { RegionCoverVisual } from '../RegionCoverVisual/RegionCoverVisual';
 
@@ -36,12 +35,7 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
         />
       </Box>
 
-      <Grid
-        alignItems="start"
-        gap="5"
-        mt="5"
-        templateColumns={{ base: 'minmax(0, 1fr)', lg: 'minmax(0, 1fr) 224px' }}
-      >
+      <Grid alignItems="start" gap="5" mt="5" templateColumns="minmax(0, 1fr)">
         <Box minW="0">
           <Flex gap="2" mb="4" wrap="wrap">
             <Badge colorPalette="blue" size="lg" variant="subtle">
@@ -70,10 +64,6 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
             Locale: <Text as="strong">{vm.localeLabel}</Text>
           </Text>
         </Box>
-
-        <Flex align={{ base: 'flex-start', lg: 'flex-end' }} direction="column" gap="3" minW="0">
-          <LocaleSwitch onChange={(locale) => vm.setLocale(locale)} value={vm.locale} />
-        </Flex>
       </Grid>
     </Box>
   );
