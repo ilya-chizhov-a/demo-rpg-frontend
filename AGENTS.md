@@ -73,6 +73,6 @@ committed), `.env/.env.<mode>.local` (uncommitted overrides). Only
 ## Related repos
 
 - `../demo-rpg-backend` — NestJS subgraph (regions, federation entrypoint)
-- `../demo-rpg-docs` — project identity, architecture, BRs, capability coverage,
-  messaging, and bootstrap data
+- `../demo-rpg-docs` — project passport, public architecture summary, product
+  story, and bootstrap snapshot
 - `../../infrastructure` — Argo CD apps and Helm charts for the dev stand

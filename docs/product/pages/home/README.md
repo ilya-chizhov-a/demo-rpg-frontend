@@ -19,7 +19,7 @@ section is backed by live data.
 - Entry point from docs, direct demo URL, and product walkthroughs.
 - Links to `/heroes`, `/items`, `/monsters`, `/regions`, `/quests`, `/blog`,
   `/search`, and selected section-subnav examples such as `/classes`.
-- Uses the messaging source from `https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/messaging.md`.
+- Uses the public story from `https://github.com/revisium/demo-rpg-docs/blob/master/product.md#public-story`.
 
 ## Functional Blocks
 
@@ -101,20 +101,20 @@ original image URLs directly if a future icon uses a file source.
 ## Architecture Notes
 
 - Page slice: `src/pages/Home/`.
-- `HomeViewModel` owns committed fallback navigation and messaging while CMS data
-  is pending.
+- `HomeViewModel` owns committed fallback navigation and product copy while CMS
+  data is pending.
 - The CMS DataSource should be added before the page is marked `Done`.
 - Do not hardcode CMS-managed feature copy after CMS tables are ready.
 
 ## Acceptance Criteria
 
 - [x] Visitor can reach a proof page for every headline capability from the home page.
-- [ ] Landing copy matches the messaging source.
+- [ ] Landing copy matches the public product story.
 - [x] CMS absence does not prevent route navigation.
 - [ ] Page works on phone, tablet, and desktop.
 
 ## Open Questions
 
 - Confirm whether news should be a data or CMS table before exposing `/news`.
-- Confirm CMS table availability and messaging source content before replacing
+- Confirm CMS table availability and public story content before replacing
   fallback copy.

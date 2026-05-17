@@ -5,7 +5,7 @@ Revisium example by showing what the page requested, what came back, which
 subgraph owns each field, and where the source data lives.
 
 The product-level evidence contract lives in
-`https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/explainer-widget.md`.
+`https://github.com/revisium/demo-rpg-docs/blob/master/product.md#explainer-evidence`.
 This file is the frontend implementation contract.
 
 ## Required On

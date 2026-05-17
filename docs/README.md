@@ -35,12 +35,14 @@ the same PR explicitly changes them.
 
 ## Source Hierarchy
 
-The broader product source of truth remains `demo-rpg-docs`:
+The broader product source of truth remains the lightweight `demo-rpg-docs`
+passport:
 
 - `https://github.com/revisium/demo-rpg-docs/blob/master/README.md#source-of-truth-boundaries` defines repo ownership boundaries.
-- `https://github.com/revisium/demo-rpg-docs/blob/master/requirements/BR-0003-frontend-showcase.md` defines the business requirement.
-- `https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/revisium-feature-coverage.md` defines the Revisium capability coverage.
-- `https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/messaging.md` defines the public narrative.
+- `https://github.com/revisium/demo-rpg-docs/blob/master/product.md` defines
+  the public story, route scope, and Revisium proof map.
+- `https://github.com/revisium/demo-rpg-docs/blob/master/architecture.md`
+  defines the public component boundary.
 
 This repository owns the implementation contract:
 
@@ -51,8 +53,8 @@ This repository owns the implementation contract:
 - review gates;
 - agent playbooks.
 
-When the product docs and frontend docs need to change together, update both in
-the same PR. Do not let implementation drift from either layer.
+When the public product story and frontend docs need to change together, update
+both in the same PR. Do not let implementation drift from either layer.
 
 When implementation changes behavior or architecture, docs must change in the
 same PR unless the existing document already describes the new behavior exactly.

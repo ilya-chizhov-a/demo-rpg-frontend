@@ -2,7 +2,7 @@
 
 Canonical implementation list for `demo-rpg-frontend`.
 
-The broader product inventory lives in `https://github.com/revisium/demo-rpg-docs/blob/master/products/branching-tales/page-inventory.md`.
+The broader product route scope lives in `https://github.com/revisium/demo-rpg-docs/blob/master/product.md#route-scope`.
 This file is the frontend implementation contract: routes listed here are the
 routes the frontend team is expected to build unless this document changes first.
 

@@ -6,8 +6,8 @@ product contracts, FSD, MVVM, MobX ViewModels, typed GraphQL, review gates, and
 handoff prompts.
 
 If the target product also has a separate docs/passport repository, keep the
-same boundary model as Branching Tales: the docs repo owns product identity,
-BRs, ADRs, capability coverage, messaging, and bootstrap data; the frontend repo
+same boundary model as Branching Tales: the docs repo owns the public passport,
+architecture summary, product story, and bootstrap snapshot; the frontend repo
 owns exact route behaviour, page specs, layout, implementation status, review
 gates, and agent workflows.
 
@@ -39,7 +39,8 @@ Copy the ideas and adapt names, routes, and domain language:
 - Visual theme and image prompts.
 - Deployment URLs, env names, and cloud/source links.
 - Any Branching Tales demo-specific examples.
-- Any product scope that belongs in a separate docs/passport repo.
+- Any public product story or route scope that belongs in a separate
+  docs/passport repo.
 
 ## One-Prompt Bootstrap
 
@@ -85,10 +86,9 @@ First inspect these reference files:
 - docs/design-system/README.md
 
 Then inspect the target repo stack and existing code. If there is a companion
-docs/passport repo, inspect its source-of-truth boundary section, BRs,
-capability coverage, and messaging docs. Do not invent a new architecture if
-the target repo already has a compatible pattern. Adapt the reference rules to
-the target stack.
+docs/passport repo, inspect its source-of-truth boundary section and product
+story. Do not invent a new architecture if the target repo already has a
+compatible pattern. Adapt the reference rules to the target stack.
 
 Deliverables in the target repo:
 1. Root AGENTS.md that points agents to the docs-first workflow.
