@@ -30,7 +30,8 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
         <RegionCoverVisual
           climate={vm.climate}
           image={vm.coverImage}
-          regionId={vm.id}
+          placeholderDescription={vm.coverPlaceholderDescription}
+          placeholderTitle={vm.coverPlaceholderTitle}
           variant="hero"
         />
       </Box>

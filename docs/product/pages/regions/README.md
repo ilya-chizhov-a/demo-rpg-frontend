@@ -82,11 +82,10 @@ reference pattern for readable game-database list pages.
   text badge remains the source of meaning when art is unavailable or abstract.
   The card reserves space for `cover_image` so imgproxy-served art renders
   without layout shift across phone, tablet, and desktop widths.
-- While the public dev GraphQL response exposes `cover_image` but returns empty
-  file objects, `/regions` may use local copies of the matching Revisium Cloud
-  draft files as row-id fallbacks. The fallback is secondary to
-  `data.cover_image.url` and must be removed once the dev dataset consistently
-  returns file URLs and imgproxy can derive them.
+- If `data.cover_image.url` is missing or invalid, `/regions` renders the
+  region media placeholder for the card image slot instead of checked-in
+  per-region fallback art. Keep it page-owned until another real page or widget
+  needs the same component.
 - Region cards use a restrained hover/focus lift, accent border, and subtle
   landscape scale to signal clickability without changing card dimensions.
 

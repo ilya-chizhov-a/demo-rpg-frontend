@@ -100,6 +100,8 @@ Rules:
 - Catalog images must render slot-sized `imgproxy` derivatives, not original
   Revisium/admin CDN URLs. Cards should provide `1x` and `2x` candidates for
   high-density screens.
+- Missing or invalid image fields render a stable media placeholder for the same
+  slot. Do not use local per-entity image copies as fallbacks.
 - Filtering UI must update a JSON payload preview before the request fires.
 - Sorting controls must map to explicit `orderBy` JSON.
 - Pagination must expose the active cursor in the Explainer Widget variables.
@@ -128,6 +130,8 @@ Rules:
 - Detail heroes, maps, portraits, and file previews must request dimensions
   for their actual rendered slot through `imgproxy`; the original CDN URL may
   be shown as metadata or source evidence, but not used as rendered image bytes.
+- Missing or invalid detail media uses a stable media placeholder with the same
+  reserved slot dimensions.
 - FK fields link to the referenced row in the app when a route exists and to
   `cloud.revisium.io` from the Explainer Widget.
 - Formula fields are labelled as computed output, not as hand-authored values.
@@ -153,6 +157,8 @@ Rules:
   dimensions.
 - Keep placeholders, aspect ratios, and skeletons stable so image loading does
   not shift catalog or detail layouts.
+- Missing API images use a stable media placeholder for the consuming slot, not
+  checked-in replacement art.
 
 ## Explainer Widget Pattern
 

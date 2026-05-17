@@ -47,7 +47,8 @@ export const RegionCard = observer(({ item }: RegionCardProps) => {
       <RegionCoverVisual
         climate={item.climate}
         image={item.coverImage}
-        regionId={item.id}
+        placeholderDescription={item.coverPlaceholderDescription}
+        placeholderTitle={item.coverPlaceholderTitle}
         zoomOnGroupHover
       />
 

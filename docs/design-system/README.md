@@ -215,6 +215,10 @@ Implementation rules:
 - The source URL returned by Revisium/admin remains available for metadata,
   Explainer Widget samples, and cloud/source links, but not for rendered image
   bytes.
+- If the API image field is absent, empty, invalid, or not an image MIME type,
+  render a stable media placeholder for the same UI slot. Do not fall back to
+  local per-entity replacement art. Keep the placeholder page-owned until at
+  least two real page or widget consumers need a shared component.
 - Always request slot-sized images. Catalog thumbnails, avatars, cover cards,
   media previews, and detail heroes each define their own target dimensions.
 - Use `srcset` for high-density screens. Prefer the same logical slot with

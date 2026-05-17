@@ -12,24 +12,16 @@ interface RegionCoverImageSource {
 
 export function prepareRegionCardCoverImage(
   source: RegionCoverImageSource | null | undefined,
-  regionId: string,
   title: string,
 ): PreparedImageSlot | null {
-  return (
-    prepareRegionCoverImage(source, title, 520, 292, false) ??
-    getFallbackRegionCoverImage(regionId, title, 520, 292, false)
-  );
+  return prepareRegionCoverImage(source, title, 520, 292, false);
 }
 
 export function prepareRegionHeroCoverImage(
   source: RegionCoverImageSource | null | undefined,
-  regionId: string,
   title: string,
 ): PreparedImageSlot | null {
-  return (
-    prepareRegionCoverImage(source, title, 1200, 420, true) ??
-    getFallbackRegionCoverImage(regionId, title, 1200, 420, true)
-  );
+  return prepareRegionCoverImage(source, title, 1200, 420, true);
 }
 
 export function getRegionCoverImageMetadata(
@@ -66,32 +58,4 @@ function prepareRegionCoverImage(
     sourceUrl: source.url,
     width,
   });
-}
-
-const fallbackCoverImages: Record<string, string> = {
-  'ashen-wastes': '/images/regions/ashen-wastes.png',
-  'ironcrest-mountains': '/images/regions/ironcrest-mountains.png',
-  'sundered-coast': '/images/regions/sundered-coast.png',
-  'verdant-marches': '/images/regions/verdant-marches.png',
-  'whispering-vale': '/images/regions/whispering-vale.png',
-};
-
-function getFallbackRegionCoverImage(
-  regionId: string,
-  title: string,
-  width: number,
-  height: number,
-  eager: boolean,
-): PreparedImageSlot | null {
-  const src = fallbackCoverImages[regionId];
-  if (!src) return null;
-
-  return {
-    alt: `${title} region cover image`,
-    height,
-    loading: eager ? 'eager' : 'lazy',
-    src,
-    srcSet: '',
-    width,
-  };
 }

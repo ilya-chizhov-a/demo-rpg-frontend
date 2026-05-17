@@ -16,6 +16,10 @@ import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { RegionDetailDataSource, type RegionDetailNode } from '../api/RegionDetailDataSource';
 import type { RegionLocale } from './RegionItemViewModel';
 import { getRegionCoverImageMetadata, prepareRegionHeroCoverImage } from './regionCoverImages';
+import {
+  getRegionCoverPlaceholderDescription,
+  getRegionCoverPlaceholderTitle,
+} from './regionUiCopy';
 
 // Keep this explainer copy aligned with src/pages/Regions/api/RegionDetail.graphql.
 const REGION_DETAIL_QUERY = `query RegionDetail($id: String!) {
@@ -88,7 +92,15 @@ export class RegionDetailViewModel implements IViewModel {
 
   public get coverImage(): PreparedImageSlot | null {
     if (!this.item) return null;
-    return prepareRegionHeroCoverImage(this.item.data.cover_image, this.item.id, this.title);
+    return prepareRegionHeroCoverImage(this.item.data.cover_image, this.title);
+  }
+
+  public get coverPlaceholderTitle(): string {
+    return getRegionCoverPlaceholderTitle(this.locale);
+  }
+
+  public get coverPlaceholderDescription(): string {
+    return getRegionCoverPlaceholderDescription(this.locale, this.title);
   }
 
   public get localeLabel(): string {

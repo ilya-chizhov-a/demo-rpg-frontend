@@ -78,11 +78,10 @@ Federation once backend enrichment fields are present in the composed schema.
 - Tablet/Desktop: detail content stays primary with a floating widget trigger; community-notes block visible above fold.
 - The required `cover_image` renders through imgproxy as the hero media. The
   climate text badge remains the source of meaning when art is unavailable or abstract.
-- While the public dev GraphQL response exposes `cover_image` but returns empty
-  file objects, `/regions/[id]` may use the same local copies of Revisium Cloud
-  draft files as `/regions`. The fallback is secondary to `data.cover_image.url`
-  and must be removed once the dev dataset consistently returns file URLs and
-  imgproxy can derive them.
+- If `data.cover_image.url` is missing or invalid, `/regions/[id]` renders the
+  region media placeholder for the hero image slot instead of checked-in
+  per-region fallback art. Keep it page-owned until another real page or widget
+  needs the same component.
 - Revisium-owned field rows use subtle hover/focus surface feedback for scan
   affordance, while field attribution remains explicit in the widget.
 
@@ -94,8 +93,8 @@ Federation once backend enrichment fields are present in the composed schema.
 ## Acceptance Criteria
 
 - [x] Renders Revisium-owned region text fields from GraphQL.
-- [ ] Renders required `cover_image` from GraphQL through imgproxy.
-- [ ] Required `cover_image` reserves layout and renders without layout shift on phone/tablet/desktop.
+- [x] Renders required `cover_image` from GraphQL through imgproxy.
+- [x] Required `cover_image` reserves layout and renders without layout shift on phone/tablet/desktop.
 - [x] Field ownership is visible in the page UI and widget for data-owned fields.
 - [x] Backend-unavailable state is visible while federation fields are absent.
 - [ ] Renders at least one backend-owned field in the same GraphQL result.

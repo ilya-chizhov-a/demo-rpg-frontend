@@ -4,6 +4,10 @@ import type { PreparedImageSlot } from 'src/shared/lib';
 import type { SupportedLocale } from 'src/shared/model';
 import type { RegionNode } from '../api/RegionsDataSource';
 import { prepareRegionCardCoverImage } from './regionCoverImages';
+import {
+  getRegionCoverPlaceholderDescription,
+  getRegionCoverPlaceholderTitle,
+} from './regionUiCopy';
 
 export type RegionLocale = SupportedLocale;
 
@@ -45,7 +49,15 @@ export class RegionItemViewModel {
   }
 
   public get coverImage(): PreparedImageSlot | null {
-    return prepareRegionCardCoverImage(this.node.data.cover_image, this.id, this.title);
+    return prepareRegionCardCoverImage(this.node.data.cover_image, this.title);
+  }
+
+  public get coverPlaceholderTitle(): string {
+    return getRegionCoverPlaceholderTitle(this.getLocale());
+  }
+
+  public get coverPlaceholderDescription(): string {
+    return getRegionCoverPlaceholderDescription(this.getLocale(), this.title);
   }
 
   public get publishedLabel(): string {
