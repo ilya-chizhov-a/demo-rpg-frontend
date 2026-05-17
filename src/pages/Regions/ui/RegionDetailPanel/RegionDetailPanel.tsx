@@ -18,7 +18,7 @@ export const RegionDetailPanel = observer(({ vm }: RegionDetailPanelProps) => {
       p="6"
     >
       <Heading as="h2" fontSize="xl">
-        Revisium fields
+        Region facts
       </Heading>
       <SimpleGrid as="dl" columns={{ base: 1, sm: 2 }} gap="5" mt="5">
         <RegionDetailField label="Region id" value={vm.id} />

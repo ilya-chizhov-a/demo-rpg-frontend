@@ -1,9 +1,14 @@
-// Minimal dependency-injection container with two scopes:
+import { isClient } from './helpers/isClient';
+
+// Minimal dependency-injection container with three scopes:
 //   - singleton: one instance per container lifetime
+//   - clientSingleton: one browser instance; fresh instances during SSR
 //   - transient: a fresh instance on every `get()`
 //
 // ViewModels register as `transient` so each page mount gets a clean store.
-// Long-lived services (ApiService, EnvironmentService) register as `singleton`.
+// Long-lived stateless services (ApiService, EnvironmentService) register as
+// `singleton`. Browser-global UI state can use `clientSingleton` when it must
+// not leak between concurrent SSR requests.
 //
 // We intentionally do NOT support a `session` scope: in SSR the container is
 // shared across concurrent requests, and per-request state stored on a module
@@ -11,7 +16,7 @@
 // pass an explicit context through the call site (or AsyncLocalStorage in the
 // loader/action) — do not add it back to this container.
 
-type Scope = 'singleton' | 'transient';
+type Scope = 'clientSingleton' | 'singleton' | 'transient';
 
 type Factory<T> = () => T;
 
@@ -39,7 +44,11 @@ class DIContainer {
       throw new Error(`DIContainer: token "${token.name}" is not registered`);
     }
 
-    if (registration.scope === 'singleton') {
+    if (registration.scope === 'singleton' || registration.scope === 'clientSingleton') {
+      if (registration.scope === 'clientSingleton' && !isClient()) {
+        return registration.factory();
+      }
+
       registration.singletonInstance ??= registration.factory();
       return registration.singletonInstance;
     }

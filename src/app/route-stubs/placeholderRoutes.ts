@@ -4,12 +4,13 @@ export const placeholderRoutes = {
   abilities: {
     capability: 'SVG icon catalog',
     route: '/abilities',
+    sectionNavKey: 'heroes',
     source: 'data.abilities',
     status: 'Draft',
     title: 'Abilities',
   },
   about: {
-    capability: 'Long-form architecture and what Revisium did vs what we wrote',
+    capability: 'Long-form system design and implementation split',
     route: '/about',
     source: 'messaging docs + static architecture content',
     status: 'Draft',
@@ -36,9 +37,26 @@ export const placeholderRoutes = {
     status: 'Draft',
     title: 'Blog Post',
   },
+  dialogs: {
+    capability: 'Quest dialog branches and speaker references',
+    route: '/dialogs',
+    sectionNavKey: 'quests',
+    source: 'data.dialogs, data.quests, data.npcs',
+    status: 'Draft',
+    title: 'Dialogs',
+  },
+  effects: {
+    capability: 'Reusable stat or combat effect reference rows',
+    route: '/effects',
+    sectionNavKey: 'items',
+    source: 'data.effects',
+    status: 'Draft',
+    title: 'Effects',
+  },
   factionDetail: {
     capability: 'Reverse-FK aggregation and crest rendering',
     route: '/factions/:id',
+    sectionNavKey: 'world',
     source: 'data.factions, related data.heroes, data.monsters',
     status: 'Draft',
     title: 'Faction Detail',
@@ -46,6 +64,7 @@ export const placeholderRoutes = {
   factions: {
     capability: 'Crest file, alignment enum',
     route: '/factions',
+    sectionNavKey: 'world',
     source: 'data.factions',
     status: 'Draft',
     title: 'Factions',
@@ -53,6 +72,7 @@ export const placeholderRoutes = {
   heroDetail: {
     capability: 'Single FK, array FK, embedded equipment, formulas, portrait',
     route: '/heroes/:id',
+    sectionNavKey: 'heroes',
     source: 'data.heroes plus class, ability, and item FKs',
     status: 'Draft',
     title: 'Hero Detail',
@@ -60,6 +80,7 @@ export const placeholderRoutes = {
   heroes: {
     capability: 'FK filters, formula string, portrait file field',
     route: '/heroes',
+    sectionNavKey: 'heroes',
     source: 'data.heroes, data.classes, data.regions, data.factions',
     status: 'Draft',
     title: 'Heroes',
@@ -74,6 +95,7 @@ export const placeholderRoutes = {
   itemDetail: {
     capability: 'Formula fields, embedded modifiers, SVG icon',
     route: '/items/:id',
+    sectionNavKey: 'items',
     source: 'data.items plus type and stat FKs',
     status: 'Draft',
     title: 'Item Detail',
@@ -81,13 +103,23 @@ export const placeholderRoutes = {
   items: {
     capability: 'Complex where/orderBy, cursor pagination, SVG icons',
     route: '/items',
+    sectionNavKey: 'items',
     source: 'data.items, data.item_types, data.stats',
     status: 'Draft',
     title: 'Items',
   },
+  itemTypes: {
+    capability: 'Item taxonomy reference table',
+    route: '/item-types',
+    sectionNavKey: 'items',
+    source: 'data.item_types',
+    status: 'Draft',
+    title: 'Item Types',
+  },
   locationDetail: {
     capability: 'Large map file and dimensions metadata',
     route: '/locations/:id',
+    sectionNavKey: 'world',
     source: 'data.locations, data.regions',
     status: 'Draft',
     title: 'Location Detail',
@@ -95,6 +127,7 @@ export const placeholderRoutes = {
   locations: {
     capability: 'Region FK and map preview',
     route: '/locations',
+    sectionNavKey: 'world',
     source: 'data.locations, data.regions',
     status: 'Draft',
     title: 'Locations',
@@ -130,6 +163,7 @@ export const placeholderRoutes = {
   npcDetail: {
     capability: 'Portrait file detail and location FK',
     route: '/npcs/:id',
+    sectionNavKey: 'heroes',
     source: 'data.npcs, data.locations',
     status: 'Draft',
     title: 'NPC Detail',
@@ -137,6 +171,7 @@ export const placeholderRoutes = {
   npcs: {
     capability: 'Portrait file, computed display label',
     route: '/npcs',
+    sectionNavKey: 'heroes',
     source: 'data.npcs, data.locations',
     status: 'Draft',
     title: 'NPCs',
@@ -144,6 +179,7 @@ export const placeholderRoutes = {
   parties: {
     capability: 'Array FK column and formula counters',
     route: '/parties',
+    sectionNavKey: 'heroes',
     source: 'data.parties, data.heroes',
     status: 'Draft',
     title: 'Parties',
@@ -151,6 +187,7 @@ export const placeholderRoutes = {
   partyDetail: {
     capability: 'Array FK resolution, member_count, is_full',
     route: '/parties/:id',
+    sectionNavKey: 'heroes',
     source: 'data.parties, data.heroes',
     status: 'Draft',
     title: 'Party Detail',
@@ -158,6 +195,7 @@ export const placeholderRoutes = {
   questDetail: {
     capability: 'Two-level embedded arrays and formulas',
     route: '/quests/:id',
+    sectionNavKey: 'quests',
     source: 'data.quests, data.npcs, data.locations, data.items',
     status: 'Draft',
     title: 'Quest Detail',
@@ -165,6 +203,7 @@ export const placeholderRoutes = {
   quests: {
     capability: 'FK catalog, level filter, repeatable flag',
     route: '/quests',
+    sectionNavKey: 'quests',
     source: 'data.quests, data.npcs, data.locations',
     status: 'Draft',
     title: 'Quests',
@@ -172,6 +211,7 @@ export const placeholderRoutes = {
   regionDetail: {
     capability: 'Federation reference detail',
     route: '/regions/:id',
+    sectionNavKey: 'world',
     source: 'data.regions plus backend RegionsNode fields',
     status: 'Blocked',
     title: 'Region Detail',
@@ -179,9 +219,17 @@ export const placeholderRoutes = {
   search: {
     capability: 'Full-text search',
     route: '/search',
-    source: 'Revisium search across demo-rpg-data and demo-rpg-cms',
+    source: 'search across demo-rpg-data and demo-rpg-cms',
     status: 'Blocked',
     title: 'Search',
+  },
+  stats: {
+    capability: 'Stat taxonomy reference table',
+    route: '/stats',
+    sectionNavKey: 'items',
+    source: 'data.stats',
+    status: 'Draft',
+    title: 'Stats',
   },
 } satisfies Record<string, PlaceholderPageProps>;
 

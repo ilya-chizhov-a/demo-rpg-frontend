@@ -1,10 +1,11 @@
 import { makeAutoObservable } from 'mobx';
 
 import type { PreparedImageSlot } from 'src/shared/lib';
+import type { SupportedLocale } from 'src/shared/model';
 import type { RegionNode } from '../api/RegionsDataSource';
 import { prepareRegionCardCoverImage } from './regionCoverImages';
 
-export type RegionLocale = 'en' | 'ru' | 'zh';
+export type RegionLocale = SupportedLocale;
 
 const localeNames: Record<RegionLocale, string> = {
   en: 'English',

@@ -1,6 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 
-import type { IViewModel } from 'src/shared/config';
+import {
+  getSectionNavigationItems,
+  type ActiveNavigationItem,
+  type IViewModel,
+} from 'src/shared/config';
 import {
   container,
   hasRequestError,
@@ -11,10 +15,7 @@ import {
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { RegionDetailDataSource, type RegionDetailNode } from '../api/RegionDetailDataSource';
 import type { RegionLocale } from './RegionItemViewModel';
-import {
-  getRegionCoverImageMetadata,
-  prepareRegionHeroCoverImage,
-} from './regionCoverImages';
+import { getRegionCoverImageMetadata, prepareRegionHeroCoverImage } from './regionCoverImages';
 
 // Keep this explainer copy aligned with src/pages/Regions/api/RegionDetail.graphql.
 const REGION_DETAIL_QUERY = `query RegionDetail($id: String!) {
@@ -121,6 +122,10 @@ export class RegionDetailViewModel implements IViewModel {
 
   public get cloudRowHref(): string {
     return `${this.cloudRegionsBaseHref}/${this.item?.id ?? this.id}`;
+  }
+
+  public get sectionNavItems(): readonly ActiveNavigationItem[] {
+    return getSectionNavigationItems('world', `/regions/${this.id || ''}`);
   }
 
   public get explainer(): ExplainerDescriptor {

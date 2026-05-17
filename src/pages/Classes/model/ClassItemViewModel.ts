@@ -1,8 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 
+import type { SupportedLocale } from 'src/shared/model';
 import type { ClassNode } from '../api/ClassesDataSource';
 
-export type ClassLocale = 'en' | 'ru' | 'zh';
+export type ClassLocale = SupportedLocale;
 
 const localeNames: Record<ClassLocale, string> = {
   en: 'English',

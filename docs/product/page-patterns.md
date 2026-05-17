@@ -6,14 +6,51 @@ requirements, but should not silently weaken these patterns.
 ## App Shell
 
 - Persistent top navigation with brand link to `/`.
-- Primary navigation exposes capability families, not every route.
+- Primary navigation exposes direct game-database links only: Home, Heroes,
+  Items, Monsters, World, Quests, Guides, and Search.
+- Top navigation v1 does not use dropdowns for route navigation. Secondary
+  routes live in section subnav on catalog/detail pages.
 - Footer chip appears on every page except full-screen error pages.
 - Footer chip links to `/about` and shows subgraph composition in compact text.
-- Global locale switcher is visible in the shell once localization is implemented.
+- Global locale switcher is visible in the shell once localization is
+  implemented; it may use a compact language menu and must not become a
+  technical settings panel.
 - Shell must be SSR-rendered and usable before hydration.
 - The shell follows the Dark Tactical Atlas direction from the design system:
   dark midnight surface, cyan active state, minimal one-tone or two-tone icons,
   and no gold/yellow system accents.
+
+## Game Database Section Pattern
+
+Used by catalog and detail pages that belong to a game database family:
+Heroes, Items, Monsters, World, and Quests.
+
+Functional blocks:
+
+- page header with the game-facing section name and purpose;
+- horizontal section subnav for sibling catalogs;
+- catalog/detail content;
+- related entity sections written as player-facing relationships;
+- Explainer Widget as the primary technical source/proof layer.
+
+Rules:
+
+- Section subnav uses links, chips, or tabs. Do not use dropdowns in v1.
+- Monsters is a section family even when it has only one v1 route; in that case
+  the subnav may be omitted until related monster routes are added.
+- Related entities render as named game-facing sections, not raw foreign-key
+  fields.
+- Detail pages should group relationships by meaning, for example:
+  "Dropped by monsters", "Used by heroes", "Quest rewards", "Related type",
+  and "Related stat".
+- Raw FK, array FK, formula, source table, schema, row, REST, and MCP
+  explanations belong in the Explainer Widget.
+- JSON filter/sort previews may remain in page controls when a page spec
+  requires them; the Explainer Widget still owns the complete variables,
+  response sample, and source links.
+- If a relationship cannot be resolved yet, do not render a dead route link.
+  Prefer a blocked/empty game-facing section in the page spec and source proof
+  in the widget.
 
 ## Stub Route Pattern
 
@@ -40,7 +77,8 @@ Rules:
 ## Catalog Page Pattern
 
 Used by `/regions`, `/heroes`, `/items`, `/monsters`, `/quests`, `/parties`,
-`/factions`, `/npcs`, `/locations`, `/classes`, `/abilities`, `/blog`, `/news`.
+`/factions`, `/npcs`, `/locations`, `/classes`, `/abilities`, `/item-types`,
+`/stats`, `/effects`, `/dialogs`, `/blog`, `/news`.
 
 Functional blocks:
 

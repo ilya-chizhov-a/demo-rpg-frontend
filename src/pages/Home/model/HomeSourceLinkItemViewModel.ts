@@ -8,8 +8,6 @@ export class HomeSourceLinkItemViewModel {
   public readonly title: string;
   public readonly description: string;
   public readonly href: string;
-  public readonly target = '_blank';
-  public readonly rel = 'noreferrer';
 
   constructor(params: HomeSourceLinkItemParams) {
     this.title = params.title;
@@ -19,5 +17,17 @@ export class HomeSourceLinkItemViewModel {
 
   public get key(): string {
     return this.href;
+  }
+
+  public get isExternal(): boolean {
+    return this.href.startsWith('http://') || this.href.startsWith('https://');
+  }
+
+  public get target(): string | undefined {
+    return this.isExternal ? '_blank' : undefined;
+  }
+
+  public get rel(): string | undefined {
+    return this.isExternal ? 'noreferrer' : undefined;
   }
 }

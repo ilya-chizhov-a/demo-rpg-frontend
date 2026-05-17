@@ -1,17 +1,18 @@
 # Design System And Layout
 
-Branching Tales uses fantasy content, but the UI is a precise DevRel product
-surface. The visual language should feel like a serious developer tool showing
-a rich dataset, not a game landing page or decorative RPG interface.
+Branching Tales uses fantasy content, but the primary UI is a public RPG codex
+and game database. The visual language should feel like a serious, readable
+catalog and companion site: dense, scannable, and content-led, without becoming
+a fantasy marketing page or developer dashboard chrome.
 
 ## Visual Direction
 
 The product direction is **Dark Tactical Atlas**.
 
 The UI should feel like a modern tactical database and world atlas for a fantasy
-RPG. It uses a dark, legible DevRel surface with a restrained game atmosphere:
-region art, climate icons, maps, and source evidence carry the setting, while
-navigation, controls, filters, tables, and widgets stay precise and quiet.
+RPG. It uses a dark, legible codex surface with a restrained game atmosphere:
+region art, climate icons, maps, and entity relationships carry the setting,
+while navigation, controls, filters, tables, and widgets stay precise and quiet.
 
 Core rules:
 
@@ -34,26 +35,30 @@ Core rules:
 
 ## Design Principles
 
-- Dense but readable: prioritize scanning, comparison, and evidence.
+- Dense but readable: prioritize scanning, comparison, related entities, and evidence.
 - Restrained fantasy: names, art, climate icons, and maps carry the theme;
   chrome stays quiet.
 - Every surface has a job: avoid decorative sections that do not help evaluation.
-- Code and data examples are first-class UI, not afterthoughts.
+- Code and data examples belong in the Explainer Widget so the codex stays
+  game-facing by default.
 - Accessibility and responsive behaviour are required, not polish.
 
 ## Layout System
 
 | Area              | Requirement                                                                                                     |
 | ----------------- | --------------------------------------------------------------------------------------------------------------- |
-| App shell         | Sticky top nav, brand link, route groups, locale switcher, footer chip.                                         |
+| App shell         | Sticky top nav, brand link, direct route links, compact language button/menu, footer chip.                      |
 | Page header       | Title, one-sentence purpose, capability chips, optional primary CTA.                                            |
 | Main content      | Catalog grid/table or detail content.                                                                           |
 | Explainer control | Required on data pages; compact floating trigger with an overlay panel that does not reserve page layout space. |
 | Footer            | Architecture chip and source links.                                                                             |
 
-The top nav uses the primary destinations from the site map: Home, Data,
-Search, Branching, About, and News. Secondary dictionary routes are reachable
-from page content or stubs, not from the top nav.
+The top nav uses the primary destinations from the site map: Home, Heroes,
+Items, Monsters, World, Quests, Guides, Search, and a language button. It does
+not use route-navigation dropdowns in v1. Secondary dictionary routes are
+reachable from section subnav, page content, or stubs, not from header menus.
+The language button may open a compact language menu, but it is not a route
+dropdown or a technical settings panel.
 The top nav remains pinned to the top edge while pages scroll so route changes
 and primary navigation stay available on long catalog/detail pages.
 The page keeps native scrolling and browser scrollbar affordance. Internal code

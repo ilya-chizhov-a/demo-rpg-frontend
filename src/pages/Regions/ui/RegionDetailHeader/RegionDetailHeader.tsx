@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Grid, Heading, Link, Text } from '@chakra-ui/react';
+import { Badge, Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import { Link as RouterLink } from 'react-router';
 
@@ -72,9 +72,6 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
 
         <Flex align={{ base: 'flex-start', lg: 'flex-end' }} direction="column" gap="3" minW="0">
           <LocaleSwitch onChange={(locale) => vm.setLocale(locale)} value={vm.locale} />
-          <Link color="#67e8f9" href={vm.cloudRowHref} rel="noreferrer" target="_blank">
-            Open cloud row
-          </Link>
         </Flex>
       </Grid>
     </Box>

@@ -1,16 +1,16 @@
 # About Page
 
-| Field | Value |
-|---|---|
-| Route | `/about` |
-| Status | Draft |
-| Pattern | Narrative architecture page |
-| Primary capability | Long-form 80/20 story and architecture explanation |
+| Field              | Value                                            |
+| ------------------ | ------------------------------------------------ |
+| Route              | `/about`                                         |
+| Status             | Draft                                            |
+| Pattern            | Narrative architecture page                      |
+| Primary capability | Long-form system design and implementation split |
 
 ## Purpose
 
-Explain what Revisium provides, what the custom backend provides, and how the
-federated demo is assembled.
+Explain how the codex frontend, data content platform, and custom backend fit
+together without making the main product UI feel like a developer console.
 
 ## Context And Entry
 
@@ -19,42 +19,42 @@ federated demo is assembled.
 
 ## Functional Blocks
 
-| Block | Requirement |
-|---|---|
-| Intro | Repeat the short Branching Tales 80/20 framing. |
-| Architecture diagram | Render the current frontend/router/backend/Revisium topology. |
-| What Revisium did | Table for schemas, content, files, formulas, branching, search, APIs, federation participation. |
-| What we wrote | Table for backend counters/comments/recommendations/runtime logic and frontend UI. |
-| Evaluation path | Ordered list of pages to click for a five-minute evaluation. |
-| Source links | GitHub and cloud project links. |
+| Block                | Requirement                                                                                     |
+| -------------------- | ----------------------------------------------------------------------------------------------- |
+| Intro                | Repeat the short Branching Tales 80/20 framing.                                                 |
+| Architecture diagram | Render the current frontend/router/backend/Revisium topology.                                   |
+| What Revisium did    | Table for schemas, content, files, formulas, branching, search, APIs, federation participation. |
+| What we wrote        | Table for backend counters/comments/recommendations/runtime logic and frontend UI.              |
+| Evaluation path      | Ordered list of pages to click for a five-minute evaluation.                                    |
+| Source links         | GitHub and cloud project links.                                                                 |
 
 ## Primary Actions
 
-| Action | Result |
-|---|---|
-| View schema-first example | Navigate to `/regions`. |
-| View federation example | Navigate to `/regions/[id]` once available. |
-| View branching example | Navigate to `/balance-patch`. |
-| Open source | Open GitHub repo in a new tab. |
+| Action                    | Result                                                        |
+| ------------------------- | ------------------------------------------------------------- |
+| View schema-first example | Navigate to `/regions`.                                       |
+| View federation example   | Navigate from `/regions` to a concrete `/regions/[id]` route. |
+| View branching example    | Navigate to `/balance-patch`.                                 |
+| Open source               | Open GitHub repo in a new tab.                                |
 
 ## States
 
-| State | Requirement |
-|---|---|
-| Loaded | Static narrative renders with links and diagram. |
+| State               | Requirement                                            |
+| ------------------- | ------------------------------------------------------ |
+| Loaded              | Static narrative renders with links and diagram.       |
 | Diagram unavailable | Render text fallback with the same architecture facts. |
 
 ## Transitions
 
-| From | Trigger | To |
-|---|---|---|
-| Loaded | Source link click | External tab |
+| From   | Trigger               | To           |
+| ------ | --------------------- | ------------ |
+| Loaded | Source link click     | External tab |
 | Loaded | Proof page link click | Target route |
 
 ## Data Contract
 
-| Source | Fields |
-|---|---|
+| Source      | Fields                                                   |
+| ----------- | -------------------------------------------------------- |
 | Static docs | Messaging and architecture content from `demo-rpg-docs`. |
 
 ## Explainer Widget

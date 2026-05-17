@@ -9,29 +9,30 @@
 
 ## Purpose
 
-Show a small reference table used by hero foreign keys, with a required class
-icon file on every row.
+Show class profiles as part of the hero codex. The page still proves that
+heroes can reference a small class table, but the visible framing is class
+comparison, roles, and stat growth.
 
 ## Context And Entry
 
-- Entry from hero filters, hero detail pages, search results, and dictionary navigation.
+- Entry from hero filters, hero detail pages, search results, and Heroes section subnav.
 - Links to `/heroes` with a class filter when supported.
 
 ## Functional Blocks
 
-| Block            | Requirement                                                |
-| ---------------- | ---------------------------------------------------------- |
-| Header           | Explain class table as FK target.                          |
-| Class list       | Icon, name, description, role/archetype fields if present. |
-| Related heroes   | Optional count or link to heroes filtered by class.        |
-| Explainer Widget | Required.                                                  |
+| Block            | Requirement                                                     |
+| ---------------- | --------------------------------------------------------------- |
+| Header           | Explain classes as hero roles with compact stat-growth context. |
+| Class list       | Icon, name, description, role/archetype fields if present.      |
+| Related heroes   | Optional count or link to heroes filtered by class.             |
+| Explainer Widget | Required.                                                       |
 
 ## Primary Actions
 
-| Action                        | Result                                                  |
-| ----------------------------- | ------------------------------------------------------- |
-| Filter heroes by class        | Navigate to `/heroes` with class filter if supported.   |
-| Open Revisium cloud deep-link | Open the selected `data.classes` row in Revisium Cloud. |
+| Action                 | Result                                                |
+| ---------------------- | ----------------------------------------------------- |
+| Filter heroes by class | Navigate to `/heroes` with class filter if supported. |
+| Open source row        | Available from the Explainer Widget, not page chrome. |
 
 ## States
 
@@ -59,7 +60,8 @@ icon file on every row.
 
 - Summary: "Classes show a small Revisium reference table with a required file field used as a foreign-key target by heroes."
 - Variables: locale.
-- Deep links: classes table/schema.
+- Deep links: classes table/schema and selected class row when a row action is
+  present.
 - Subgraphs: `data`.
 
 ## Responsive Rules

@@ -2,7 +2,7 @@ import { Box, Button } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 
 import { renderWhen, useViewModel } from 'src/shared/lib';
-import { CatalogPageLayout, CatalogSkeleton, StatePanel } from 'src/shared/ui';
+import { CatalogPageLayout, CatalogSkeleton, SectionSubnav, StatePanel } from 'src/shared/ui';
 import { ExplainerWidget } from 'src/widgets/explainer-widget';
 import { RegionsViewModel } from '../../model/RegionsViewModel';
 import { RegionList } from '../RegionList/RegionList';
@@ -43,12 +43,17 @@ export const RegionsPage = observer(() => {
       footerAction={renderWhen(
         vm.hasNextPage,
         <Box display="flex" justifyContent="center" mt="6">
-          <Button colorPalette="green" disabled={!vm.canLoadMore} onClick={() => void vm.loadMore()}>
+          <Button
+            colorPalette="green"
+            disabled={!vm.canLoadMore}
+            onClick={() => void vm.loadMore()}
+          >
             {vm.showRefreshing ? 'Loading...' : 'Load more'}
           </Button>
         </Box>,
       )}
       header={<RegionsHeader />}
+      sectionSubnav={<SectionSubnav ariaLabel="World section" items={vm.sectionNavItems} />}
       list={renderWhen(vm.showList, <RegionList vm={vm} />)}
       loading={renderWhen(
         vm.showLoading,

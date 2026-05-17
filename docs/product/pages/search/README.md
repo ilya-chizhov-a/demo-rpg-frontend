@@ -1,16 +1,16 @@
 # Search Page
 
-| Field | Value |
-|---|---|
-| Route | `/search` |
-| Status | Blocked |
-| Pattern | Search |
-| Primary capability | Full-text search across Revisium data and CMS |
+| Field              | Value                                     |
+| ------------------ | ----------------------------------------- |
+| Route              | `/search`                                 |
+| Status             | Blocked                                   |
+| Pattern            | Search                                    |
+| Primary capability | Full-text search across game data and CMS |
 
 ## Purpose
 
-Demonstrate Revisium full-text search across all fields and multiple tables,
-grouped into useful frontend results.
+Demonstrate full-text search across all fields and multiple tables, grouped
+into useful frontend results.
 
 ## Context And Entry
 
@@ -19,50 +19,50 @@ grouped into useful frontend results.
 
 ## Functional Blocks
 
-| Block | Requirement |
-|---|---|
-| Header | Search purpose and capability chips. |
-| Search input | Query text, submit, clear. |
-| Results groups | Group by project/table/domain. |
-| Match snippets | Highlight matched field/value from compact match payload. |
-| Explainer Widget | Required; shows `search_rows` equivalent. |
+| Block            | Requirement                                               |
+| ---------------- | --------------------------------------------------------- |
+| Header           | Search purpose and capability chips.                      |
+| Search input     | Query text, submit, clear.                                |
+| Results groups   | Group by project/table/domain.                            |
+| Match snippets   | Highlight matched field/value from compact match payload. |
+| Explainer Widget | Required; shows `search_rows` equivalent.                 |
 
 ## Primary Actions
 
-| Action | Result |
-|---|---|
-| Submit query | Fetch grouped results. |
-| Clear query | Reset to empty state. |
-| Open result | Navigate to app route when mapped, otherwise cloud row. |
+| Action       | Result                                                  |
+| ------------ | ------------------------------------------------------- |
+| Submit query | Fetch grouped results.                                  |
+| Clear query  | Reset to empty state.                                   |
+| Open result  | Navigate to app route when mapped, otherwise cloud row. |
 
 ## States
 
-| State | Requirement |
-|---|---|
-| Empty query | Prompt to search without fake examples. |
-| Loading | Keep query visible and show result skeletons. |
-| Loaded | Grouped results with snippets. |
-| No results | Clear no-match state and retry affordance. |
-| Error | Readable failure. |
+| State       | Requirement                                   |
+| ----------- | --------------------------------------------- |
+| Empty query | Prompt to search without fake examples.       |
+| Loading     | Keep query visible and show result skeletons. |
+| Loaded      | Grouped results with snippets.                |
+| No results  | Clear no-match state and retry affordance.    |
+| Error       | Readable failure.                             |
 
 ## Transitions
 
-| From | Trigger | To |
-|---|---|---|
-| Empty query | Submit query | Loading results |
-| Loaded results | Change query | Refreshing results |
-| Loaded results | Open result | App route or cloud row |
+| From           | Trigger      | To                     |
+| -------------- | ------------ | ---------------------- |
+| Empty query    | Submit query | Loading results        |
+| Loaded results | Change query | Refreshing results     |
+| Loaded results | Open result  | App route or cloud row |
 
 ## Data Contract
 
-| Source | Fields |
-|---|---|
-| Revisium `search_rows` | row id, table id, matches, optional row data when needed. |
-| Search route mapping | table id to app route and display label. |
+| Source               | Fields                                                    |
+| -------------------- | --------------------------------------------------------- |
+| `search_rows`        | row id, table id, matches, optional row data when needed. |
+| Search route mapping | table id to app route and display label.                  |
 
 ## Explainer Widget
 
-- Summary: "Search shows Revisium full-text lookup across all fields and tables."
+- Summary: "Search shows full-text lookup across all fields and tables."
 - Surfaces: REST/MCP/GraphQL depending on backend exposure; show exact search call used.
 - Variables: query string, projects, limit.
 - Response sample: grouped compact matches.

@@ -21,6 +21,8 @@ const statusPalette: Record<HomeCapabilityStatus, HomeCapabilityStatusPalette> =
   next: 'purple',
 };
 
+const actionLabel = 'Open section';
+
 export class HomeCapabilityItemViewModel {
   public readonly title: string;
   public readonly description: string;
@@ -46,5 +48,9 @@ export class HomeCapabilityItemViewModel {
 
   public get statusPalette(): HomeCapabilityStatusPalette {
     return statusPalette[this.status];
+  }
+
+  public get actionLabel(): string {
+    return actionLabel;
   }
 }

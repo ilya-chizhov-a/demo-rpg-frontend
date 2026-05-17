@@ -10,14 +10,13 @@ export function RegionBackendPanel() {
       p="6"
     >
       <Heading as="h2" fontSize="xl">
-        Backend enrichment
+        Community notes
       </Heading>
       <Text color="#9aa7b1" lineHeight="1.55" mt="2">
-        Likes, views, comments, and federation source links are not present in the composed GraphQL
-        schema yet.
+        Likes, views, comments, and activity notes are planned for this region detail page.
       </Text>
       <Badge colorPalette="gray" mt="4" size="lg" variant="subtle">
-        backend pending
+        coming later
       </Badge>
     </Box>
   );

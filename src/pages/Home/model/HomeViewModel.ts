@@ -48,107 +48,122 @@ type SourceLinkRow = readonly [title: string, description: string, href: string]
 
 const heroContent: HomeHeroContent = {
   badges: [
-    { label: 'data', palette: 'blue' },
-    { label: 'cms ready', palette: 'purple' },
-    { label: 'GraphQL', palette: 'green' },
+    { label: 'codex', palette: 'blue' },
+    { label: 'world atlas', palette: 'purple' },
+    { label: 'guides', palette: 'green' },
   ],
   title: 'Branching Tales',
-  subtitle:
-    'A focused Revisium evaluation demo: prove schema-first content, generated GraphQL contracts, branching data, and federation without turning the frontend into a glue-code layer.',
-  primaryCta: { label: 'Browse regions', href: '/regions' },
-  secondaryCta: { label: 'How this works', href: '/about' },
+  subtitle: 'A public RPG database for heroes, items, monsters, regions, quests, and guides.',
+  primaryCta: { label: 'Browse heroes', href: '/heroes' },
+  secondaryCta: { label: 'Search codex', href: '/search' },
   fallbackNote:
-    'CMS-backed landing copy is not connected yet, so this page renders committed fallback copy and keeps navigation available.',
-  fallbackLink: { label: 'Start with the live catalog.', href: '/regions' },
+    'The current home uses committed fallback copy while database and guide sections are filled in.',
+  fallbackLink: { label: 'Start with the world atlas.', href: '/regions' },
 };
 
 const capabilitySection: HomeSectionContent = {
-  title: 'Capability map',
+  title: 'Featured databases',
   description:
-    'Each card points to the fastest page for proving one product claim. Live routes are usable now; next and blocked routes keep their implementation status visible.',
+    'Jump into the main codex sections. Routes still in delivery keep their implementation status visible.',
 };
 
 const demoPathsSection: HomeSectionContent = {
-  title: 'Demo paths',
-  description: 'Use these routes as a short evaluation path through the current product surface.',
+  title: 'Codex paths',
+  description: 'Start with a catalog, then move into related guides, world lore, and search.',
 };
 
 const sourceLinksSection: HomeSectionContent = {
-  title: 'Source links',
+  title: 'Latest guides and world preview',
 };
 
 const demoPathsCta: HomeCta = {
-  label: 'Start with regions',
+  label: 'Open world atlas',
   href: '/regions',
 };
 
 const capabilityRows: readonly CapabilityRow[] = [
   [
-    'Schema-first content',
-    'Browse typed RPG data from Revisium rows through the GraphQL router.',
-    'data.regions',
+    'Heroes',
+    'Browse playable characters, roles, class links, abilities, and build hooks.',
+    'Characters',
+    '/heroes',
+    'next',
+  ],
+  [
+    'Items',
+    'Inspect weapons, gear, item types, stats, effects, and reward links.',
+    'Equipment',
+    '/items',
+    'next',
+  ],
+  [
+    'Monsters',
+    'Track enemies, drops, factions, abilities, and encounter notes.',
+    'Bestiary',
+    '/monsters',
+    'next',
+  ],
+  [
+    'World',
+    'Open regions now, then follow locations and factions as the atlas expands.',
+    'Atlas',
     '/regions',
     'live',
   ],
   [
-    'Reference catalogs',
-    'Inspect compact enum-like tables before larger catalogs are implemented.',
-    'data.classes',
-    '/classes',
-    'live',
-  ],
-  [
-    'Federation proof',
-    'Follow the region detail shell where backend-owned fields will attach.',
-    'data + backend',
-    '/regions/ashen-wastes',
+    'Quests',
+    'Follow quest chains, NPCs, locations, repeatable flags, and rewards.',
+    'Journal',
+    '/quests',
     'next',
   ],
   [
-    'Branching revisions',
-    'Compare master and draft values once revision diff data is exposed.',
-    'branching',
-    '/balance-patch',
-    'blocked',
-  ],
-  [
-    'Three API surfaces',
-    'Use the source widget pattern to compare GraphQL, REST, and MCP paths.',
-    'GraphQL first',
-    '/about',
-    'next',
-  ],
-  [
-    'No glue-code catalogs',
-    'Move from rows to product pages with generated types and thin ViewModels.',
-    'MVVM',
-    '/heroes',
+    'Guides',
+    'Read articles and updates from the guide catalog while news remains blocked.',
+    'Articles',
+    '/blog',
     'next',
   ],
 ];
 
 const demoPathRows: readonly DemoPathRow[] = [
-  ['Browse live data', 'Start with localized regions and typed classes.', '/regions'],
+  ['Browse a catalog', 'Start with heroes, items, monsters, or the world atlas.', '/heroes'],
   [
-    'Inspect entity details',
-    'Open a region row and see field ownership in context.',
-    '/regions/ironcrest-mountains',
+    'Open related sections',
+    'Use section tabs to move between classes, abilities, NPCs, and parties.',
+    '/classes',
   ],
   [
-    'Compare revisions',
-    'Reserved for balance and branch proof once the API is ready.',
-    '/balance-patch',
+    'Search the codex',
+    'Search routes are wired now and will expand across data and articles.',
+    '/search',
   ],
-  ['Read architecture', 'See what Revisium owns and what the frontend owns.', '/about'],
+  [
+    'Read guides',
+    'Guide articles live under the blog route until a separate news source exists.',
+    '/blog',
+  ],
 ];
 
 const proofRows: readonly ProofRow[] = [
-  ['Rows', 'demo-rpg-data', 'rgba(56, 189, 248, 0.16)', 'rgba(56, 189, 248, 0.4)', '#7dd3fc'],
-  ['Schema', 'GraphQL types', 'rgba(52, 211, 153, 0.14)', 'rgba(52, 211, 153, 0.36)', '#86efac'],
-  ['Pages', 'MVVM slices', 'rgba(167, 139, 250, 0.16)', 'rgba(167, 139, 250, 0.38)', '#c4b5fd'],
   [
-    'Sources',
-    'Explainer widget',
+    'Explore',
+    'Heroes and classes',
+    'rgba(56, 189, 248, 0.16)',
+    'rgba(56, 189, 248, 0.4)',
+    '#7dd3fc',
+  ],
+  ['Collect', 'Items and stats', 'rgba(52, 211, 153, 0.14)', 'rgba(52, 211, 153, 0.36)', '#86efac'],
+  [
+    'Hunt',
+    'Monsters and drops',
+    'rgba(167, 139, 250, 0.16)',
+    'rgba(167, 139, 250, 0.38)',
+    '#c4b5fd',
+  ],
+  [
+    'Travel',
+    'Regions and factions',
     'rgba(45, 212, 191, 0.14)',
     'rgba(45, 212, 191, 0.34)',
     '#5eead4',
@@ -156,25 +171,17 @@ const proofRows: readonly ProofRow[] = [
 ];
 
 const sourceLinkRows: readonly SourceLinkRow[] = [
+  ['Starter guide', 'A route for launch notes, systems guides, and companion articles.', '/blog'],
   [
-    'Cloud data project',
-    'Open the Revisium data rows used by the live catalogs.',
-    'https://cloud.revisium.io/app/revisium/demo-rpg-data/master/draft/regions',
+    'World preview',
+    'Begin with the implemented regions catalog and expand into locations.',
+    '/regions',
   ],
+  ['Faction index', 'Track alliances, conflicts, and crest-led faction profiles.', '/factions'],
   [
-    'Frontend repository',
-    'React Router, Chakra UI, MobX ViewModels, and generated GraphQL types.',
-    'https://github.com/revisium/demo-rpg-frontend',
-  ],
-  [
-    'Backend repository',
-    'Federation and backend-owned enrichment fields planned for detail pages.',
-    'https://github.com/revisium/demo-rpg-backend',
-  ],
-  [
-    'Docs repository',
-    'Product messaging, page inventory, and implementation notes.',
-    'https://github.com/revisium/demo-rpg-docs',
+    'Quest journal',
+    'Follow quest chains, NPC handoffs, and reward routes as they are delivered.',
+    '/quests',
   ],
 ];
 

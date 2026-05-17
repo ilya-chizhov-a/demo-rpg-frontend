@@ -1,4 +1,5 @@
 import { Box, Heading, Link, Text } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router';
 
 import type { HomeSourceLinkItemViewModel } from '../../model/HomeSourceLinkItemViewModel';
 
@@ -17,17 +18,23 @@ export function HomeSourceLinkCard({ item }: HomeSourceLinkCardProps) {
       p="5"
     >
       <Heading as="h3" fontSize="lg">
-        <Link
-          alignItems="center"
-          color="#67e8f9"
-          display="inline-flex"
-          href={item.href}
-          minH="11"
-          rel={item.rel}
-          target={item.target}
-        >
-          {item.title}
-        </Link>
+        {item.isExternal ? (
+          <Link
+            alignItems="center"
+            color="#67e8f9"
+            display="inline-flex"
+            href={item.href}
+            minH="11"
+            rel={item.rel}
+            target={item.target}
+          >
+            {item.title}
+          </Link>
+        ) : (
+          <Link asChild color="#67e8f9" display="inline-flex" minH="11">
+            <RouterLink to={item.href}>{item.title}</RouterLink>
+          </Link>
+        )}
       </Heading>
       <Text color="#9aa7b1" lineHeight="1.55" mt="2">
         {item.description}

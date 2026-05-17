@@ -1,21 +1,28 @@
-import { Badge, Box, Button, Container, Flex, HStack, Link, Text } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Button,
+  Container,
+  Flex,
+  HStack,
+  Link,
+  Menu,
+  Portal,
+  Text,
+} from '@chakra-ui/react';
+import { observer } from 'mobx-react-lite';
 import { Link as RouterLink, useLocation } from 'react-router';
+
+import { useViewModel } from 'src/shared/lib';
+import { AppLayoutViewModel } from './AppLayoutViewModel';
 
 interface AppLayoutProps {
   readonly children: React.ReactNode;
 }
 
-const navItems = [
-  { label: 'Home', to: '/' },
-  { label: 'Data', to: '/regions' },
-  { label: 'Search', to: '/search' },
-  { label: 'Branching', to: '/balance-patch' },
-  { label: 'About', to: '/about' },
-  { label: 'News', to: '/news' },
-] as const;
-
-export function AppLayout({ children }: AppLayoutProps) {
+export const AppLayout = observer(function AppLayout({ children }: AppLayoutProps) {
   const location = useLocation();
+  const vm = useViewModel(AppLayoutViewModel);
 
   return (
     <Box
@@ -109,32 +116,88 @@ export function AppLayout({ children }: AppLayoutProps) {
               </RouterLink>
             </Link>
 
-            <HStack as="nav" gap="2" aria-label="Primary navigation" wrap="wrap">
-              {navItems.map((item) => {
-                const isActive =
-                  item.to === '/'
-                    ? location.pathname === '/'
-                    : location.pathname === item.to || location.pathname.startsWith(`${item.to}/`);
-
-                return (
+            <HStack gap="3" wrap="wrap">
+              <HStack as="nav" gap="2" aria-label="Primary navigation" wrap="wrap">
+                {vm.getPrimaryNavItems(location.pathname).map((item) => {
+                  return (
+                    <Button
+                      asChild
+                      bg={item.isActive ? 'rgba(34, 211, 238, 0.16)' : 'transparent'}
+                      borderColor={item.isActive ? 'rgba(103, 232, 249, 0.65)' : 'transparent'}
+                      borderWidth="1px"
+                      color={item.isActive ? '#f4f7f8' : '#9aa7b1'}
+                      key={item.to}
+                      size="sm"
+                      variant="ghost"
+                      _hover={{
+                        bg: item.isActive ? 'rgba(34, 211, 238, 0.2)' : 'rgba(23, 33, 43, 0.78)',
+                        color: '#f4f7f8',
+                      }}
+                    >
+                      <RouterLink aria-current={item.isActive ? 'page' : undefined} to={item.to}>
+                        {item.label}
+                      </RouterLink>
+                    </Button>
+                  );
+                })}
+              </HStack>
+              <Menu.Root positioning={{ placement: 'bottom-end' }}>
+                <Menu.Trigger asChild>
                   <Button
-                    asChild
-                    bg={isActive ? 'rgba(34, 211, 238, 0.16)' : 'transparent'}
-                    borderColor={isActive ? 'rgba(103, 232, 249, 0.65)' : 'transparent'}
+                    aria-label={`Language: ${vm.currentLocaleName}`}
+                    bg="rgba(18, 24, 32, 0.86)"
+                    borderColor="rgba(103, 232, 249, 0.32)"
                     borderWidth="1px"
-                    color={isActive ? '#f4f7f8' : '#9aa7b1'}
-                    key={item.to}
+                    color="#f4f7f8"
+                    minH="44px"
+                    minW="52px"
                     size="sm"
-                    variant="ghost"
-                    _hover={{
-                      bg: isActive ? 'rgba(34, 211, 238, 0.2)' : 'rgba(23, 33, 43, 0.78)',
-                      color: '#f4f7f8',
-                    }}
+                    variant="outline"
+                    _hover={{ bg: 'rgba(34, 211, 238, 0.12)', borderColor: '#67e8f9' }}
                   >
-                    <RouterLink to={item.to}>{item.label}</RouterLink>
+                    {vm.currentLocaleLabel}
                   </Button>
-                );
-              })}
+                </Menu.Trigger>
+                <Portal>
+                  <Menu.Positioner>
+                    <Menu.Content
+                      bg="#121820"
+                      borderColor="rgba(103, 232, 249, 0.24)"
+                      borderWidth="1px"
+                      minW="140px"
+                      shadow="0 18px 42px rgba(0, 0, 0, 0.32)"
+                    >
+                      {vm.localeOptions.map((option) => {
+                        const isSelected = vm.isLocaleSelected(option.value);
+
+                        return (
+                          <Menu.Item
+                            aria-checked={isSelected}
+                            bg={isSelected ? 'rgba(34, 211, 238, 0.16)' : 'transparent'}
+                            color="#f4f7f8"
+                            key={option.value}
+                            onClick={() => vm.setLocale(option.value)}
+                            role="menuitemradio"
+                            value={option.value}
+                            _highlighted={{ bg: 'rgba(34, 211, 238, 0.12)' }}
+                          >
+                            <Flex align="center" gap="3" justify="space-between" w="100%">
+                              <Text as="span">
+                                {option.label} - {option.nativeLabel}
+                              </Text>
+                              {isSelected ? (
+                                <Badge colorPalette="cyan" size="sm" variant="subtle">
+                                  Current
+                                </Badge>
+                              ) : null}
+                            </Flex>
+                          </Menu.Item>
+                        );
+                      })}
+                    </Menu.Content>
+                  </Menu.Positioner>
+                </Portal>
+              </Menu.Root>
             </HStack>
           </Flex>
         </Container>
@@ -155,7 +218,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         <Container maxW="1440px" px={{ base: '4', md: '6', lg: '8' }} py="4">
           <Flex align="center" gap="3" justify="space-between" wrap="wrap">
             <Badge bg="rgba(167, 139, 250, 0.16)" color="#c4b5fd" variant="solid">
-              React Router SSR + Revisium GraphQL
+              React Router SSR + GraphQL
             </Badge>
             <Text color="#9aa7b1" fontSize="sm">
               data + cms + backend subgraphs.{' '}
@@ -168,4 +231,4 @@ export function AppLayout({ children }: AppLayoutProps) {
       </Box>
     </Box>
   );
-}
+});

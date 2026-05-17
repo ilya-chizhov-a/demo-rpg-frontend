@@ -1,10 +1,10 @@
 # News Detail
 
-| Field | Value |
-|---|---|
-| Route | `/news/[slug]` |
-| Status | Blocked |
-| Pattern | News detail |
+| Field              | Value                                      |
+| ------------------ | ------------------------------------------ |
+| Route              | `/news/[slug]`                             |
+| Status             | Blocked                                    |
+| Pattern            | News detail                                |
 | Primary capability | News body, cover file, optional federation |
 
 ## Purpose
@@ -14,50 +14,51 @@ federated entity after region detail.
 
 ## Context And Entry
 
-- Entry from `/news`, home latest-news widget, blog/about links, and external posts.
+- Entry from `/news` only after a news source is confirmed; Guides in the top
+  nav routes to `/blog` for v1.
 - Links to related proof pages and the news source row.
 
 ## Functional Blocks
 
-| Block | Requirement |
-|---|---|
-| Header | Category, title, `published_at`, pinned marker if relevant. |
-| Cover image | Revisium file field. |
-| Body | Markdown or structured rich text depending on schema. |
-| Optional backend stats | Likes/viewCount/comments if `NewsNode` federation ships. |
-| Explainer Widget | Required. |
+| Block                  | Requirement                                                 |
+| ---------------------- | ----------------------------------------------------------- |
+| Header                 | Category, title, `published_at`, pinned marker if relevant. |
+| Cover image            | Revisium file field.                                        |
+| Body                   | Markdown or structured rich text depending on schema.       |
+| Optional backend stats | Likes/viewCount/comments if `NewsNode` federation ships.    |
+| Explainer Widget       | Required.                                                   |
 
 ## Primary Actions
 
-| Action | Result |
-|---|---|
-| Back to news | Navigate to `/news`. |
-| Open related proof page | Navigate to linked route from content. |
-| Open cloud row | Open news row. |
+| Action                  | Result                                                           |
+| ----------------------- | ---------------------------------------------------------------- |
+| Back to news            | Navigate to `/news`.                                             |
+| Open related proof page | Navigate to linked route from content.                           |
+| Open source row         | Available from the Explainer Widget once the news source exists. |
 
 ## States
 
-| State | Requirement |
-|---|---|
-| Loading | Article skeleton. |
-| Loaded | News body and metadata render. |
-| Not found | Back link. |
-| Error | Retry. |
+| State     | Requirement                    |
+| --------- | ------------------------------ |
+| Loading   | Article skeleton.              |
+| Loaded    | News body and metadata render. |
+| Not found | Back link.                     |
+| Error     | Retry.                         |
 
 ## Transitions
 
-| From | Trigger | To |
-|---|---|---|
-| News catalog | Open post | Detail loading |
-| Detail loaded | Back action | `/news` |
+| From          | Trigger        | To                 |
+| ------------- | -------------- | ------------------ |
+| News catalog  | Open post      | Detail loading     |
+| Detail loaded | Back action    | `/news`            |
 | Detail loaded | Capability CTA | Related proof page |
 
 ## Data Contract
 
-| Source | Fields |
-|---|---|
+| Source                        | Fields                                                          |
+| ----------------------------- | --------------------------------------------------------------- |
 | `data.news` or `cms.news` TBD | slug, title, body, category, pinned, published_at, cover_image. |
-| Optional backend `NewsNode` | likes/viewCount/comments. |
+| Optional backend `NewsNode`   | likes/viewCount/comments.                                       |
 
 ## Explainer Widget
 

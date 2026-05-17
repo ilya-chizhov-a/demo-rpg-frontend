@@ -9,35 +9,36 @@
 
 ## Purpose
 
-Serve as the first complete catalog implementation and the reference pattern for
-simple Revisium-generated list pages.
+Serve as the first complete world-atlas catalog implementation and the
+reference pattern for readable game-database list pages.
 
 ## Context And Entry
 
-- Linked from home, app nav, and capability map.
+- Linked from home, app nav, World section subnav, and capability map.
 - Region cards link to `/regions/[id]` once the detail route exists.
-- The page is the first proof that Revisium JSON Schema becomes typed GraphQL.
+- The page is the first proof, inside the Explainer Widget, that JSON Schema
+  becomes typed GraphQL.
 
 ## Functional Blocks
 
-| Block            | Requirement                                                                              |
-| ---------------- | ---------------------------------------------------------------------------------------- |
-| Header           | Title, short explanation, chips for `data.regions`, enum, localized strings, file field. |
-| Result summary   | Shows visible count and `totalCount`.                                                    |
-| Climate filter   | Server-side JSON filter using `data.path = ["climate"]`.                                 |
-| Region list      | Cards with name, description, climate, `cover_image` thumbnail, and detail link.         |
-| Pagination       | Shows connection `pageInfo`; load-more fetches the next cursor.                          |
-| Explainer Widget | Required; shows `Regions` operation, variables, response sample, cloud links.            |
+| Block            | Requirement                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| Header           | Title, atlas purpose, and chips for `data.regions`, climates, localized lore, and pagination. |
+| Result summary   | Shows visible count and `totalCount`.                                                         |
+| Climate filter   | Server-side JSON filter using `data.path = ["climate"]`.                                      |
+| Region list      | Cards with name, description, climate, `cover_image` thumbnail, and detail link.              |
+| Pagination       | Shows connection `pageInfo`; load-more fetches the next cursor.                               |
+| Explainer Widget | Required; shows `Regions` operation, variables, response sample, cloud links.                 |
 
 ## Primary Actions
 
-| Action         | Result                                                                                     |
-| -------------- | ------------------------------------------------------------------------------------------ |
-| Change locale  | Re-query with selected localized sub-fields or update selection according to query design. |
-| Filter climate | Updates filter payload preview and re-queries the connection with a JSON filter.           |
-| Load more      | Fetches next cursor and updates widget variables.                                          |
-| Open region    | Navigate to `/regions/[id]`.                                                               |
-| View in cloud  | Opens `demo-rpg-data` regions table.                                                       |
+| Action            | Result                                                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------ |
+| Change locale     | Re-query with selected localized sub-fields or update selection according to query design. |
+| Filter climate    | Updates filter payload preview and re-queries the connection with a JSON filter.           |
+| Load more         | Fetches next cursor and updates widget variables.                                          |
+| Open region       | Navigate to `/regions/[id]`.                                                               |
+| View source table | Available from the Explainer Widget, not page chrome.                                      |
 
 ## States
 

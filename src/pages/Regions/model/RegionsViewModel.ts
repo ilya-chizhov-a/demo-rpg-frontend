@@ -1,6 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 
-import type { IViewModel } from 'src/shared/config';
+import {
+  getSectionNavigationItems,
+  type ActiveNavigationItem,
+  type IViewModel,
+} from 'src/shared/config';
 import {
   container,
   hasRequestError,
@@ -11,6 +15,7 @@ import {
   shouldRequestInitialData,
   totalCatalogCount,
 } from 'src/shared/lib';
+import { LocaleService } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import {
   RegionsDataSource,
@@ -68,16 +73,19 @@ const REGIONS_QUERY = `query Regions($data: Demo_rpg_dataGetRegionsesInput) {
 }`;
 
 export class RegionsViewModel implements IViewModel {
-  public locale: RegionLocale = 'en';
   public activeClimate: string | null = null;
   private readonly itemCache = new Map<string, RegionItemViewModel>();
   private readonly loadedItems: RegionNode[] = [];
 
-  constructor(public readonly dataSource: RegionsDataSource) {
-    makeAutoObservable<this, 'itemCache'>(
+  constructor(
+    public readonly dataSource: RegionsDataSource,
+    private readonly localeService: LocaleService,
+  ) {
+    makeAutoObservable<this, 'itemCache' | 'localeService'>(
       this,
       {
         itemCache: false,
+        localeService: false,
       },
       { autoBind: true },
     );
@@ -182,8 +190,16 @@ export class RegionsViewModel implements IViewModel {
     };
   }
 
+  public get locale(): RegionLocale {
+    return this.localeService.locale;
+  }
+
+  public get sectionNavItems(): readonly ActiveNavigationItem[] {
+    return getSectionNavigationItems('world', '/regions');
+  }
+
   public setLocale(locale: RegionLocale): void {
-    this.locale = locale;
+    this.localeService.setLocale(locale);
   }
 
   public async setClimate(climate: string | null): Promise<void> {
@@ -325,6 +341,10 @@ export class RegionsViewModel implements IViewModel {
   }
 }
 
-container.register(RegionsViewModel, () => new RegionsViewModel(container.get(RegionsDataSource)), {
-  scope: 'transient',
-});
+container.register(
+  RegionsViewModel,
+  () => new RegionsViewModel(container.get(RegionsDataSource), container.get(LocaleService)),
+  {
+    scope: 'transient',
+  },
+);
