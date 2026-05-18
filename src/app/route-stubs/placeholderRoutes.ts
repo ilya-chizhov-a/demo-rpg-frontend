@@ -1,236 +1,63 @@
-import type { PlaceholderPageProps } from './PlaceholderPage/PlaceholderPage';
+import type { SectionNavKey } from 'src/shared/config';
+import type { SupportedLocale } from 'src/shared/model';
+import placeholderRoutesData from './placeholderRoutes.data.json';
 
-export const placeholderRoutes = {
-  abilities: {
-    capability: 'SVG icon catalog',
-    route: '/abilities',
-    sectionNavKey: 'heroes',
-    source: 'data.abilities',
-    status: 'Draft',
-    title: 'Abilities',
-  },
-  about: {
-    capability: 'Long-form system design and implementation split',
-    route: '/about',
-    source: 'messaging docs + static architecture content',
-    status: 'Draft',
-    title: 'About',
-  },
-  balancePatch: {
-    capability: 'Branching and revision diff',
-    route: '/balance-patch',
-    source: 'data.items master:head vs master:draft',
-    status: 'Blocked',
-    title: 'Balance Patch',
-  },
-  blog: {
-    capability: 'CMS catalog and markdown content',
-    route: '/blog',
-    source: 'cms.blog_posts, cms.blog_authors',
-    status: 'Draft',
-    title: 'Blog',
-  },
-  blogPost: {
-    capability: 'Markdown body, hero image, author avatar',
-    route: '/blog/:slug',
-    source: 'cms.blog_posts, cms.blog_authors',
-    status: 'Draft',
-    title: 'Blog Post',
-  },
-  dialogs: {
-    capability: 'Quest dialog branches and speaker references',
-    route: '/dialogs',
-    sectionNavKey: 'quests',
-    source: 'data.dialogs, data.quests, data.npcs',
-    status: 'Draft',
-    title: 'Dialogs',
-  },
-  effects: {
-    capability: 'Reusable stat or combat effect reference rows',
-    route: '/effects',
-    sectionNavKey: 'items',
-    source: 'data.effects',
-    status: 'Draft',
-    title: 'Effects',
-  },
-  factionDetail: {
-    capability: 'Reverse-FK aggregation and crest rendering',
-    route: '/factions/:id',
-    sectionNavKey: 'world',
-    source: 'data.factions, related data.heroes, data.monsters',
-    status: 'Draft',
-    title: 'Faction Detail',
-  },
-  factions: {
-    capability: 'Crest file, alignment enum',
-    route: '/factions',
-    sectionNavKey: 'world',
-    source: 'data.factions',
-    status: 'Draft',
-    title: 'Factions',
-  },
-  heroDetail: {
-    capability: 'Single FK, array FK, embedded equipment, formulas, portrait',
-    route: '/heroes/:id',
-    sectionNavKey: 'heroes',
-    source: 'data.heroes plus class, ability, and item FKs',
-    status: 'Draft',
-    title: 'Hero Detail',
-  },
-  heroes: {
-    capability: 'FK filters, formula string, portrait file field',
-    route: '/heroes',
-    sectionNavKey: 'heroes',
-    source: 'data.heroes, data.classes, data.regions, data.factions',
-    status: 'Draft',
-    title: 'Heroes',
-  },
-  home: {
-    capability: 'CMS-driven landing, 80/20 message, capability navigation',
-    route: '/',
-    source: 'cms.landing_hero, cms.landing_features, cms.landing_testimonials',
-    status: 'Draft',
-    title: 'Home',
-  },
-  itemDetail: {
-    capability: 'Formula fields, embedded modifiers, SVG icon',
-    route: '/items/:id',
-    sectionNavKey: 'items',
-    source: 'data.items plus type and stat FKs',
-    status: 'Draft',
-    title: 'Item Detail',
-  },
-  items: {
-    capability: 'Complex where/orderBy, cursor pagination, SVG icons',
-    route: '/items',
-    sectionNavKey: 'items',
-    source: 'data.items, data.item_types, data.stats',
-    status: 'Draft',
-    title: 'Items',
-  },
-  itemTypes: {
-    capability: 'Item taxonomy reference table',
-    route: '/item-types',
-    sectionNavKey: 'items',
-    source: 'data.item_types',
-    status: 'Draft',
-    title: 'Item Types',
-  },
-  locationDetail: {
-    capability: 'Large map file and dimensions metadata',
-    route: '/locations/:id',
-    sectionNavKey: 'world',
-    source: 'data.locations, data.regions',
-    status: 'Draft',
-    title: 'Location Detail',
-  },
-  locations: {
-    capability: 'Region FK and map preview',
-    route: '/locations',
-    sectionNavKey: 'world',
-    source: 'data.locations, data.regions',
-    status: 'Draft',
-    title: 'Locations',
-  },
-  monsterDetail: {
-    capability: 'Array FK and drop formulas',
-    route: '/monsters/:id',
-    source: 'data.monsters, data.factions, data.abilities',
-    status: 'Draft',
-    title: 'Monster Detail',
-  },
-  monsters: {
-    capability: 'FK, embedded drops, formula counters, illustration',
-    route: '/monsters',
-    source: 'data.monsters, data.factions',
-    status: 'Draft',
-    title: 'Monsters',
-  },
-  news: {
-    capability: 'Pinned priority order, time-window filter, enum category',
-    route: '/news',
-    source: 'data.news or cms.news TBD',
-    status: 'Blocked',
-    title: 'News',
-  },
-  newsDetail: {
-    capability: 'News detail and optional federation',
-    route: '/news/:slug',
-    source: 'data.news or cms.news TBD plus optional backend enrichment',
-    status: 'Blocked',
-    title: 'News Detail',
-  },
-  npcDetail: {
-    capability: 'Portrait file detail and location FK',
-    route: '/npcs/:id',
-    sectionNavKey: 'heroes',
-    source: 'data.npcs, data.locations',
-    status: 'Draft',
-    title: 'NPC Detail',
-  },
-  npcs: {
-    capability: 'Portrait file, computed display label',
-    route: '/npcs',
-    sectionNavKey: 'heroes',
-    source: 'data.npcs, data.locations',
-    status: 'Draft',
-    title: 'NPCs',
-  },
-  parties: {
-    capability: 'Array FK column and formula counters',
-    route: '/parties',
-    sectionNavKey: 'heroes',
-    source: 'data.parties, data.heroes',
-    status: 'Draft',
-    title: 'Parties',
-  },
-  partyDetail: {
-    capability: 'Array FK resolution, member_count, is_full',
-    route: '/parties/:id',
-    sectionNavKey: 'heroes',
-    source: 'data.parties, data.heroes',
-    status: 'Draft',
-    title: 'Party Detail',
-  },
-  questDetail: {
-    capability: 'Two-level embedded arrays and formulas',
-    route: '/quests/:id',
-    sectionNavKey: 'quests',
-    source: 'data.quests, data.npcs, data.locations, data.items',
-    status: 'Draft',
-    title: 'Quest Detail',
-  },
-  quests: {
-    capability: 'FK catalog, level filter, repeatable flag',
-    route: '/quests',
-    sectionNavKey: 'quests',
-    source: 'data.quests, data.npcs, data.locations',
-    status: 'Draft',
-    title: 'Quests',
-  },
-  regionDetail: {
-    capability: 'Federation reference detail',
-    route: '/regions/:id',
-    sectionNavKey: 'world',
-    source: 'data.regions plus backend RegionsNode fields',
-    status: 'Blocked',
-    title: 'Region Detail',
-  },
-  search: {
-    capability: 'Full-text search',
-    route: '/search',
-    source: 'search across demo-rpg-data and demo-rpg-cms',
-    status: 'Blocked',
-    title: 'Search',
-  },
-  stats: {
-    capability: 'Stat taxonomy reference table',
-    route: '/stats',
-    sectionNavKey: 'items',
-    source: 'data.stats',
-    status: 'Draft',
-    title: 'Stats',
-  },
-} satisfies Record<string, PlaceholderPageProps>;
+export interface PlaceholderRouteDescriptor {
+  readonly title: string;
+  readonly route: string;
+  readonly status: 'Blocked' | 'Draft';
+  readonly capability: string;
+  readonly source: string;
+  readonly sectionNavKey?: SectionNavKey;
+}
 
-export type PlaceholderRouteKey = keyof typeof placeholderRoutes;
+export interface PlaceholderRouteCopy {
+  readonly title: string;
+  readonly capability: string;
+}
+
+export interface PlaceholderPageCopy {
+  readonly blockedDescription: string;
+  readonly capabilityLabel: string;
+  readonly draftDescription: string;
+  readonly implementationNote: string;
+  readonly implementationTitle: string;
+  readonly openImplementedCatalog: string;
+  readonly routeLabel: string;
+  readonly sectionAriaSuffix: string;
+  readonly sourceLabel: string;
+  readonly statusLabels: Record<PlaceholderRouteDescriptor['status'], string>;
+}
+
+interface PlaceholderRoutesData {
+  readonly routes: Record<string, PlaceholderRouteDescriptor>;
+  readonly routeCopyByLocale: Record<SupportedLocale, Record<string, PlaceholderRouteCopy>>;
+  readonly pageCopyByLocale: Record<SupportedLocale, PlaceholderPageCopy>;
+}
+
+const placeholderRoutesSource = placeholderRoutesData as PlaceholderRoutesData;
+
+export type PlaceholderRouteKey = keyof typeof placeholderRoutesData.routes;
+
+export const placeholderRoutes = placeholderRoutesSource.routes as Record<
+  PlaceholderRouteKey,
+  PlaceholderRouteDescriptor
+>;
+
+const placeholderRouteCopyByLocale = placeholderRoutesSource.routeCopyByLocale as Record<
+  SupportedLocale,
+  Record<PlaceholderRouteKey, PlaceholderRouteCopy>
+>;
+
+const placeholderPageCopyByLocale = placeholderRoutesSource.pageCopyByLocale;
+
+export function getPlaceholderRouteCopy(
+  key: PlaceholderRouteKey,
+  locale: SupportedLocale,
+): PlaceholderRouteCopy {
+  return placeholderRouteCopyByLocale[locale][key] ?? placeholderRouteCopyByLocale.en[key];
+}
+
+export function getPlaceholderPageCopy(locale: SupportedLocale): PlaceholderPageCopy {
+  return placeholderPageCopyByLocale[locale] ?? placeholderPageCopyByLocale.en;
+}

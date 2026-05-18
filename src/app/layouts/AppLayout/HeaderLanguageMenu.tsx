@@ -4,8 +4,9 @@ import type { LocaleOption, SupportedLocale } from 'src/shared/model';
 import { LanguageIcon } from './AppLayoutIcons';
 
 interface HeaderLanguageMenuProps {
+  readonly ariaLabel: string;
   readonly currentLocale: SupportedLocale;
-  readonly currentLocaleName: string;
+  readonly currentLabel: string;
   readonly isOpen: boolean;
   readonly options: readonly LocaleOption[];
   readonly onChange: (locale: SupportedLocale) => void;
@@ -13,8 +14,9 @@ interface HeaderLanguageMenuProps {
 }
 
 export function HeaderLanguageMenu({
+  ariaLabel,
   currentLocale,
-  currentLocaleName,
+  currentLabel,
   isOpen,
   onChange,
   onOpenChange,
@@ -30,7 +32,7 @@ export function HeaderLanguageMenu({
       >
         <Menu.Trigger asChild>
           <IconButton
-            aria-label={`Language: ${currentLocaleName}`}
+            aria-label={ariaLabel}
             bg="rgba(18, 24, 32, 0.86)"
             borderColor="rgba(103, 232, 249, 0.3)"
             borderWidth="1px"
@@ -105,7 +107,7 @@ export function HeaderLanguageMenu({
                           size="sm"
                           variant="solid"
                         >
-                          Current
+                          {currentLabel}
                         </Badge>
                       ) : null}
                     </Flex>

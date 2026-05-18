@@ -25,7 +25,7 @@ export const ExplainerWidget = observer(function ExplainerWidget({
       <Button
         aria-controls={panelId}
         aria-expanded={vm.isOpen}
-        aria-label={vm.isOpen ? 'Close Revisium explainer' : 'Open Revisium explainer'}
+        aria-label={vm.isOpen ? vm.copy.closeAria : vm.copy.openAria}
         bg="white"
         borderColor="blue.300"
         borderRadius="full"
@@ -58,7 +58,7 @@ export const ExplainerWidget = observer(function ExplainerWidget({
               Revisium
             </Text>
             <Text color="blue.700" fontSize="xs" lineHeight="1.1" mt="1">
-              source view
+              {vm.copy.sourceView}
             </Text>
           </Box>
         </Flex>
@@ -89,10 +89,10 @@ export const ExplainerWidget = observer(function ExplainerWidget({
             <Stack gap="2">
               <Flex align="center" gap="2" justify="space-between">
                 <Badge bg="whiteAlpha.200" color="blue.50" variant="solid">
-                  Revisium reference
+                  {vm.copy.referenceBadge}
                 </Badge>
                 <Button
-                  aria-label="Close Revisium explainer"
+                  aria-label={vm.copy.closeAria}
                   color="blue.50"
                   minH="36px"
                   minW="36px"
@@ -105,11 +105,11 @@ export const ExplainerWidget = observer(function ExplainerWidget({
                 </Button>
               </Flex>
               <Text color="blue.100" fontSize="sm" fontWeight="bold">
-                How this uses Revisium
+                {vm.copy.howThisUsesRevisium}
               </Text>
               <Flex align="flex-end" gap="3" justify="space-between">
                 <Heading as="h2" fontSize="lg" id={headingId}>
-                  Explainer Widget
+                  {vm.copy.heading}
                 </Heading>
                 <Text color="blue.100" fontSize="xs">
                   cloud.revisium.io
@@ -121,6 +121,8 @@ export const ExplainerWidget = observer(function ExplainerWidget({
           <Box display="grid" gap="4" minH="0" overflowY="auto" overscrollBehavior="contain" p="4">
             <ExplainerContent
               descriptor={descriptor}
+              copy={vm.copy}
+              sharedCopy={vm.sharedCopy}
               isLoading={isLoading}
               isSectionOpen={(section) => vm.isTechnicalSectionOpen(section)}
               onToggleSection={(section) => vm.toggleTechnicalSection(section)}

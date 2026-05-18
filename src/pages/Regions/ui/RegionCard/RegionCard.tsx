@@ -3,13 +3,15 @@ import { observer } from 'mobx-react-lite';
 import { Link as RouterLink } from 'react-router';
 
 import type { RegionItemViewModel } from '../../model/RegionItemViewModel';
+import type { RegionsPageCopy } from '../../model/regionUiCopy';
 import { RegionCoverVisual } from '../RegionCoverVisual/RegionCoverVisual';
 
 interface RegionCardProps {
+  readonly copy: RegionsPageCopy;
   readonly item: RegionItemViewModel;
 }
 
-export const RegionCard = observer(({ item }: RegionCardProps) => {
+export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
   return (
     <Box
       as="li"
@@ -78,7 +80,7 @@ export const RegionCard = observer(({ item }: RegionCardProps) => {
       >
         <Box>
           <Text as="dt" color="#9aa7b1" fontSize="xs">
-            Published
+            {copy.publishedLabel}
           </Text>
           <Text as="dd" fontWeight="bold" mt="1">
             {item.publishedLabel}
@@ -86,7 +88,7 @@ export const RegionCard = observer(({ item }: RegionCardProps) => {
         </Box>
         <Box>
           <Text as="dt" color="#9aa7b1" fontSize="xs">
-            Version
+            {copy.versionLabel}
           </Text>
           <Text as="dd" fontWeight="bold" mt="1">
             {item.versionLabel}
@@ -108,7 +110,7 @@ export const RegionCard = observer(({ item }: RegionCardProps) => {
             transform: 'translateX(2px)',
           }}
         >
-          <RouterLink to={item.detailHref}>Open region</RouterLink>
+          <RouterLink to={item.detailHref}>{copy.cardOpenAction}</RouterLink>
         </Button>
       </Box>
     </Box>

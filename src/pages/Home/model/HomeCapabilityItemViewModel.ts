@@ -3,17 +3,13 @@ export type HomeCapabilityStatusPalette = 'gray' | 'green' | 'purple';
 
 interface HomeCapabilityItemParams {
   readonly title: string;
+  readonly actionLabel: string;
   readonly description: string;
   readonly label: string;
   readonly href: string;
   readonly status: HomeCapabilityStatus;
+  readonly statusLabel: string;
 }
-
-const statusLabel: Record<HomeCapabilityStatus, string> = {
-  blocked: 'blocked',
-  live: 'live',
-  next: 'next',
-};
 
 const statusPalette: Record<HomeCapabilityStatus, HomeCapabilityStatusPalette> = {
   blocked: 'gray',
@@ -21,21 +17,23 @@ const statusPalette: Record<HomeCapabilityStatus, HomeCapabilityStatusPalette> =
   next: 'purple',
 };
 
-const actionLabel = 'Open section';
-
 export class HomeCapabilityItemViewModel {
   public readonly title: string;
+  public readonly actionLabel: string;
   public readonly description: string;
   public readonly label: string;
   public readonly href: string;
   public readonly status: HomeCapabilityStatus;
+  private readonly statusLabelValue: string;
 
   constructor(params: HomeCapabilityItemParams) {
     this.title = params.title;
+    this.actionLabel = params.actionLabel;
     this.description = params.description;
     this.label = params.label;
     this.href = params.href;
     this.status = params.status;
+    this.statusLabelValue = params.statusLabel;
   }
 
   public get key(): string {
@@ -43,14 +41,10 @@ export class HomeCapabilityItemViewModel {
   }
 
   public get statusLabel(): string {
-    return statusLabel[this.status];
+    return this.statusLabelValue;
   }
 
   public get statusPalette(): HomeCapabilityStatusPalette {
     return statusPalette[this.status];
-  }
-
-  public get actionLabel(): string {
-    return actionLabel;
   }
 }

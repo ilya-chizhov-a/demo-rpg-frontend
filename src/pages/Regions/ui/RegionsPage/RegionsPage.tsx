@@ -17,19 +17,19 @@ export const RegionsPage = observer(() => {
       empty={renderWhen(
         vm.showEmpty,
         <StatePanel
-          actionLabel={vm.hasActiveFilter ? 'Reset filter' : undefined}
-          description="The query completed, but no loaded regions match the current filter."
+          actionLabel={vm.hasActiveFilter ? vm.copy.emptyActionLabel : undefined}
+          description={vm.copy.emptyDescription}
           onAction={vm.hasActiveFilter ? () => void vm.resetFilters() : undefined}
-          title="No regions found"
+          title={vm.copy.emptyTitle}
         />,
       )}
       error={renderWhen(
         vm.showError,
         <StatePanel
-          actionLabel="Retry"
-          description="The GraphQL router did not return the regions catalog."
+          actionLabel={vm.copy.retryActionLabel}
+          description={vm.copy.errorDescription}
           onAction={() => void vm.retry()}
-          title="Failed to load regions"
+          title={vm.copy.errorTitle}
           tone="error"
         />,
       )}
@@ -48,17 +48,19 @@ export const RegionsPage = observer(() => {
             disabled={!vm.canLoadMore}
             onClick={() => void vm.loadMore()}
           >
-            {vm.showRefreshing ? 'Loading...' : 'Load more'}
+            {vm.showRefreshing ? vm.copy.loadingMoreLabel : vm.copy.showMoreActionLabel}
           </Button>
         </Box>,
       )}
-      header={<RegionsHeader />}
-      sectionSubnav={<SectionSubnav ariaLabel="World section" items={vm.sectionNavItems} />}
+      header={<RegionsHeader vm={vm} />}
+      sectionSubnav={
+        <SectionSubnav ariaLabel={vm.copy.worldSectionAriaLabel} items={vm.sectionNavItems} />
+      }
       list={renderWhen(vm.showList, <RegionList vm={vm} />)}
       loading={renderWhen(
         vm.showLoading,
         <CatalogSkeleton
-          ariaLabel="Loading regions"
+          ariaLabel={vm.copy.loadingAriaLabel}
           columns={{ base: 1, md: 2, xl: 5 }}
           itemCount={6}
         />,

@@ -9,7 +9,7 @@ requirements, but should not silently weaken these patterns.
 - The brand link must not show a rectangular mouse-click focus outline; keyboard
   focus may use a non-framed text/icon state.
 - Primary navigation exposes eight direct icon-labelled route links:
-  Home, Heroes, Items, Monsters, World, Quests, Guides, and Search.
+  Home, World, Heroes, Items, Monsters, Quests, Guides, and Search.
 - At `<= 1200px`, the shell keeps brand, language, source/schema, and burger
   controls in the header; route links move into a fullscreen dialog with
   icon-labelled rows, `1px` gray dividers, no framed row buttons, and cyan active
@@ -21,6 +21,8 @@ requirements, but should not silently weaken these patterns.
 - Global locale switcher is visible in the shell once localization is
   implemented; it uses an icon button that opens a compact language menu on
   click and remains keyboard accessible.
+- The shell locale switcher owns the global site locale. Pages must not add
+  separate page-local language controls for ordinary localized copy.
 - A header source/schema widget may open Revisium Cloud schema/table links; it
   is a proof control, not route navigation.
 - Shell must be SSR-rendered and usable before hydration.
@@ -215,11 +217,18 @@ The app supports `en`, `ru`, and `zh` for Revisium `LocalizedString` content.
 Rules:
 
 - Locale selection is global.
+- The selected locale is stored by the frontend locale service on the client so
+  refreshes and direct route opens keep the user's language choice after
+  hydration.
 - Switching locale re-issues queries with locale-specific field selection where
   the GraphQL schema requires explicit sub-fields.
 - Missing active-locale content falls back to `en`.
 - The UI must mark fallback content in the Explainer Widget.
 - UI chrome translations live in frontend i18n, not in Revisium content rows.
+- Frontend i18n covers the app shell, primary and section navigation, footer,
+  placeholder routes, shared catalog states, Explainer Widget chrome, and the
+  UI copy on implemented pages. Revisium localized fields remain responsible for
+  entity names and descriptions.
 
 ## State Pattern
 

@@ -19,7 +19,7 @@ export const HomeHero = observer(({ vm }: HomeHeroProps) => {
       pt={{ base: '2', lg: '4' }}
     >
       <Stack align="flex-start" gap="6" maxW="960px">
-        <Flex aria-label="Current proof surfaces" gap="2" wrap="wrap">
+        <Flex aria-label={vm.heroBadgesAriaLabel} gap="2" wrap="wrap">
           {hero.badges.map((badge) => (
             <Badge colorPalette={badge.palette} key={badge.label} size="lg" variant="subtle">
               {badge.label}

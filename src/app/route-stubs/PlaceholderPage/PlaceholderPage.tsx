@@ -1,52 +1,42 @@
 import { Badge, Box, Button, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import { observer } from 'mobx-react-lite';
 import { Link as RouterLink } from 'react-router';
 
-import { getSectionNavigationItems, type SectionNavKey } from 'src/shared/config';
+import { useViewModel } from 'src/shared/lib';
 import { PageShell, SectionSubnav } from 'src/shared/ui';
+import { PlaceholderPageViewModel } from '../PlaceholderPageViewModel';
+import type { PlaceholderRouteKey } from '../placeholderRoutes';
 
-export interface PlaceholderPageProps {
-  readonly title: string;
-  readonly route: string;
-  readonly status: 'Blocked' | 'Draft';
-  readonly capability: string;
-  readonly source: string;
-  readonly sectionNavKey?: SectionNavKey;
+interface PlaceholderPageProps {
+  readonly routeKey: PlaceholderRouteKey;
 }
 
-export function PlaceholderPage({
-  capability,
-  route,
-  sectionNavKey,
-  source,
-  status,
-  title,
-}: PlaceholderPageProps) {
-  const colorPalette = status === 'Blocked' ? 'red' : 'orange';
-  const sectionNav = sectionNavKey ? getSectionNavigationItems(sectionNavKey, route) : null;
+export const PlaceholderPage = observer(function PlaceholderPage({ routeKey }: PlaceholderPageProps) {
+  const vm = useViewModel(PlaceholderPageViewModel, routeKey);
 
   return (
     <PageShell>
       <Stack gap="6">
         <Box>
-          <Badge colorPalette={colorPalette} mb="4" variant="subtle">
-            {status}
+          <Badge colorPalette={vm.colorPalette} mb="4" variant="subtle">
+            {vm.statusLabel}
           </Badge>
           <Heading as="h1" fontSize={{ base: '3xl', md: '5xl' }} lineHeight="1.05">
-            {title}
+            {vm.title}
           </Heading>
           <Text color="#9aa7b1" fontSize="lg" lineHeight="1.6" maxW="720px" mt="3">
-            {status === 'Blocked'
-              ? 'This route is wired into the app shell, but its implementation is waiting on a documented dependency.'
-              : 'This route is wired into the app shell and ready for implementation from its page spec.'}
+            {vm.description}
           </Text>
         </Box>
 
-        {sectionNav ? <SectionSubnav ariaLabel={`${title} section`} items={sectionNav} /> : null}
+        {vm.sectionNav ? (
+          <SectionSubnav ariaLabel={vm.sectionAriaLabel} items={vm.sectionNav} />
+        ) : null}
 
         <SimpleGrid columns={{ base: 1, md: 3 }} gap="4">
-          <InfoPanel label="Route" value={route} />
-          <InfoPanel label="Source" value={source} />
-          <InfoPanel label="Capability" value={capability} />
+          <InfoPanel label={vm.pageCopy.routeLabel} value={vm.descriptor.route} />
+          <InfoPanel label={vm.pageCopy.sourceLabel} value={vm.descriptor.source} />
+          <InfoPanel label={vm.pageCopy.capabilityLabel} value={vm.capability} />
         </SimpleGrid>
 
         <Box
@@ -57,11 +47,10 @@ export function PlaceholderPage({
           p="5"
         >
           <Heading as="h2" fontSize="xl">
-            Implementation placeholder
+            {vm.pageCopy.implementationTitle}
           </Heading>
           <Text color="#9aa7b1" lineHeight="1.6" mt="2">
-            The full page should follow its spec under docs/product/pages, the shared page
-            patterns, and the MVVM/DataSource boundaries before this status moves toward Done.
+            {vm.pageCopy.implementationNote}
           </Text>
           <Button
             asChild
@@ -70,13 +59,13 @@ export function PlaceholderPage({
             mt="5"
             _hover={{ bg: '#67e8f9' }}
           >
-            <RouterLink to="/regions">Open implemented catalog</RouterLink>
+            <RouterLink to="/regions">{vm.pageCopy.openImplementedCatalog}</RouterLink>
           </Button>
         </Box>
       </Stack>
     </PageShell>
   );
-}
+});
 
 interface InfoPanelProps {
   readonly label: string;

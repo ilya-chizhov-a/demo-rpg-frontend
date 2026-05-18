@@ -12,7 +12,9 @@ export const ClassesToolbar = observer(({ vm }: ClassesToolbarProps) => {
   return (
     <Box mb="5">
       <ResultSummary
-        entityLabel="classes"
+        entityLabel={vm.copy.entityLabel}
+        ofLabel={vm.sharedCopy.resultSummaryOf}
+        showingLabel={vm.sharedCopy.resultSummaryShowing}
         totalCount={vm.totalCount}
         visibleCount={vm.visibleCount}
       />

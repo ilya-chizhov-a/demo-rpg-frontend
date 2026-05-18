@@ -6,20 +6,25 @@ import type {
   ExplainerTechnicalSectionId,
 } from '../../model/ExplainerWidgetViewModel';
 import type { ExplainerDescriptor, ExplainerSubgraph } from '../../model/types';
+import type { UiCopy } from 'src/shared/model';
 import { CodePanel } from '../CodePanel/CodePanel';
 
 interface ExplainerContentProps {
+  readonly copy: UiCopy['explainer'];
   readonly descriptor: ExplainerDescriptor;
   readonly isSectionOpen: (section: ExplainerTechnicalSectionId) => boolean;
   readonly isLoading?: boolean;
   readonly onToggleSection: (section: ExplainerTechnicalSectionId) => void;
+  readonly sharedCopy: UiCopy['shared'];
 }
 
 export const ExplainerContent = observer(function ExplainerContent({
+  copy,
   descriptor,
   isLoading = false,
   isSectionOpen,
   onToggleSection,
+  sharedCopy,
 }: ExplainerContentProps) {
   const panelIdBase = useId();
 
@@ -39,22 +44,26 @@ export const ExplainerContent = observer(function ExplainerContent({
 
       <CodePanel
         collapsible
+        hideLabel={sharedCopy.codePanelHide}
         isOpen={isSectionOpen('graphql')}
         label="GraphQL"
         meta={descriptor.surfaces.graphql.operationName}
         onToggle={() => onToggleSection('graphql')}
         panelId={`${panelIdBase}-graphql-panel`}
+        showLabel={sharedCopy.codePanelShow}
       >
         {descriptor.surfaces.graphql.request}
       </CodePanel>
       {descriptor.surfaces.rest ? (
         <CodePanel
           collapsible
+          hideLabel={sharedCopy.codePanelHide}
           isOpen={isSectionOpen('rest')}
           label="REST"
           meta={`${descriptor.surfaces.rest.method} ${descriptor.surfaces.rest.path}`}
           onToggle={() => onToggleSection('rest')}
           panelId={`${panelIdBase}-rest-panel`}
+          showLabel={sharedCopy.codePanelShow}
         >
           {descriptor.surfaces.rest.request ?? descriptor.surfaces.rest.path}
         </CodePanel>
@@ -62,27 +71,31 @@ export const ExplainerContent = observer(function ExplainerContent({
       {descriptor.surfaces.mcp ? (
         <CodePanel
           collapsible
+          hideLabel={sharedCopy.codePanelHide}
           isOpen={isSectionOpen('mcp')}
           label="MCP"
           meta={descriptor.surfaces.mcp.toolName}
           onToggle={() => onToggleSection('mcp')}
           panelId={`${panelIdBase}-mcp-panel`}
+          showLabel={sharedCopy.codePanelShow}
         >
           {descriptor.surfaces.mcp.request}
         </CodePanel>
       ) : null}
       <CodePanel
         collapsible
+        hideLabel={sharedCopy.codePanelHide}
         isOpen={isSectionOpen('variables')}
-        label="Variables"
+        label={copy.variables}
         onToggle={() => onToggleSection('variables')}
         panelId={`${panelIdBase}-variables-panel`}
+        showLabel={sharedCopy.codePanelShow}
       >
         {JSON.stringify(descriptor.variables, null, 2)}
       </CodePanel>
       {isLoading ? (
         <Box
-          aria-label="Loading explainer response"
+          aria-label={copy.loadingResponse}
           bg="gray.100"
           borderColor="gray.200"
           borderRadius="md"
@@ -98,10 +111,12 @@ export const ExplainerContent = observer(function ExplainerContent({
       ) : (
         <CodePanel
           collapsible
+          hideLabel={sharedCopy.codePanelHide}
           isOpen={isSectionOpen('responseSample')}
-          label="Response sample"
+          label={copy.responseSample}
           onToggle={() => onToggleSection('responseSample')}
           panelId={`${panelIdBase}-response-panel`}
+          showLabel={sharedCopy.codePanelShow}
         >
           {JSON.stringify(descriptor.responseSample, null, 2)}
         </CodePanel>
@@ -110,12 +125,12 @@ export const ExplainerContent = observer(function ExplainerContent({
       {descriptor.localeFallbacks && descriptor.localeFallbacks.length > 0 ? (
         <Box bg="orange.50" borderColor="orange.200" borderRadius="md" borderWidth="1px" p="3">
           <Text color="orange.900" fontSize="sm" fontWeight="bold">
-            Locale fallbacks
+            {copy.localeFallbacks}
           </Text>
           <Stack as="ul" gap="1" listStyleType="none" mt="2" p="0">
             {descriptor.localeFallbacks.map((fallback) => (
               <Text as="li" color="orange.900" fontSize="sm" key={fallback.path}>
-                {fallback.path}: {fallback.requestedLocale} rendered as {fallback.renderedLocale}
+                {fallback.path}: {fallback.requestedLocale} -&gt; {fallback.renderedLocale}
               </Text>
             ))}
           </Stack>
@@ -125,7 +140,7 @@ export const ExplainerContent = observer(function ExplainerContent({
       {descriptor.fieldAttribution && descriptor.fieldAttribution.length > 0 ? (
         <Box bg="blue.50" borderColor="blue.200" borderRadius="md" borderWidth="1px" p="3">
           <Text color="blue.900" fontSize="sm" fontWeight="bold">
-            Field attribution
+            {copy.fieldAttribution}
           </Text>
           <Stack as="ul" gap="1" listStyleType="none" mt="2" p="0">
             {descriptor.fieldAttribution.map((field) => (
@@ -140,17 +155,19 @@ export const ExplainerContent = observer(function ExplainerContent({
       {descriptor.federation ? (
         <Box bg="purple.50" borderColor="purple.200" borderRadius="md" borderWidth="1px" p="3">
           <Text color="purple.900" fontSize="sm" fontWeight="bold">
-            Federation
+            {copy.federation}
           </Text>
           <Text color="purple.900" fontSize="sm" mt="1">
             {descriptor.federation.summary}
           </Text>
           <CodePanel
             collapsible
+            hideLabel={sharedCopy.codePanelHide}
             isOpen={isSectionOpen('federationSdl')}
-            label="SDL excerpt"
+            label={copy.federationSdl}
             onToggle={() => onToggleSection('federationSdl')}
             panelId={`${panelIdBase}-federation-panel`}
+            showLabel={sharedCopy.codePanelShow}
           >
             {descriptor.federation.sdlExcerpt}
           </CodePanel>
@@ -159,35 +176,35 @@ export const ExplainerContent = observer(function ExplainerContent({
 
       <Box bg="white" borderColor="blue.200" borderRadius="md" borderWidth="1px" p="3">
         <Text color="blue.950" fontSize="sm" fontWeight="bold">
-          Revisium Cloud
+          {copy.revisiumCloud}
         </Text>
         <Stack align="flex-start" gap="2" mt="2">
           <Link color="blue.800" href={descriptor.deepLinks.cloudTable} rel="noreferrer" target="_blank">
-            Cloud table
+            {copy.cloudTable}
           </Link>
           {descriptor.deepLinks.cloudSchema ? (
             <Link color="blue.800" href={descriptor.deepLinks.cloudSchema} rel="noreferrer" target="_blank">
-              Cloud schema
+              {copy.cloudSchema}
             </Link>
           ) : null}
           {descriptor.deepLinks.cloudRow ? (
             <Link color="blue.800" href={descriptor.deepLinks.cloudRow} rel="noreferrer" target="_blank">
-              Cloud row
+              {copy.cloudRow}
             </Link>
           ) : null}
           {descriptor.deepLinks.openApi ? (
             <Link color="blue.800" href={descriptor.deepLinks.openApi} rel="noreferrer" target="_blank">
-              OpenAPI
+              {copy.openApi}
             </Link>
           ) : null}
           {descriptor.deepLinks.mcpTool ? (
             <Link color="blue.800" href={descriptor.deepLinks.mcpTool} rel="noreferrer" target="_blank">
-              MCP tool
+              {copy.mcpTool}
             </Link>
           ) : null}
           {descriptor.deepLinks.federationSdlSource ? (
             <Link color="blue.800" href={descriptor.deepLinks.federationSdlSource} rel="noreferrer" target="_blank">
-              Federation SDL
+              {copy.federationSdl}
             </Link>
           ) : null}
         </Stack>

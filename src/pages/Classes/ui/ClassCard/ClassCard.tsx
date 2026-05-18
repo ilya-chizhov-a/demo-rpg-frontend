@@ -3,12 +3,14 @@ import { observer } from 'mobx-react-lite';
 import { Link as RouterLink } from 'react-router';
 
 import type { ClassItemViewModel } from '../../model/ClassItemViewModel';
+import type { ClassesPageCopy } from '../../model/classUiCopy';
 
 interface ClassCardProps {
+  readonly copy: ClassesPageCopy;
   readonly item: ClassItemViewModel;
 }
 
-export const ClassCard = observer(({ item }: ClassCardProps) => {
+export const ClassCard = observer(({ copy, item }: ClassCardProps) => {
   return (
     <Box
       as="li"
@@ -42,9 +44,9 @@ export const ClassCard = observer(({ item }: ClassCardProps) => {
         gap="3"
         pt="4"
       >
-        <Stat label="Base HP" value={item.baseHpLabel} />
-        <Stat label="HP growth" value={item.hpPerLevelLabel} />
-        <Stat label="MP growth" value={item.mpPerLevelLabel} />
+        <Stat label={copy.fieldBaseHp} value={item.baseHpLabel} />
+        <Stat label={copy.fieldHpGrowth} value={item.hpPerLevelLabel} />
+        <Stat label={copy.fieldMpGrowth} value={item.mpPerLevelLabel} />
       </SimpleGrid>
 
       <Button
@@ -55,7 +57,7 @@ export const ClassCard = observer(({ item }: ClassCardProps) => {
         variant="outline"
         _hover={{ bg: 'rgba(34, 211, 238, 0.12)' }}
       >
-        <RouterLink to={item.heroesHref}>Filter heroes</RouterLink>
+        <RouterLink to={item.heroesHref}>{copy.cardActionLabel}</RouterLink>
       </Button>
     </Box>
   );

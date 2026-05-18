@@ -13,15 +13,26 @@ export const RegionsToolbar = observer(({ vm }: RegionsToolbarProps) => {
     <Flex align="flex-start" gap="4" mb="5" wrap="wrap">
       <Box>
         <ResultSummary
-          entityLabel="regions"
+          entityLabel={vm.copy.entityLabel}
+          ofLabel={vm.sharedCopy.resultSummaryOf}
+          showingLabel={vm.sharedCopy.resultSummaryShowing}
           totalCount={vm.totalCount}
           visibleCount={vm.visibleCount}
         />
         <Text color="#9aa7b1" fontSize="sm" mt="1">
-          Filter: <Text as="strong">{vm.activeFilterLabel}</Text>
+          {vm.copy.filterLabel}:{' '}
+          <Text as="span" fontWeight="bold">
+            {vm.activeFilterLabel}
+          </Text>
         </Text>
         {vm.climateButtons.length > 1 ? (
-          <Flex aria-label="Visible climates" gap="2" mt="2" wrap="wrap">
+          <Flex
+            aria-label={vm.copy.climateButtonsAriaLabel}
+            gap="2"
+            mt="2"
+            role="group"
+            wrap="wrap"
+          >
             {vm.climateButtons.map((button) => (
               <Button
                 aria-pressed={button.ariaPressed}

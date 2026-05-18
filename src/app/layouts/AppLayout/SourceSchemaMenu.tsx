@@ -9,6 +9,7 @@ interface SourceSchemaMenuProps {
   readonly menuDescription: string;
   readonly menuTitle: string;
   readonly onOpen?: () => void;
+  readonly triggerAriaLabel: string;
 }
 
 export function SourceSchemaMenu({
@@ -16,6 +17,7 @@ export function SourceSchemaMenu({
   menuDescription,
   menuTitle,
   onOpen,
+  triggerAriaLabel,
 }: SourceSchemaMenuProps) {
   return (
     <Menu.Root
@@ -28,7 +30,7 @@ export function SourceSchemaMenu({
     >
       <Menu.Trigger asChild>
         <Button
-          aria-label="Open Revisium source schemas"
+          aria-label={triggerAriaLabel}
           bg="transparent"
           borderColor="transparent"
           borderWidth="0"

@@ -20,7 +20,7 @@ export const RegionList = observer(({ vm }: RegionListProps) => {
       p="0"
     >
       {vm.items.map((item) => (
-        <RegionCard item={item} key={item.id} />
+        <RegionCard copy={vm.copy} item={item} key={item.id} />
       ))}
     </SimpleGrid>
   );

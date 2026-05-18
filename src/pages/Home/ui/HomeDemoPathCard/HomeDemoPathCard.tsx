@@ -35,7 +35,7 @@ export function HomeDemoPathCard({ item }: HomeDemoPathCardProps) {
         variant="ghost"
         _hover={{ bg: 'rgba(34, 211, 238, 0.12)' }}
       >
-        <RouterLink to={item.href}>Open</RouterLink>
+        <RouterLink to={item.href}>{item.actionLabel}</RouterLink>
       </Button>
     </Box>
   );

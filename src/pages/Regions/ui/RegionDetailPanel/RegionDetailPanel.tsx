@@ -18,13 +18,13 @@ export const RegionDetailPanel = observer(({ vm }: RegionDetailPanelProps) => {
       p="6"
     >
       <Heading as="h2" fontSize="xl">
-        Region facts
+        {vm.copy.detail.factsTitle}
       </Heading>
       <SimpleGrid as="dl" columns={{ base: 1, sm: 2 }} gap="5" mt="5">
-        <RegionDetailField label="Region id" value={vm.id} />
-        <RegionDetailField label="Climate" value={vm.climate} />
-        <RegionDetailField label="Published" value={vm.publishedLabel} />
-        <RegionDetailField label="Version" value={vm.versionLabel} />
+        <RegionDetailField label={vm.copy.detail.fieldRegionId} value={vm.id} />
+        <RegionDetailField label={vm.copy.detail.fieldClimate} value={vm.climate} />
+        <RegionDetailField label={vm.copy.detail.fieldPublished} value={vm.publishedLabel} />
+        <RegionDetailField label={vm.copy.detail.fieldVersion} value={vm.versionLabel} />
       </SimpleGrid>
     </Box>
   );

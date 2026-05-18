@@ -8,7 +8,9 @@ export {
   withActivePrimaryNavigationItems,
   type ActiveNavigationItem,
   type NavigationItem,
+  type NavigationCopy,
   type PrimaryNavigationIcon,
   type PrimaryNavigationItem,
+  type SectionNavigationItemId,
   type SectionNavKey,
 } from './navigation';

@@ -6,15 +6,21 @@ import { HeaderCloseIcon, HeaderMenuIcon, HeaderNavIcon } from './AppLayoutIcons
 import { HeaderBrandContent } from './HeaderBrand';
 
 interface HeaderNavigationDialogProps {
+  readonly closeLabel: string;
   readonly isOpen: boolean;
   readonly items: readonly ActiveNavigationItem<PrimaryNavigationItem>[];
+  readonly navAriaLabel: string;
+  readonly openLabel: string;
   readonly onOpenChange: (isOpen: boolean) => void;
   readonly onSelectItem: () => void;
 }
 
 export function HeaderNavigationDialog({
+  closeLabel,
   isOpen,
   items,
+  navAriaLabel,
+  openLabel,
   onOpenChange,
   onSelectItem,
 }: HeaderNavigationDialogProps) {
@@ -27,7 +33,7 @@ export function HeaderNavigationDialog({
     >
       <Dialog.Trigger asChild>
         <IconButton
-          aria-label="Open primary navigation"
+          aria-label={openLabel}
           bg="rgba(18, 24, 32, 0.86)"
           borderColor="rgba(103, 232, 249, 0.3)"
           borderWidth="1px"
@@ -95,7 +101,7 @@ export function HeaderNavigationDialog({
               </Dialog.Title>
               <Dialog.CloseTrigger asChild>
                 <IconButton
-                  aria-label="Close primary navigation"
+                  aria-label={closeLabel}
                   color="#9aa7b1"
                   h="44px"
                   insetInlineEnd="var(--dialog-shell-gutter)"
@@ -121,7 +127,7 @@ export function HeaderNavigationDialog({
             </Dialog.Header>
 
             <Dialog.Body p="0">
-              <Box as="nav" aria-label="Primary navigation dialog">
+              <Box as="nav" aria-label={navAriaLabel}>
                 {items.map((item) => (
                   <Link
                     asChild

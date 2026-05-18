@@ -70,7 +70,7 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         zIndex="banner"
         _focus={{ top: '4' }}
       >
-        Skip to content
+        {vm.skipToContentLabel}
       </Link>
 
       <Box
@@ -117,14 +117,14 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
               }}
               _hover={{ color: '#67e8f9', textDecoration: 'none' }}
             >
-              <RouterLink aria-label="Branching Tales home" to="/">
+              <RouterLink aria-label={vm.brandHomeAriaLabel} to="/">
                 <HeaderBrandContent />
               </RouterLink>
             </Link>
 
             <Box
               as="nav"
-              aria-label="Primary navigation"
+              aria-label={vm.primaryNavigationAriaLabel}
               flex="1 1 auto"
               minW="0"
               overflowX="visible"
@@ -180,8 +180,9 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
 
             <HStack flex="0 0 auto" gap="2">
               <HeaderLanguageMenu
+                ariaLabel={vm.languageAriaLabel}
                 currentLocale={vm.currentLocale}
-                currentLocaleName={vm.currentLocaleName}
+                currentLabel={vm.currentLanguageBadgeLabel}
                 isOpen={vm.isLanguageMenuOpen}
                 onChange={(locale) => vm.setLocale(locale)}
                 onOpenChange={(isOpen) => vm.setLanguageMenuOpen(isOpen)}
@@ -192,6 +193,7 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
                 menuDescription={vm.sourceSchemaMenuDescription}
                 menuTitle={vm.sourceSchemaMenuTitle}
                 onOpen={() => vm.closeLanguageMenu()}
+                triggerAriaLabel={vm.sourceSchemaTriggerAriaLabel}
               />
               <Box
                 css={{
@@ -201,8 +203,11 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
                 }}
               >
                 <HeaderNavigationDialog
+                  closeLabel={vm.closePrimaryNavigationLabel}
                   isOpen={vm.isNavigationDialogOpen}
                   items={primaryNavItems}
+                  navAriaLabel={vm.primaryNavigationDialogAriaLabel}
+                  openLabel={vm.openPrimaryNavigationLabel}
                   onOpenChange={(isOpen) => vm.setNavigationDialogOpen(isOpen)}
                   onSelectItem={() => vm.closeNavigationDialog()}
                 />
@@ -245,12 +250,12 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         <Container maxW={pageShellMaxWidth} px={pageShellGutters} py="4">
           <Flex align="center" gap="3" justify="space-between" wrap="wrap">
             <Badge bg="rgba(167, 139, 250, 0.16)" color="#c4b5fd" variant="solid">
-              React Router SSR + GraphQL
+              {vm.footerBadgeLabel}
             </Badge>
             <Text color="#9aa7b1" fontSize="sm">
-              data + cms + backend subgraphs.{' '}
+              {vm.footerText}{' '}
               <Link asChild color="#67e8f9" fontWeight="medium">
-                <RouterLink to="/about">Architecture</RouterLink>
+                <RouterLink to="/about">{vm.footerLinkLabel}</RouterLink>
               </Link>
             </Text>
           </Flex>

@@ -15,10 +15,11 @@ import {
   shouldRequestInitialData,
   totalCatalogCount,
 } from 'src/shared/lib';
-import { LocaleService } from 'src/shared/model';
+import { LocaleService, type UiCopy } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { ClassesDataSource, type ClassNode } from '../api/ClassesDataSource';
 import { ClassItemViewModel, type ClassLocale } from './ClassItemViewModel';
+import { getClassesPageCopy, type ClassesPageCopy } from './classUiCopy';
 
 // Keep this display string in sync with api/Classes.graphql until the widget can import raw GraphQL.
 const CLASSES_QUERY = `query Classes($data: Demo_rpg_dataGetClassesesInput) {
@@ -111,8 +112,7 @@ export class ClassesViewModel implements IViewModel {
 
   public get explainer(): ExplainerDescriptor {
     return {
-      summary:
-        'Classes show a small Revisium reference table used as a foreign-key target by heroes.',
+      summary: this.copy.explainerSummary,
       surfaces: {
         graphql: {
           operationName: 'Classes',
@@ -131,8 +131,7 @@ export class ClassesViewModel implements IViewModel {
         cloudSchema: 'https://cloud.revisium.io/demo-rpg-data/schema/classes',
       },
       localeFallbacks: this.localeFallbacks,
-      footerNote:
-        'This page reads the generated GraphQL connection and shows a small FK target table used by heroes.',
+      footerNote: this.copy.explainerFooterNote,
     };
   }
 
@@ -141,7 +140,15 @@ export class ClassesViewModel implements IViewModel {
   }
 
   public get sectionNavItems(): readonly ActiveNavigationItem[] {
-    return getSectionNavigationItems('heroes', '/classes');
+    return getSectionNavigationItems('heroes', '/classes', this.localeService.ui.navigation);
+  }
+
+  public get copy(): ClassesPageCopy {
+    return getClassesPageCopy(this.locale);
+  }
+
+  public get sharedCopy(): UiCopy['shared'] {
+    return this.localeService.ui.shared;
   }
 
   public setLocale(locale: ClassLocale): void {
@@ -163,7 +170,12 @@ export class ClassesViewModel implements IViewModel {
     const cached = this.itemCache.get(node.id);
     if (cached) return cached;
 
-    const item = new ClassItemViewModel(node, () => this.locale);
+    const item = new ClassItemViewModel(
+      node,
+      () => this.locale,
+      () => this.copy.levelUnit,
+      () => this.copy.noDescription,
+    );
     this.itemCache.set(node.id, item);
     return item;
   }

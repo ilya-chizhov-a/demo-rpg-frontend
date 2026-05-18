@@ -13,7 +13,7 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
   return (
     <Box mb="8">
       <Button
-        aria-label="Back to regions catalog"
+        aria-label={vm.copy.detail.backAriaLabel}
         asChild
         borderColor="rgba(103, 232, 249, 0.34)"
         color="#67e8f9"
@@ -22,7 +22,7 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
         variant="outline"
         _hover={{ bg: 'rgba(34, 211, 238, 0.12)', borderColor: '#67e8f9' }}
       >
-        <RouterLink to="/regions">← Back to regions catalog</RouterLink>
+        <RouterLink to="/regions">{vm.copy.detail.backLabel}</RouterLink>
       </Button>
 
       <Box mt="4">
@@ -45,7 +45,7 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
               {vm.climate}
             </Badge>
             <Badge colorPalette="gray" size="lg" variant="subtle">
-              backend pending
+              {vm.copy.detail.backendPending}
             </Badge>
           </Flex>
           <Heading as="h1" fontSize={{ base: '3xl', md: '4xl' }} lineHeight="1.1">
@@ -61,7 +61,10 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
             {vm.description}
           </Text>
           <Text color="#9aa7b1" fontSize="sm" mt="3">
-            Locale: <Text as="strong">{vm.localeLabel}</Text>
+            {vm.copy.detail.localeLabel}:{' '}
+            <Text as="span" fontWeight="bold">
+              {vm.localeLabel}
+            </Text>
           </Text>
         </Box>
       </Grid>

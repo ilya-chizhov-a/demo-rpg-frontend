@@ -8,7 +8,13 @@ import {
   withActivePrimaryNavigationItems,
 } from 'src/shared/config';
 import { container } from 'src/shared/lib';
-import { LocaleService, type LocaleOption, type SupportedLocale } from 'src/shared/model';
+import {
+  LocaleService,
+  type LocaleOption,
+  type SourceSchemaLinkId,
+  type SupportedLocale,
+  type UiCopy,
+} from 'src/shared/model';
 
 export interface SourceSchemaLink {
   readonly badgeBg: string;
@@ -22,8 +28,6 @@ export interface SourceSchemaLink {
   readonly subgraph: 'cms' | 'data';
 }
 
-type SourceSchemaLinkId = 'classesSchema' | 'cmsDraft' | 'regionsSchema' | 'regionsTable';
-
 interface SourceSchemaLinkDefinition {
   readonly badgeBg: string;
   readonly badgeColor: string;
@@ -32,11 +36,6 @@ interface SourceSchemaLinkDefinition {
   readonly iconColor: string;
   readonly id: SourceSchemaLinkId;
   readonly subgraph: SourceSchemaLink['subgraph'];
-}
-
-interface SourceSchemaLinkCopy {
-  readonly description: string;
-  readonly label: string;
 }
 
 const sourceSchemaLinkDefinitions: readonly SourceSchemaLinkDefinition[] = [
@@ -78,82 +77,6 @@ const sourceSchemaLinkDefinitions: readonly SourceSchemaLinkDefinition[] = [
   },
 ];
 
-const sourceSchemaCopyByLocale: Record<
-  SupportedLocale,
-  {
-    readonly menuDescription: string;
-    readonly menuTitle: string;
-    readonly links: Record<SourceSchemaLinkId, SourceSchemaLinkCopy>;
-  }
-> = {
-  en: {
-    menuDescription: 'Cloud links for source tables and generated schema proof.',
-    menuTitle: 'Revisium schemas',
-    links: {
-      classesSchema: {
-        description: 'Classes reference table and schema proof.',
-        label: 'Classes schema',
-      },
-      cmsDraft: {
-        description: 'CMS graph planned for landing, blog, and guide content.',
-        label: 'Demo RPG CMS',
-      },
-      regionsSchema: {
-        description: 'Generated schema proof for the regions catalog.',
-        label: 'Regions schema',
-      },
-      regionsTable: {
-        description: 'Current generated table used by the atlas catalog.',
-        label: 'Regions table',
-      },
-    },
-  },
-  ru: {
-    menuDescription: 'Ссылки Revisium Cloud на исходные таблицы и сгенерированные схемы.',
-    menuTitle: 'Схемы Revisium',
-    links: {
-      classesSchema: {
-        description: 'Справочная таблица классов и подтверждение схемы.',
-        label: 'Схема классов',
-      },
-      cmsDraft: {
-        description: 'CMS-граф для главной страницы, блога и гайдов.',
-        label: 'Demo RPG CMS',
-      },
-      regionsSchema: {
-        description: 'Сгенерированное подтверждение схемы каталога регионов.',
-        label: 'Схема регионов',
-      },
-      regionsTable: {
-        description: 'Текущая сгенерированная таблица для каталога атласа.',
-        label: 'Таблица регионов',
-      },
-    },
-  },
-  zh: {
-    menuDescription: 'Revisium Cloud 中源表和生成 schema 证明的链接。',
-    menuTitle: 'Revisium schema',
-    links: {
-      classesSchema: {
-        description: '职业参考表和 schema 证明。',
-        label: '职业 schema',
-      },
-      cmsDraft: {
-        description: '用于首页、博客和指南内容的 CMS 图。',
-        label: 'Demo RPG CMS',
-      },
-      regionsSchema: {
-        description: '区域目录的生成 schema 证明。',
-        label: '区域 schema',
-      },
-      regionsTable: {
-        description: '地图目录使用的当前生成表。',
-        label: '区域表',
-      },
-    },
-  },
-};
-
 export class AppLayoutViewModel implements IViewModel {
   public isLanguageMenuOpen = false;
   public isNavigationDialogOpen = false;
@@ -173,7 +96,7 @@ export class AppLayoutViewModel implements IViewModel {
   }
 
   public mount(): void {
-    // No app-shell side effects yet.
+    this.localeService.hydrateFromClientStorage();
   }
 
   public unmount(): void {
@@ -183,7 +106,7 @@ export class AppLayoutViewModel implements IViewModel {
   public getPrimaryNavItems(
     pathname: string,
   ): readonly ActiveNavigationItem<PrimaryNavigationItem>[] {
-    return withActivePrimaryNavigationItems(pathname);
+    return withActivePrimaryNavigationItems(pathname, this.localeService.ui.navigation);
   }
 
   public get sourceSchemaLinks(): readonly SourceSchemaLink[] {
@@ -202,6 +125,54 @@ export class AppLayoutViewModel implements IViewModel {
 
   public get sourceSchemaMenuTitle(): string {
     return this.sourceSchemaCopy.menuTitle;
+  }
+
+  public get brandHomeAriaLabel(): string {
+    return this.localeService.ui.appShell.brandHomeAria;
+  }
+
+  public get closePrimaryNavigationLabel(): string {
+    return this.localeService.ui.appShell.closePrimaryNavigation;
+  }
+
+  public get currentLanguageBadgeLabel(): string {
+    return this.localeService.ui.appShell.currentLanguageBadge;
+  }
+
+  public get footerBadgeLabel(): string {
+    return this.localeService.ui.appShell.footerBadge;
+  }
+
+  public get footerLinkLabel(): string {
+    return this.localeService.ui.appShell.footerLinkLabel;
+  }
+
+  public get footerText(): string {
+    return this.localeService.ui.appShell.footerText;
+  }
+
+  public get languageAriaLabel(): string {
+    return `${this.localeService.ui.appShell.languageAriaLabelPrefix}: ${this.currentLocaleName}`;
+  }
+
+  public get openPrimaryNavigationLabel(): string {
+    return this.localeService.ui.appShell.openPrimaryNavigation;
+  }
+
+  public get primaryNavigationAriaLabel(): string {
+    return this.localeService.ui.appShell.primaryNavigation;
+  }
+
+  public get primaryNavigationDialogAriaLabel(): string {
+    return this.localeService.ui.appShell.primaryNavigationDialog;
+  }
+
+  public get skipToContentLabel(): string {
+    return this.localeService.ui.appShell.skipToContent;
+  }
+
+  public get sourceSchemaTriggerAriaLabel(): string {
+    return this.localeService.ui.appShell.sourceSchemaTriggerAria;
   }
 
   public get currentLocale(): SupportedLocale {
@@ -239,8 +210,8 @@ export class AppLayoutViewModel implements IViewModel {
     this.isNavigationDialogOpen = false;
   }
 
-  private get sourceSchemaCopy(): (typeof sourceSchemaCopyByLocale)[SupportedLocale] {
-    return sourceSchemaCopyByLocale[this.currentLocale] ?? sourceSchemaCopyByLocale.en;
+  private get sourceSchemaCopy(): UiCopy['sourceSchema'] {
+    return this.localeService.ui.sourceSchema;
   }
 }
 

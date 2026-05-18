@@ -26,10 +26,10 @@ widget:
 | Nav item | Target        | Notes                                                                                              |
 | -------- | ------------- | -------------------------------------------------------------------------------------------------- |
 | Home     | `/`           | Home route; the brand mark also links here without a mouse-click outline.                          |
+| World    | `/regions`    | World family entry; highlights regions, locations, and factions.                                  |
 | Heroes   | `/heroes`     | Heroes family entry; highlights heroes, classes, abilities, NPCs, and parties.                    |
 | Items    | `/items`      | Items family entry; highlights items, item types, stats, and effects.                             |
 | Monsters | `/monsters`   | Monsters catalog entry.                                                                           |
-| World    | `/regions`    | World family entry; highlights regions, locations, and factions.                                  |
 | Quests   | `/quests`     | Quests family entry; highlights quests and dialogs.                                               |
 | Guides   | `/blog`       | Guides and updates entry; highlights blog, news, balance patch, and architecture explainer routes. |
 | Search   | `/search`     | Global search entry once implemented.                                                              |
@@ -39,7 +39,10 @@ widget:
 Do not add top-nav dropdowns for route navigation in v1. Detail pages and
 secondary catalogs are reached from catalogs, search, related links, or section
 subnav. The language menu is not a route-navigation dropdown and must not become
-a technical settings panel. The source/schema widget is allowed to reveal
+a technical settings panel. The selected language is global and localizes
+visible site chrome, primary navigation labels, section navigation labels,
+shared page states, placeholder copy, and implemented page UI copy. The
+source/schema widget is allowed to reveal
 external Revisium Cloud links because it is a proof/source control, not route
 navigation.
 

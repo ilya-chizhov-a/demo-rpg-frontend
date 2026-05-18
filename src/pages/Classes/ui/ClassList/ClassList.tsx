@@ -20,7 +20,7 @@ export const ClassList = observer(({ vm }: ClassListProps) => {
       p="0"
     >
       {vm.items.map((item) => (
-        <ClassCard item={item} key={item.id} />
+        <ClassCard copy={vm.copy} item={item} key={item.id} />
       ))}
     </SimpleGrid>
   );

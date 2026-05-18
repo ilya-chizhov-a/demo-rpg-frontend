@@ -15,7 +15,7 @@ import {
   shouldRequestInitialData,
   totalCatalogCount,
 } from 'src/shared/lib';
-import { LocaleService } from 'src/shared/model';
+import { LocaleService, type UiCopy } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import {
   RegionsDataSource,
@@ -24,6 +24,7 @@ import {
 } from '../api/RegionsDataSource';
 import { RegionItemViewModel, type RegionLocale } from './RegionItemViewModel';
 import { getRegionCoverImageMetadata } from './regionCoverImages';
+import { getRegionsPageCopy, type RegionsPageCopy } from './regionUiCopy';
 
 const REGIONS_PAGE_SIZE = 24;
 
@@ -153,7 +154,7 @@ export class RegionsViewModel implements IViewModel {
 
   public get climateButtons(): readonly ClimateButtonDescriptor[] {
     return [
-      this.createClimateButtonDescriptor(null, 'All', 'all'),
+      this.createClimateButtonDescriptor(null, this.copy.allClimateButton, 'all'),
       ...this.climates.map((climate) =>
         this.createClimateButtonDescriptor(climate, climate, climate),
       ),
@@ -161,7 +162,7 @@ export class RegionsViewModel implements IViewModel {
   }
 
   public get activeFilterLabel(): string {
-    return this.activeClimate ?? 'All climates';
+    return this.copy.activeFilterLabel(this.activeClimate);
   }
 
   public get hasActiveFilter(): boolean {
@@ -170,8 +171,7 @@ export class RegionsViewModel implements IViewModel {
 
   public get explainer(): ExplainerDescriptor {
     return {
-      summary:
-        'Regions show how localized JSON fields become a typed GraphQL catalog with enum-like climate values and connection metadata.',
+      summary: this.copy.explainerSummary,
       surfaces: {
         graphql: {
           operationName: 'Regions',
@@ -185,8 +185,7 @@ export class RegionsViewModel implements IViewModel {
         cloudTable: 'https://cloud.revisium.io/app/revisium/demo-rpg-data/master/draft/regions',
       },
       localeFallbacks: this.localeFallbacks,
-      footerNote:
-        'The browser calls the same-origin /graphql endpoint; Vite proxies it to the federated router during local development.',
+      footerNote: this.copy.explainerFooterNote,
     };
   }
 
@@ -195,7 +194,15 @@ export class RegionsViewModel implements IViewModel {
   }
 
   public get sectionNavItems(): readonly ActiveNavigationItem[] {
-    return getSectionNavigationItems('world', '/regions');
+    return getSectionNavigationItems('world', '/regions', this.localeService.ui.navigation);
+  }
+
+  public get copy(): RegionsPageCopy {
+    return getRegionsPageCopy(this.locale);
+  }
+
+  public get sharedCopy(): UiCopy['shared'] {
+    return this.localeService.ui.shared;
   }
 
   public setLocale(locale: RegionLocale): void {
@@ -237,7 +244,7 @@ export class RegionsViewModel implements IViewModel {
     const cached = this.itemCache.get(node.id);
     if (cached) return cached;
 
-    const item = new RegionItemViewModel(node, () => this.locale);
+    const item = new RegionItemViewModel(node, () => this.locale, () => this.copy.noDescription);
     this.itemCache.set(node.id, item);
     return item;
   }

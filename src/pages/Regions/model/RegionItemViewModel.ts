@@ -21,10 +21,12 @@ export class RegionItemViewModel {
   constructor(
     private readonly node: RegionNode,
     private readonly getLocale: () => RegionLocale,
+    private readonly getNoDescriptionCopy: () => string,
   ) {
-    makeAutoObservable<this, 'node' | 'getLocale'>(this, {
+    makeAutoObservable<this, 'node' | 'getLocale' | 'getNoDescriptionCopy'>(this, {
       node: false,
       getLocale: false,
+      getNoDescriptionCopy: false,
     });
   }
 
@@ -41,7 +43,7 @@ export class RegionItemViewModel {
   }
 
   public get description(): string {
-    return this.localized(this.node.data.description) || 'No description available.';
+    return this.localized(this.node.data.description) || this.getNoDescriptionCopy();
   }
 
   public get climate(): string {

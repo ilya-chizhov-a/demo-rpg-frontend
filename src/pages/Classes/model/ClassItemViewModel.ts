@@ -15,10 +15,17 @@ export class ClassItemViewModel {
   constructor(
     private readonly node: ClassNode,
     private readonly getLocale: () => ClassLocale,
+    private readonly getLevelUnitCopy: () => string,
+    private readonly getNoDescriptionCopy: () => string,
   ) {
-    makeAutoObservable<this, 'node' | 'getLocale'>(this, {
+    makeAutoObservable<
+      this,
+      'node' | 'getLocale' | 'getLevelUnitCopy' | 'getNoDescriptionCopy'
+    >(this, {
       node: false,
       getLocale: false,
+      getLevelUnitCopy: false,
+      getNoDescriptionCopy: false,
     });
   }
 
@@ -31,7 +38,7 @@ export class ClassItemViewModel {
   }
 
   public get description(): string {
-    return this.localized(this.node.data.description) || 'No description available.';
+    return this.localized(this.node.data.description) || this.getNoDescriptionCopy();
   }
 
   public get primaryStat(): string {
@@ -43,11 +50,11 @@ export class ClassItemViewModel {
   }
 
   public get hpPerLevelLabel(): string {
-    return `+${this.node.data.hp_per_level}/level`;
+    return `+${this.node.data.hp_per_level}/${this.getLevelUnitCopy()}`;
   }
 
   public get mpPerLevelLabel(): string {
-    return `+${this.node.data.mp_per_level}/level`;
+    return `+${this.node.data.mp_per_level}/${this.getLevelUnitCopy()}`;
   }
 
   public get localeLabel(): string {

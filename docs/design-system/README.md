@@ -53,8 +53,8 @@ Core rules:
 | Explainer control | Required on data pages; compact floating trigger with an overlay panel that does not reserve page layout space.                                  |
 | Footer            | Architecture chip and source links.                                                                                                              |
 
-The top nav uses the primary destinations from the site map: Home, Heroes,
-Items, Monsters, World, Quests, Guides, Search, a language icon menu, and a
+The top nav uses the primary destinations from the site map: Home, World,
+Heroes, Items, Monsters, Quests, Guides, Search, a language icon menu, and a
 source/schema widget.
 It does not use route-navigation dropdowns in v1. Secondary dictionary routes
 are reachable from section subnav, page content, or stubs, not from header
@@ -64,6 +64,10 @@ panel. The source/schema widget may open Revisium Cloud regions schema and table
 links because it is a proof/source surface rather than route navigation.
 The top nav remains pinned to the top edge while pages scroll so route changes
 and primary navigation stay available on long catalog/detail pages.
+The language menu controls the global site locale. Shell labels, route labels,
+footer text, shared states, placeholder pages, Explainer Widget chrome, and UI
+copy on implemented pages use frontend i18n for `en`, `ru`, and `zh`; entity
+names and descriptions still come from Revisium localized fields.
 At `<= 1200px`, the top nav switches to compact shell navigation: brand on the
 left; language, source/schema, and burger controls on the right; and direct route
 links in a fullscreen dialog. Dialog route rows are unframed, separated by `1px`

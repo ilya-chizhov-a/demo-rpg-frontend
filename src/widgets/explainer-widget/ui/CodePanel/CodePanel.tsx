@@ -8,9 +8,11 @@ interface CodePanelBaseProps {
 
 interface CollapsibleCodePanelProps extends CodePanelBaseProps {
   readonly collapsible: true;
+  readonly hideLabel: string;
   readonly isOpen: boolean;
   readonly onToggle: () => void;
   readonly panelId: string;
+  readonly showLabel: string;
 }
 
 interface StaticCodePanelProps extends CodePanelBaseProps {
@@ -88,7 +90,7 @@ export function CodePanel(props: CodePanelProps) {
         >
           <CodePanelHeader label={label} meta={meta} />
           <Text as="span" color="gray.600" flexShrink="0">
-            {isOpen ? 'Hide' : 'Show'}
+            {isOpen ? props.hideLabel : props.showLabel}
           </Text>
         </Box>
       ) : (

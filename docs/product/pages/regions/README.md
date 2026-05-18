@@ -34,7 +34,7 @@ reference pattern for readable game-database list pages.
 
 | Action            | Result                                                                                     |
 | ----------------- | ------------------------------------------------------------------------------------------ |
-| Change locale     | Re-query with selected localized sub-fields or update selection according to query design. |
+| Change locale     | Use the global header language menu; update site chrome and refresh rendered localized fields with previous cards preserved. |
 | Filter climate    | Updates filter payload preview and re-queries the connection with a JSON filter.           |
 | Load more         | Fetches next cursor and updates widget variables.                                          |
 | Open region       | Navigate to `/regions/[id]`.                                                               |

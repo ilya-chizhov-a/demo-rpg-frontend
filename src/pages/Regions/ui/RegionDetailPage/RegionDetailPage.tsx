@@ -18,17 +18,17 @@ export const RegionDetailPage = observer(() => {
   return (
     <PageShell>
       <RegionDetailHeader vm={vm} />
-      <SectionSubnav ariaLabel="World section" items={vm.sectionNavItems} />
+      <SectionSubnav ariaLabel={vm.copy.worldSectionAriaLabel} items={vm.sectionNavItems} />
 
       <Box minW="0">
         {renderWhen(vm.showLoading, <RegionDetailSkeleton />)}
         {renderWhen(
           vm.showError,
           <StatePanel
-            actionLabel="Retry"
-            description="The GraphQL router did not return this region. Check the URL or return to the catalog."
+            actionLabel={vm.sharedCopy.retry}
+            description={vm.copy.detail.errorDescription}
             onAction={() => void vm.retry()}
-            title="Region unavailable"
+            title={vm.copy.detail.errorTitle}
             tone="error"
           />,
         )}
@@ -36,7 +36,7 @@ export const RegionDetailPage = observer(() => {
           vm.showDetail,
           <Stack gap="4">
             <RegionDetailPanel vm={vm} />
-            <RegionBackendPanel />
+            <RegionBackendPanel copy={vm.copy.detail} />
           </Stack>,
         )}
       </Box>

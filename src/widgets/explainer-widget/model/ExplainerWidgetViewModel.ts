@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 import type { IViewModel } from 'src/shared/config';
 import { container } from 'src/shared/lib';
+import { LocaleService, type UiCopy } from 'src/shared/model';
 
 export type ExplainerTechnicalSectionId =
   | 'graphql'
@@ -15,8 +16,14 @@ export class ExplainerWidgetViewModel implements IViewModel {
   public isOpen = false;
   private readonly openTechnicalSections = new Set<ExplainerTechnicalSectionId>();
 
-  constructor() {
-    makeAutoObservable(this, {}, { autoBind: true });
+  constructor(private readonly localeService: LocaleService) {
+    makeAutoObservable<this, 'localeService'>(
+      this,
+      {
+        localeService: false,
+      },
+      { autoBind: true },
+    );
   }
 
   public setup(): void {
@@ -51,10 +58,18 @@ export class ExplainerWidgetViewModel implements IViewModel {
     }
     this.openTechnicalSections.add(section);
   }
+
+  public get copy(): UiCopy['explainer'] {
+    return this.localeService.ui.explainer;
+  }
+
+  public get sharedCopy(): UiCopy['shared'] {
+    return this.localeService.ui.shared;
+  }
 }
 
 container.register(
   ExplainerWidgetViewModel,
-  () => new ExplainerWidgetViewModel(),
+  () => new ExplainerWidgetViewModel(container.get(LocaleService)),
   { scope: 'transient' },
 );

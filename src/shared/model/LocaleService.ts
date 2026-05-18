@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
-import { container } from 'src/shared/lib';
+import { container, isClient } from 'src/shared/lib';
+import { uiCopyByLocale, type UiCopy } from './UiCopy';
 
 export type SupportedLocale = 'en' | 'ru' | 'zh';
 
@@ -14,9 +15,10 @@ const defaultLocaleOption: LocaleOption = { value: 'en', label: 'EN', nativeLabe
 
 const localeOptions: readonly LocaleOption[] = [
   defaultLocaleOption,
-  { value: 'ru', label: 'RU', nativeLabel: 'Russian' },
-  { value: 'zh', label: 'ZH', nativeLabel: 'Chinese' },
+  { value: 'ru', label: 'RU', nativeLabel: 'Русский' },
+  { value: 'zh', label: 'ZH', nativeLabel: '中文' },
 ] as const;
+const localeStorageKey = 'branching-tales.locale';
 
 export class LocaleService {
   public locale: SupportedLocale = 'en';
@@ -33,9 +35,45 @@ export class LocaleService {
     return localeOptions.find((option) => option.value === this.locale) ?? defaultLocaleOption;
   }
 
+  public get ui(): UiCopy {
+    return uiCopyByLocale[this.locale] ?? uiCopyByLocale.en;
+  }
+
+  public hydrateFromClientStorage(): void {
+    if (!isClient()) return;
+
+    const storedLocale = readStoredLocale();
+    if (isSupportedLocale(storedLocale)) {
+      this.locale = storedLocale;
+    }
+  }
+
   public setLocale(locale: SupportedLocale): void {
     this.locale = locale;
+    this.persistLocale(locale);
+  }
+
+  private persistLocale(locale: SupportedLocale): void {
+    if (!isClient()) return;
+
+    try {
+      globalThis.localStorage.setItem(localeStorageKey, locale);
+    } catch {
+      // Ignore blocked storage; the in-memory locale still updates.
+    }
   }
 }
 
 container.register(LocaleService, () => new LocaleService(), { scope: 'clientSingleton' });
+
+function isSupportedLocale(value: string | null): value is SupportedLocale {
+  return localeOptions.some((option) => option.value === value);
+}
+
+function readStoredLocale(): string | null {
+  try {
+    return globalThis.localStorage.getItem(localeStorageKey);
+  } catch {
+    return null;
+  }
+}

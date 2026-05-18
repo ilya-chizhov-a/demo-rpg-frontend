@@ -12,7 +12,7 @@ import {
   isRefreshing,
   type PreparedImageSlot,
 } from 'src/shared/lib';
-import { LocaleService } from 'src/shared/model';
+import { LocaleService, type UiCopy } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { RegionDetailDataSource, type RegionDetailNode } from '../api/RegionDetailDataSource';
 import type { RegionLocale } from './RegionItemViewModel';
@@ -20,6 +20,8 @@ import { getRegionCoverImageMetadata, prepareRegionHeroCoverImage } from './regi
 import {
   getRegionCoverPlaceholderDescription,
   getRegionCoverPlaceholderTitle,
+  getRegionsPageCopy,
+  type RegionsPageCopy,
 } from './regionUiCopy';
 
 // Keep this explainer copy aligned with src/pages/Regions/api/RegionDetail.graphql.
@@ -92,7 +94,7 @@ export class RegionDetailViewModel implements IViewModel {
   }
 
   public get description(): string {
-    return this.localized(this.item?.data.description) || 'No description available.';
+    return this.localized(this.item?.data.description) || this.copy.detail.noDescription;
   }
 
   public get climate(): string {
@@ -146,13 +148,16 @@ export class RegionDetailViewModel implements IViewModel {
   }
 
   public get sectionNavItems(): readonly ActiveNavigationItem[] {
-    return getSectionNavigationItems('world', `/regions/${this.id || ''}`);
+    return getSectionNavigationItems(
+      'world',
+      `/regions/${this.id || ''}`,
+      this.localeService.ui.navigation,
+    );
   }
 
   public get explainer(): ExplainerDescriptor {
     return {
-      summary:
-        'Region detail shows a Revisium-owned row now and marks where backend federation fields will attach.',
+      summary: this.copy.regionDetailExplainerSummary,
       surfaces: {
         graphql: {
           operationName: 'RegionDetail',
@@ -174,13 +179,20 @@ export class RegionDetailViewModel implements IViewModel {
         { path: 'regions.data.cover_image', owningSubgraph: 'data' },
       ],
       localeFallbacks: this.localeFallbacks,
-      footerNote:
-        'Backend-owned federation fields are intentionally shown as unavailable until the composed schema exposes them.',
+      footerNote: this.copy.regionDetailExplainerFooterNote,
     };
   }
 
   public get locale(): RegionLocale {
     return this.localeService.locale;
+  }
+
+  public get copy(): RegionsPageCopy {
+    return getRegionsPageCopy(this.locale);
+  }
+
+  public get sharedCopy(): UiCopy['shared'] {
+    return this.localeService.ui.shared;
   }
 
   public setLocale(locale: RegionLocale): void {
