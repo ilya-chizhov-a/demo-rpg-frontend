@@ -73,6 +73,9 @@ and JSON panels may expose their own scroll affordance when needed.
 The app shell uses a dark midnight surface over the page atlas background.
 Active navigation uses a cyan underline or outlined pill, with no layout shift
 between active and inactive states.
+All route content uses the shared `PageShell` wrapper so gutters and max width
+stay identical between home, catalog, detail, and placeholder pages. Every
+route-level page is centered at max width `1440px`.
 
 Current implementation order:
 
@@ -96,6 +99,8 @@ Current implementation order:
 
 No page-level horizontal scroll. Fixed-format widgets use stable dimensions via
 grid tracks, min/max widths, or aspect ratios.
+The shell header, footer, and every route-level `main` use the same gutter
+tokens: `16px` on phones, `24px` on tablet widths, and `32px` on desktop.
 
 ## Chakra UI
 
@@ -150,6 +155,10 @@ red errors. Yellow/gold is not part of the system palette.
 The default page background is a dark atlas field:
 
 - Base fill uses `--color-bg`.
+- `AppLayout` owns a fixed starry-sky image asset behind all routes.
+- The star-map image starts immediately below the sticky header, stays centered
+  horizontally, is pinned to the top of the content viewport, and uses
+  `100% auto` sizing so it always spans the full viewport width.
 - A subtle star-map layer may add tiny points, faint constellation lines, and
   low-opacity map/grid marks.
 - The atlas layer must never reduce text contrast or compete with data panels.

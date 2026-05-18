@@ -1,7 +1,8 @@
-import { Box, Stack } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 
 import { useViewModel } from 'src/shared/lib';
+import { PageShell } from 'src/shared/ui';
 import { HomeViewModel } from '../../model/HomeViewModel';
 import { HomeCapabilityGrid } from '../HomeCapabilityGrid/HomeCapabilityGrid';
 import { HomeDemoPaths } from '../HomeDemoPaths/HomeDemoPaths';
@@ -13,14 +14,14 @@ export const HomePage = observer(() => {
   const vm = useViewModel(HomeViewModel);
 
   return (
-    <Box as="main" color="inherit" overflowX="clip" px={{ base: '4', md: '6', lg: '8' }} py="8">
-      <Stack gap={{ base: '10', lg: '12' }} maxW="1440px" mx="auto" w="full">
+    <PageShell>
+      <Stack gap={{ base: '10', lg: '12' }}>
         <HomeHero vm={vm} />
         <HomeProofStrip vm={vm} />
         <HomeCapabilityGrid vm={vm} />
         <HomeDemoPaths vm={vm} />
         <HomeSourceLinks vm={vm} />
       </Stack>
-    </Box>
+    </PageShell>
   );
 });

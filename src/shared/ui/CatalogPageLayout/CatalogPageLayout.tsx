@@ -1,6 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 
+import { PageShell } from '../PageShell/PageShell';
+
 interface CatalogPageLayoutProps {
   readonly header: ReactNode;
   readonly sectionSubnav?: ReactNode;
@@ -25,21 +27,19 @@ export function CatalogPageLayout({
   toolbar,
 }: CatalogPageLayoutProps) {
   return (
-    <Box as="main" color="inherit" overflowX="clip" px={{ base: '4', md: '6', lg: '8' }} py="8">
-      <Box maxW="1440px" mx="auto" w="full">
-        {header}
-        {sectionSubnav}
+    <PageShell>
+      {header}
+      {sectionSubnav}
 
-        <Box minW="0">
-          {toolbar}
-          {loading}
-          {error}
-          {empty}
-          {list}
-          {footerAction}
-        </Box>
-        {explainer}
+      <Box minW="0">
+        {toolbar}
+        {loading}
+        {error}
+        {empty}
+        {list}
+        {footerAction}
       </Box>
-    </Box>
+      {explainer}
+    </PageShell>
   );
 }

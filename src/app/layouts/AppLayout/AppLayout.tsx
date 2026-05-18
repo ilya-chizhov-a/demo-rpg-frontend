@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Link as RouterLink, useLocation } from 'react-router';
 
 import { useViewModel } from 'src/shared/lib';
+import { pageShellGutters, pageShellMaxWidth } from 'src/shared/ui';
 import { AppLayoutViewModel } from './AppLayoutViewModel';
 import { HeaderNavIcon } from './AppLayoutIcons';
 import { HeaderBrandContent } from './HeaderBrand';
@@ -26,29 +27,32 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
       minH="100dvh"
       overflowX="clip"
       position="relative"
-      _before={{
-        bgImage:
-          'radial-gradient(circle at 12% 18%, rgba(103, 232, 249, 0.24) 0 1px, transparent 1.5px), radial-gradient(circle at 78% 12%, rgba(154, 167, 177, 0.26) 0 1px, transparent 1.5px), radial-gradient(circle at 88% 72%, rgba(52, 211, 153, 0.16) 0 1px, transparent 1.5px), linear-gradient(115deg, transparent 0 42%, rgba(34, 211, 238, 0.08) 42.2%, transparent 43%), linear-gradient(16deg, transparent 0 62%, rgba(45, 212, 191, 0.06) 62.2%, transparent 63%)',
-        bgSize: '180px 180px, 260px 260px, 220px 220px, 520px 520px, 620px 620px',
-        content: '""',
-        inset: '0',
-        opacity: 0.72,
-        pointerEvents: 'none',
-        position: 'fixed',
-        zIndex: 0,
-      }}
       _after={{
         bgImage:
-          'radial-gradient(circle at 50% 0%, rgba(16, 25, 35, 0.78), rgba(7, 11, 16, 0.36) 42%, rgba(7, 11, 16, 0.84) 100%)',
+          'linear-gradient(180deg, rgba(7, 11, 16, 0.12), rgba(7, 11, 16, 0.38) 42%, rgba(7, 11, 16, 0.82) 100%)',
+        bottom: '0',
         content: '""',
-        inset: '0',
+        left: '0',
         pointerEvents: 'none',
         position: 'fixed',
+        right: '0',
+        top: 'var(--app-header-height)',
         zIndex: 0,
       }}
       css={{
+        '--app-header-height': '61px',
+        '--page-shell-gutter': '16px',
         '--color-text-on-accent': '#071018',
         '--color-text-supporting': '#c9d2da',
+        '@media (min-width: 481px)': {
+          '--page-shell-gutter': '24px',
+        },
+        '@media (min-width: 48rem)': {
+          '--app-header-height': '65px',
+        },
+        '@media (min-width: 1024px)': {
+          '--page-shell-gutter': '32px',
+        },
       }}
     >
       <Link
@@ -80,7 +84,7 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         top="0"
         zIndex="sticky"
       >
-        <Container maxW="1440px" px={{ base: '4', md: '6', lg: '8' }} py="2">
+        <Container maxW={pageShellMaxWidth} px={pageShellGutters} py="2">
           <Flex
             align="center"
             gap={{ base: '2', '2xl': '4' }}
@@ -208,6 +212,24 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         </Container>
       </Box>
 
+      <Box
+        aria-hidden="true"
+        bottom="0"
+        left="0"
+        opacity="0.82"
+        pointerEvents="none"
+        position="fixed"
+        right="0"
+        top="var(--app-header-height)"
+        zIndex="0"
+        css={{
+          backgroundImage: 'url("/assets/star-map.png")',
+          backgroundPosition: 'top center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '100% auto',
+        }}
+      />
+
       <Box id="app-content" position="relative" zIndex="1">
         {children}
       </Box>
@@ -220,7 +242,7 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         position="relative"
         zIndex="1"
       >
-        <Container maxW="1440px" px={{ base: '4', md: '6', lg: '8' }} py="4">
+        <Container maxW={pageShellMaxWidth} px={pageShellGutters} py="4">
           <Flex align="center" gap="3" justify="space-between" wrap="wrap">
             <Badge bg="rgba(167, 139, 250, 0.16)" color="#c4b5fd" variant="solid">
               React Router SSR + GraphQL

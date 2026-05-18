@@ -244,3 +244,6 @@ Every data page defines these states:
 
 No horizontal page scroll is allowed. Code panels and JSON panels may scroll
 inside their own containers.
+All route pages use the shared `PageShell` wrapper for the outer `main` element
+so home, catalog, detail, and placeholder pages keep the same responsive
+gutters, vertical rhythm, and centered content width.

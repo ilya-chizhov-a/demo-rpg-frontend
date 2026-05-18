@@ -71,6 +71,15 @@ export function HeaderNavigationDialog({
             overflow="hidden"
             shadow="none"
             w="100vw"
+            css={{
+              '--dialog-shell-gutter': '16px',
+              '@media (min-width: 481px)': {
+                '--dialog-shell-gutter': '24px',
+              },
+              '@media (min-width: 1024px)': {
+                '--dialog-shell-gutter': '32px',
+              },
+            }}
           >
             <Dialog.Header
               alignItems="center"
@@ -78,7 +87,7 @@ export function HeaderNavigationDialog({
               borderBottomWidth="1px"
               display="flex"
               justifyContent="space-between"
-              px={{ base: '4', md: '6' }}
+              px="var(--dialog-shell-gutter)"
               py="4"
             >
               <Dialog.Title>
@@ -89,7 +98,7 @@ export function HeaderNavigationDialog({
                   aria-label="Close primary navigation"
                   color="#9aa7b1"
                   h="44px"
-                  insetInlineEnd={{ base: '4', md: '6', lg: '8' }}
+                  insetInlineEnd="var(--dialog-shell-gutter)"
                   minW="44px"
                   p={0}
                   top={{ base: '2', lg: '2.5' }}
