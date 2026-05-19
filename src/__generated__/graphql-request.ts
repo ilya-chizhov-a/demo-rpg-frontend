@@ -1015,6 +1015,22 @@ export type ClassesQueryVariables = Exact<{
 
 export type ClassesQuery = { classeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, icon: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type FactionDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+  monstersData?: InputMaybe<Demo_Rpg_DataGetMonstersesInput>;
+  npcsData?: InputMaybe<Demo_Rpg_DataGetNpcsesInput>;
+}>;
+
+
+export type FactionDetailQuery = { factions: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { alignment: string, crest: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } }, monsterses: { totalCount: number, edges: Array<{ node: { id: string, data: { hp: number, kind: string, level: number, faction_id: { id: string }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } }, npcses: { totalCount: number, edges: Array<{ node: { id: string, data: { role: string, faction_id: { id: string }, location_id: { id: string, data: { name: { en: string, ru: string, zh: string } } }, name: { en: string, ru: string, zh: string }, title: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type FactionsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetFactionsesInput>;
+}>;
+
+
+export type FactionsQuery = { factionses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { alignment: string, crest: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type LocationDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1075,6 +1091,149 @@ export const ClassesDocument = gql`
           }
           mp_per_level
           primary_stat
+          name {
+            en
+            ru
+            zh
+          }
+          description {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const FactionDetailDocument = gql`
+    query FactionDetail($id: String!, $monstersData: Demo_rpg_dataGetMonstersesInput, $npcsData: Demo_rpg_dataGetNpcsesInput) {
+  factions(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      alignment
+      crest {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      description {
+        en
+        ru
+        zh
+      }
+    }
+  }
+  monsterses(data: $monstersData) {
+    edges {
+      node {
+        id
+        data {
+          faction_id {
+            id
+          }
+          hp
+          kind
+          level
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+  npcses(data: $npcsData) {
+    edges {
+      node {
+        id
+        data {
+          faction_id {
+            id
+          }
+          location_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          name {
+            en
+            ru
+            zh
+          }
+          role
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const FactionsDocument = gql`
+    query Factions($data: Demo_rpg_dataGetFactionsesInput) {
+  factionses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          alignment
+          crest {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
           name {
             en
             ru
@@ -1325,6 +1484,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     Classes(variables?: ClassesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ClassesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ClassesQuery>({ document: ClassesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Classes', 'query', variables);
+    },
+    FactionDetail(variables: FactionDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FactionDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<FactionDetailQuery>({ document: FactionDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'FactionDetail', 'query', variables);
+    },
+    Factions(variables?: FactionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FactionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<FactionsQuery>({ document: FactionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Factions', 'query', variables);
     },
     LocationDetail(variables: LocationDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LocationDetailQuery>({ document: LocationDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LocationDetail', 'query', variables);

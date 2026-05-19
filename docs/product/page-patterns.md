@@ -117,6 +117,10 @@ Rules:
 - Sorting controls must map to explicit `orderBy` JSON.
 - Pagination must expose the active cursor in the Explainer Widget variables.
 - Total count is shown when the GraphQL connection exposes `totalCount`.
+- Repeated catalog header, card title/description, and fact-row chrome may use
+  shared UI primitives once at least two catalog families consume the same
+  surface. Fact rows may opt into two-line value wrapping for long localized
+  enum labels, but must keep stable row spacing and avoid horizontal overflow.
 
 ## Detail Page Pattern
 
@@ -145,6 +149,8 @@ Rules:
   reserved slot dimensions.
 - FK fields link to the referenced row in the app when a route exists and to
   `cloud.revisium.io` from the Explainer Widget.
+- Reverse relationship sections backed by GraphQL connections expose per-section
+  load-more controls whenever `pageInfo.hasNextPage` is true.
 - Formula fields are labelled as computed output, not as hand-authored values.
 - File previews show useful metadata when it helps explain Revisium file fields.
 

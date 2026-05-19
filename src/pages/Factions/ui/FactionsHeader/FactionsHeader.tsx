@@ -1,23 +1,23 @@
 import { observer } from 'mobx-react-lite';
 import { CatalogHeader } from 'src/shared/ui';
 
-import type { RegionsViewModel } from '../../model/RegionsViewModel';
+import type { FactionsViewModel } from '../../model/FactionsViewModel';
 
-interface RegionsHeaderProps {
-  readonly vm: RegionsViewModel;
+interface FactionsHeaderProps {
+  readonly vm: FactionsViewModel;
 }
 
-export const RegionsHeader = observer(function RegionsHeader({ vm }: RegionsHeaderProps) {
+export const FactionsHeader = observer(function FactionsHeader({ vm }: FactionsHeaderProps) {
   return (
     <CatalogHeader
       ariaLabel={vm.copy.capabilitiesAriaLabel}
       badges={vm.copy.headerBadges}
       description={vm.copy.headerDescription}
-      descriptionMaxWidth="720px"
+      descriptionMaxWidth="760px"
       eyebrow={vm.copy.headerEyebrow}
       title={vm.copy.headerTitle}
-      titleId="regions-title"
-      titleSize="4xl"
+      titleId="factions-title"
+      titleSize={{ base: '4xl', md: '5xl' }}
     />
   );
 });

@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { FactionsPage } from 'src/pages/Factions';
 
-export default createPlaceholderRoute('factions');
+export default function FactionsRoute() {
+  return <FactionsPage />;
+}

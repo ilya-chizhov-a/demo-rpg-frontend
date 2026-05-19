@@ -1,0 +1,100 @@
+query FactionDetail(
+  $id: String!
+  $monstersData: Demo_rpg_dataGetMonstersesInput
+  $npcsData: Demo_rpg_dataGetNpcsesInput
+) {
+  factions(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      alignment
+      crest {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      description {
+        en
+        ru
+        zh
+      }
+    }
+  }
+  monsterses(data: $monstersData) {
+    edges {
+      node {
+        id
+        data {
+          faction_id {
+            id
+          }
+          hp
+          kind
+          level
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+  npcses(data: $npcsData) {
+    edges {
+      node {
+        id
+        data {
+          faction_id {
+            id
+          }
+          location_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          name {
+            en
+            ru
+            zh
+          }
+          role
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

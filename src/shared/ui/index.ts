@@ -1,6 +1,8 @@
 export { CatalogPageLayout } from './CatalogPageLayout/CatalogPageLayout';
 export { CatalogActionButton } from './CatalogActionButton/CatalogActionButton';
+export { CatalogCardText } from './CatalogCardText/CatalogCardText';
 export { CatalogFactRow } from './CatalogFactRow/CatalogFactRow';
+export { CatalogHeader } from './CatalogHeader/CatalogHeader';
 export { CatalogSkeleton } from './CatalogSkeleton/CatalogSkeleton';
 export { DetailSkeletonPanel } from './DetailSkeletonPanel/DetailSkeletonPanel';
 export { DetailFactField } from './DetailFactField/DetailFactField';

@@ -1,0 +1,43 @@
+query Factions($data: Demo_rpg_dataGetFactionsesInput) {
+  factionses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          alignment
+          crest {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+          name {
+            en
+            ru
+            zh
+          }
+          description {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

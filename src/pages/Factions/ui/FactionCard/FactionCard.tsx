@@ -2,16 +2,16 @@ import { Badge, Box, Flex, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import { CatalogActionButton, CatalogCardText, CatalogFactRow } from 'src/shared/ui';
 
-import type { RegionItemViewModel } from '../../model/RegionItemViewModel';
-import type { RegionsPageCopy } from '../../model/regionUiCopy';
-import { RegionCoverVisual } from '../RegionCoverVisual/RegionCoverVisual';
+import type { FactionItemViewModel } from '../../model/FactionItemViewModel';
+import type { FactionsPageCopy } from '../../model/factionUiCopy';
+import { FactionCrestVisual } from '../FactionCrestVisual/FactionCrestVisual';
 
-interface RegionCardProps {
-  readonly copy: RegionsPageCopy;
-  readonly item: RegionItemViewModel;
+interface FactionCardProps {
+  readonly copy: FactionsPageCopy;
+  readonly item: FactionItemViewModel;
 }
 
-export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
+export const FactionCard = observer(({ copy, item }: FactionCardProps) => {
   return (
     <Box
       as="li"
@@ -23,7 +23,7 @@ export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
       display="grid"
       gap="3"
       gridTemplateRows="auto auto auto 1fr"
-      minH="440px"
+      minH="470px"
       minW="0"
       outline="none"
       overflow="hidden"
@@ -41,35 +41,41 @@ export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
         boxShadow: '0 22px 44px rgba(0, 0, 0, 0.32)',
       }}
     >
-      <RegionCoverVisual
-        climate={item.climateLabel}
-        image={item.coverImage}
-        isImageLoaded={item.isCoverImageLoaded}
-        isImageUnavailable={item.isCoverImageUnavailable}
-        onImageError={(image) => item.handleCoverImageError(image)}
-        onImageLoad={() => item.handleCoverImageLoad()}
-        placeholderDescription={item.coverPlaceholderDescription}
-        placeholderTitle={item.coverPlaceholderTitle}
+      <FactionCrestVisual
+        alignmentLabel={item.alignmentLabel}
+        image={item.crestImage}
+        placeholderDescription={copy.crestPlaceholderDescription(item.title)}
+        placeholderTitle={copy.crestPlaceholderTitle}
       />
 
       <Box px="5">
         <Flex
-          align="center"
+          align="flex-start"
           color="#9aa7b1"
           fontSize="sm"
-          gap="3"
+          gap="2"
           justify="space-between"
-          minH="8"
+          minH="11"
+          wrap="wrap"
         >
           <Badge
-            colorPalette="green"
-            maxW="60%"
+            colorPalette="cyan"
+            maxW="full"
+            minH="7"
+            minW="0"
             overflow="hidden"
-            textOverflow="ellipsis"
+            overflowWrap="anywhere"
+            py="1"
             variant="subtle"
-            whiteSpace="nowrap"
+            whiteSpace="normal"
+            wordBreak="normal"
+            style={{
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 2,
+              display: '-webkit-box',
+            }}
           >
-            {item.climateLabel}
+            {item.alignmentLabel}
           </Badge>
           <Text flexShrink="0" whiteSpace="nowrap">
             {item.localeLabel}
@@ -85,7 +91,7 @@ export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
         borderTopWidth="1px"
         mx="5"
       >
-        <CatalogFactRow label={copy.detail.fieldClimate} value={item.climateLabel} />
+        <CatalogFactRow label={copy.fieldAlignment} value={item.alignmentLabel} wrapValue />
         <CatalogFactRow label={copy.publishedLabel} value={item.publishedLabel} />
         <CatalogFactRow label={copy.versionLabel} value={item.versionLabel} />
       </Box>
