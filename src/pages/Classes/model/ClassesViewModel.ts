@@ -19,6 +19,7 @@ import { LocaleService, type UiCopy } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { ClassesDataSource, type ClassNode } from '../api/ClassesDataSource';
 import { ClassItemViewModel, type ClassLocale } from './ClassItemViewModel';
+import { getClassIconMetadata } from './classImages';
 import { getClassesPageCopy, type ClassesPageCopy } from './classUiCopy';
 
 // Keep this display string in sync with api/Classes.graphql until the widget can import raw GraphQL.
@@ -34,6 +35,7 @@ const CLASSES_QUERY = `query Classes($data: Demo_rpg_dataGetClassesesInput) {
         data {
           base_hp
           hp_per_level
+          icon { fileId fileName hash height mimeType url width }
           mp_per_level
           primary_stat
           name { en ru zh }
@@ -187,6 +189,7 @@ export class ClassesViewModel implements IViewModel {
       pageInfo: this.dataSource.request.data.pageInfo,
       edges: this.loadedItems.slice(0, 3).map((node) => ({
         id: node.id,
+        icon: getClassIconMetadata(node.data.icon),
         primaryStat: node.data.primary_stat,
         name: node.data.name[this.locale],
       })),

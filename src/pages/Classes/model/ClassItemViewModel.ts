@@ -1,7 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 
+import type { PreparedImageSlot } from 'src/shared/lib';
 import { getLocaleNativeLabel, type SupportedLocale } from 'src/shared/model';
 import type { ClassNode } from '../api/ClassesDataSource';
+import { prepareClassIconImage } from './classImages';
 
 export type ClassLocale = SupportedLocale;
 
@@ -37,6 +39,10 @@ export class ClassItemViewModel {
 
   public get primaryStat(): string {
     return this.node.data.primary_stat;
+  }
+
+  public get iconImage(): PreparedImageSlot | null {
+    return prepareClassIconImage(this.node.data.icon, this.title);
   }
 
   public get baseHpLabel(): string {

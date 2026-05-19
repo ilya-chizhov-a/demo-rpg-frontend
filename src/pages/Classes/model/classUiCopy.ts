@@ -18,6 +18,7 @@ export interface ClassesPageCopy {
   readonly headerEyebrow: string;
   readonly headerTitle: string;
   readonly heroesSectionAriaLabel: string;
+  readonly iconPlaceholderLabel: string;
   readonly levelUnit: string;
   readonly loadingAriaLabel: string;
   readonly noDescription: string;
@@ -46,6 +47,7 @@ const classesPageCopy: Record<ClassLocale, ClassesPageCopy> = {
     headerEyebrow: 'Hero codex',
     headerTitle: 'Classes',
     heroesSectionAriaLabel: 'Heroes section',
+    iconPlaceholderLabel: 'No icon',
     levelUnit: 'level',
     loadingAriaLabel: 'Loading classes',
     noDescription: 'No description available.',
@@ -71,6 +73,7 @@ const classesPageCopy: Record<ClassLocale, ClassesPageCopy> = {
     headerEyebrow: 'Кодекс героев',
     headerTitle: 'Классы',
     heroesSectionAriaLabel: 'Раздел героев',
+    iconPlaceholderLabel: 'Нет иконки',
     levelUnit: 'уровень',
     loadingAriaLabel: 'Загрузка классов',
     noDescription: 'Описание недоступно.',
@@ -93,6 +96,7 @@ const classesPageCopy: Record<ClassLocale, ClassesPageCopy> = {
     headerEyebrow: '英雄 codex',
     headerTitle: '职业',
     heroesSectionAriaLabel: '英雄分区',
+    iconPlaceholderLabel: '无图标',
     levelUnit: '等级',
     loadingAriaLabel: '正在加载职业',
     noDescription: '暂无描述。',

@@ -1013,7 +1013,7 @@ export type ClassesQueryVariables = Exact<{
 }>;
 
 
-export type ClassesQuery = { classeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+export type ClassesQuery = { classeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, icon: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
 export type LocationsQueryVariables = Exact<{
   data?: InputMaybe<Demo_Rpg_DataGetLocationsesInput>;
@@ -1057,6 +1057,15 @@ export const ClassesDocument = gql`
         data {
           base_hp
           hp_per_level
+          icon {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
           mp_per_level
           primary_stat
           name {

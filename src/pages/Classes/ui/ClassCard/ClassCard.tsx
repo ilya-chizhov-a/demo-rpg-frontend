@@ -4,6 +4,7 @@ import { Link as RouterLink } from 'react-router';
 
 import type { ClassItemViewModel } from '../../model/ClassItemViewModel';
 import type { ClassesPageCopy } from '../../model/classUiCopy';
+import { ClassIconVisual } from '../ClassIconVisual/ClassIconVisual';
 
 interface ClassCardProps {
   readonly copy: ClassesPageCopy;
@@ -22,20 +23,24 @@ export const ClassCard = observer(({ copy, item }: ClassCardProps) => {
       gap="5"
       p="5"
     >
-      <Box>
-        <Flex align="center" color="#9aa7b1" fontSize="sm" gap="3" justify="space-between">
-          <Badge colorPalette="purple" variant="subtle">
-            {item.primaryStat}
-          </Badge>
-          <Text>{item.localeLabel}</Text>
-        </Flex>
-        <Heading as="h2" fontSize="xl" lineHeight="1.2" mt="4">
-          {item.title}
-        </Heading>
-        <Text color="#9aa7b1" lineHeight="1.55" mt="2">
-          {item.description}
-        </Text>
-      </Box>
+      <Flex align="flex-start" gap="4">
+        <ClassIconVisual image={item.iconImage} placeholderLabel={copy.iconPlaceholderLabel} />
+
+        <Box flex="1" minW="0">
+          <Flex align="center" color="#9aa7b1" fontSize="sm" gap="3" justify="space-between">
+            <Badge colorPalette="purple" variant="subtle">
+              {item.primaryStat}
+            </Badge>
+            <Text>{item.localeLabel}</Text>
+          </Flex>
+          <Heading as="h2" fontSize="xl" lineHeight="1.2" mt="4">
+            {item.title}
+          </Heading>
+          <Text color="#9aa7b1" lineHeight="1.55" mt="2">
+            {item.description}
+          </Text>
+        </Box>
+      </Flex>
 
       <SimpleGrid
         borderTopColor="rgba(103, 232, 249, 0.14)"

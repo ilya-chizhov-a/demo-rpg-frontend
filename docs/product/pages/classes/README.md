@@ -69,6 +69,10 @@ comparison, roles, and stat growth.
 - Phone: one-column simple list with fixed icon boxes.
 - Tablet: two-column reference list with the widget visible.
 - Desktop: compact table.
+- Class icons render through imgproxy `rs:fit` in a stable 96x96 pixel square
+  media slot so the full uploaded glyph remains visible and card layout does
+  not shift while images load. If an icon URL is absent or invalid, the card
+  keeps the same 96x96 pixel slot and renders a page-owned placeholder label.
 
 ## Architecture Notes
 
@@ -77,10 +81,17 @@ comparison, roles, and stat growth.
 ## Acceptance Criteria
 
 - [x] Class rows are visible and link to hero filters.
-- [ ] Required class icons render without layout shift.
+- [x] Class icon slots render as stable 96x96 pixel squares without layout
+  shift and use imgproxy when `icon.url` and `icon.mimeType` are valid image
+  metadata.
+- [x] Missing or invalid icon metadata keeps the same stable 96x96 pixel icon
+  slot with a page-owned placeholder label.
 - [x] Widget explains FK target role.
 
 ## Open Questions
 
 - Decide whether class detail route is needed; not planned for v1.
 - Add `starting_ability_ids` once the FK-expanded query is confirmed to return within the router timeout.
+- The current dev data returns class `icon.fileId` values, but `url`, `hash`,
+  `mimeType`, filename, and dimensions are empty or zero. Backfill that file
+  metadata before replacing the placeholder slots with real class glyphs.

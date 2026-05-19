@@ -10,6 +10,15 @@ query Classes($data: Demo_rpg_dataGetClassesesInput) {
         data {
           base_hp
           hp_per_level
+          icon {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
           mp_per_level
           primary_stat
           name {
