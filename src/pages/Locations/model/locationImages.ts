@@ -18,20 +18,23 @@ export function prepareLocationCardMapImage(
   source: LocationFileSource | null | undefined,
   title: string,
 ): LocationImageSlot | null {
-  if (!source?.mimeType.startsWith('image/')) return null;
+  const sourceUrl = source?.url?.trim();
+  if (!sourceUrl) return null;
+  if (!source?.mimeType?.startsWith('image/')) return null;
+
   const image = prepareImgproxyImageSlot({
     alt: `${title} location map`,
     gravity: 'ce',
     height: 292,
     resizeMode: 'fit',
-    sourceUrl: source.url,
+    sourceUrl,
     width: 520,
   });
   if (!image) return null;
 
   return {
     ...image,
-    fallbackSrc: source.url,
+    fallbackSrc: sourceUrl,
   };
 }
 
@@ -40,14 +43,16 @@ export function prepareLocationGalleryThumbnail(
   title: string,
   index: number,
 ): PreparedImageSlot | null {
-  if (!source?.mimeType.startsWith('image/')) return null;
+  const sourceUrl = source?.url?.trim();
+  if (!sourceUrl) return null;
+  if (!source?.mimeType?.startsWith('image/')) return null;
 
   return prepareImgproxyImageSlot({
     alt: `${title} gallery image ${index + 1}`,
     gravity: 'ce',
     height: 80,
     resizeMode: 'fill',
-    sourceUrl: source.url,
+    sourceUrl,
     width: 80,
   });
 }

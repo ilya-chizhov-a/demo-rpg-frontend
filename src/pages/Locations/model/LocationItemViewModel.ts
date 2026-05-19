@@ -8,6 +8,7 @@ import {
   prepareLocationGalleryThumbnail,
   type LocationImageSlot,
 } from './locationImages';
+import { getLocationKindLabel } from './locationUiCopy';
 
 export type LocationLocale = SupportedLocale;
 
@@ -46,6 +47,10 @@ export class LocationItemViewModel {
 
   public get kind(): string {
     return this.node.data.kind;
+  }
+
+  public get kindLabel(): string {
+    return getLocationKindLabel(this.getLocale(), this.kind);
   }
 
   public get regionId(): string {

@@ -13,6 +13,7 @@ export interface LocationsPageCopy {
   readonly explainerFooterNote: string;
   readonly explainerSummary: string;
   readonly galleryCountLabel: (count: number) => string;
+  readonly galleryEmptyPreviewLabel: string;
   readonly galleryLabel: string;
   readonly headerBadges: readonly string[];
   readonly headerDescription: string;
@@ -49,6 +50,7 @@ const locationsPageCopy: Record<LocationLocale, LocationsPageCopy> = {
     explainerSummary:
       'Locations show a region foreign key, large map file metadata, coordinates, and a required gallery file array.',
     galleryCountLabel: (count) => `${count} gallery file${count === 1 ? '' : 's'}`,
+    galleryEmptyPreviewLabel: 'No gallery files',
     galleryLabel: 'Gallery',
     headerBadges: ['data.locations', 'region FK', 'map file', 'gallery[]', 'coordinates'],
     headerDescription:
@@ -84,6 +86,7 @@ const locationsPageCopy: Record<LocationLocale, LocationsPageCopy> = {
     explainerSummary:
       'Локации показывают FK региона, метаданные большой карты, координаты и обязательный массив файлов gallery.',
     galleryCountLabel: formatRussianGalleryCount,
+    galleryEmptyPreviewLabel: 'Нет файлов галереи',
     galleryLabel: 'Галерея',
     headerBadges: ['data.locations', 'FK региона', 'файл карты', 'gallery[]', 'координаты'],
     headerDescription:
@@ -119,6 +122,7 @@ const locationsPageCopy: Record<LocationLocale, LocationsPageCopy> = {
     explainerSummary:
       '地点展示区域外键、大地图文件元数据、坐标和必填 gallery 文件数组。',
     galleryCountLabel: (count) => `${count} 个图库文件`,
+    galleryEmptyPreviewLabel: '没有图库文件',
     galleryLabel: '图库',
     headerBadges: ['data.locations', '区域 FK', '地图文件', 'gallery[]', '坐标'],
     headerDescription: '浏览各区域内的地点，查看地图预览、图库证据和地图集坐标。',
@@ -142,8 +146,37 @@ const locationsPageCopy: Record<LocationLocale, LocationsPageCopy> = {
 
 const fallbackLocale: LocationLocale = 'en';
 
+const locationKindLabelsByLocale: Record<LocationLocale, Record<string, string>> = {
+  en: {
+    dungeon: 'Dungeon',
+    ruin: 'Ruin',
+    town: 'Town',
+    village: 'Village',
+  },
+  ru: {
+    dungeon: 'Подземелье',
+    ruin: 'Руины',
+    town: 'Город',
+    village: 'Деревня',
+  },
+  zh: {
+    dungeon: '地下城',
+    ruin: '遗迹',
+    town: '城镇',
+    village: '村庄',
+  },
+};
+
 export function getLocationsPageCopy(locale: LocationLocale): LocationsPageCopy {
   return locationsPageCopy[locale] ?? locationsPageCopy[fallbackLocale];
+}
+
+export function getLocationKindLabel(locale: LocationLocale, kind: string): string {
+  return (
+    locationKindLabelsByLocale[locale]?.[kind] ??
+    locationKindLabelsByLocale[fallbackLocale][kind] ??
+    kind
+  );
 }
 
 function formatRussianGalleryCount(count: number): string {

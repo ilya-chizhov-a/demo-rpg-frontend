@@ -5,14 +5,14 @@ import type { LocationImageSlot } from '../../model/locationImages';
 
 interface LocationMapVisualProps {
   readonly image: LocationImageSlot | null;
-  readonly kind: string;
+  readonly kindLabel: string;
   readonly placeholderDescription: string;
   readonly placeholderTitle: string;
 }
 
 export function LocationMapVisual({
   image,
-  kind,
+  kindLabel,
   placeholderDescription,
   placeholderTitle,
 }: LocationMapVisualProps) {
@@ -56,7 +56,7 @@ export function LocationMapVisual({
           zIndex="1"
         >
           <Text color="#67e8f9" fontSize="xs" fontWeight="bold" textTransform="uppercase">
-            {kind}
+            {kindLabel}
           </Text>
           <Text fontSize="lg" fontWeight="bold" mt="2">
             {placeholderTitle}

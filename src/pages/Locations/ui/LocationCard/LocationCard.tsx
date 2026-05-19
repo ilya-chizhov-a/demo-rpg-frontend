@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Heading, Image, SimpleGrid, Text } from '@chakra-ui/react';
+import { Badge, Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import { Link as RouterLink } from 'react-router';
 
@@ -16,13 +16,14 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
   return (
     <Box
       as="li"
-      alignContent="space-between"
+      alignContent="start"
       bg="rgba(18, 24, 32, 0.9)"
       borderColor="rgba(103, 232, 249, 0.16)"
       borderRadius="md"
       borderWidth="1px"
       display="grid"
-      gap="5"
+      gap="3"
+      gridTemplateRows="auto auto auto auto 1fr"
       minH="440px"
       outline="none"
       overflow="hidden"
@@ -42,25 +43,61 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
     >
       <LocationMapVisual
         image={item.mapImage}
-        kind={item.kind}
+        kindLabel={item.kindLabel}
         placeholderDescription={copy.mapPlaceholderDescription(item.title)}
         placeholderTitle={copy.mapPlaceholderTitle}
       />
 
       <Box px="5">
-        <Flex align="center" color="#9aa7b1" fontSize="sm" gap="3" justify="space-between">
-          <Badge colorPalette="teal" variant="subtle">
-            {item.kind}
+        <Flex
+          align="center"
+          color="#9aa7b1"
+          fontSize="sm"
+          gap="3"
+          justify="space-between"
+          minH="8"
+        >
+          <Badge
+            colorPalette="teal"
+            maxW="60%"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            variant="subtle"
+            whiteSpace="nowrap"
+          >
+            {item.kindLabel}
           </Badge>
-          <Text>{item.localeLabel}</Text>
+          <Text flexShrink="0" whiteSpace="nowrap">
+            {item.localeLabel}
+          </Text>
         </Flex>
-        <Heading as="h2" fontSize="xl" lineHeight="1.2" mt="4">
-          {item.title}
+        <Heading
+          alignItems="flex-start"
+          as="h2"
+          display="flex"
+          fontSize="xl"
+          h="2.4em"
+          lineHeight="1.2"
+          mt="4"
+          overflow="hidden"
+        >
+          <Text
+            as="span"
+            minW="0"
+            overflow="hidden"
+            style={{
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 2,
+              display: '-webkit-box',
+            }}
+          >
+            {item.title}
+          </Text>
         </Heading>
         <Button
           asChild
           color="#67e8f9"
-          minH="44px"
+          minH={{ base: '44px', md: '36px' }}
           px="0"
           size="sm"
           variant="plain"
@@ -70,31 +107,42 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
             {copy.regionLabel}: {item.regionTitle}
           </RouterLink>
         </Button>
-        <Text color="#9aa7b1" lineHeight="1.55" mt="2">
+        <Text
+          color="#9aa7b1"
+          h="4.2em"
+          lineHeight="1.4"
+          mt="1"
+          overflow="hidden"
+          style={{
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 3,
+            display: '-webkit-box',
+          }}
+        >
           {item.description}
         </Text>
       </Box>
 
-      <SimpleGrid
+      <Box
         as="dl"
         borderTopColor="rgba(103, 232, 249, 0.14)"
         borderTopWidth="1px"
-        columns={{ base: 1, sm: 2 }}
-        gap="3"
         mx="5"
-        pt="4"
       >
         <LocationFact label={copy.coordinateLabel} value={item.coordinatesLabel} />
         <LocationFact label={copy.galleryLabel} value={copy.galleryCountLabel(item.galleryCount)} />
         <LocationFact label={copy.publishedLabel} value={item.publishedLabel} />
         <LocationFact label={copy.versionLabel} value={item.versionLabel} />
-      </SimpleGrid>
-
-      <Box px="5">
-        <GalleryPreview images={item.galleryPreviewImages} />
       </Box>
 
-      <Box px="5" pb="5">
+      <Box px="5">
+        <GalleryPreview
+          emptyLabel={copy.galleryEmptyPreviewLabel}
+          images={item.galleryPreviewImages}
+        />
+      </Box>
+
+      <Box alignSelf="end" px="5" pb="5">
         <Button
           asChild
           borderColor="rgba(103, 232, 249, 0.34)"
@@ -121,22 +169,60 @@ interface LocationFactProps {
 
 function LocationFact({ label, value }: LocationFactProps) {
   return (
-    <Box>
-      <Text as="dt" color="#9aa7b1" fontSize="xs">
+    <Flex
+      align="center"
+      as="div"
+      borderBottomColor="rgba(103, 232, 249, 0.14)"
+      borderBottomWidth="1px"
+      gap="3"
+      justify="space-between"
+      py="3"
+    >
+      <Text as="dt" color="#9aa7b1" flexShrink="0" fontSize="xs" lineHeight="1.2">
         {label}
       </Text>
-      <Text as="dd" fontWeight="bold" mt="1">
+      <Text
+        as="dd"
+        fontSize="sm"
+        fontWeight="bold"
+        lineHeight="1.2"
+        minW="0"
+        overflow="hidden"
+        textAlign="right"
+        textOverflow="ellipsis"
+        whiteSpace="nowrap"
+      >
         {value}
       </Text>
-    </Box>
+    </Flex>
   );
 }
 
 interface GalleryPreviewProps {
+  readonly emptyLabel: string;
   readonly images: readonly PreparedImageSlot[];
 }
 
-function GalleryPreview({ images }: GalleryPreviewProps) {
+function GalleryPreview({ emptyLabel, images }: GalleryPreviewProps) {
+  if (images.length === 0) {
+    return (
+      <Flex
+        align="center"
+        borderColor="rgba(103, 232, 249, 0.16)"
+        borderRadius="sm"
+        borderWidth="1px"
+        color="#9aa7b1"
+        h="48px"
+        justify="center"
+        px="3"
+      >
+        <Text fontSize="xs" lineHeight="1.2" textAlign="center">
+          {emptyLabel}
+        </Text>
+      </Flex>
+    );
+  }
+
   return (
     <Flex gap="2" minH="48px">
       {images.map((image) => (
@@ -154,13 +240,11 @@ function GalleryPreview({ images }: GalleryPreviewProps) {
             alt={image.alt}
             draggable={false}
             h="full"
-            height={image.height}
             loading={image.loading}
             objectFit="cover"
             src={image.src}
             srcSet={image.srcSet}
             w="full"
-            width={image.width}
           />
         </Box>
       ))}
