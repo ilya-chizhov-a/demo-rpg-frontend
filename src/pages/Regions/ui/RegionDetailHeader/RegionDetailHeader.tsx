@@ -1,9 +1,7 @@
-import { Badge, Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react';
+import { Badge, Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
-import { Link as RouterLink } from 'react-router';
 
 import type { RegionDetailViewModel } from '../../model/RegionDetailViewModel';
-import { RegionCoverVisual } from '../RegionCoverVisual/RegionCoverVisual';
 
 interface RegionDetailHeaderProps {
   readonly vm: RegionDetailViewModel;
@@ -11,63 +9,39 @@ interface RegionDetailHeaderProps {
 
 export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => {
   return (
-    <Box mb="8">
-      <Button
-        aria-label={vm.copy.detail.backAriaLabel}
-        asChild
-        borderColor="rgba(103, 232, 249, 0.34)"
-        color="#67e8f9"
-        minH="44px"
-        size="md"
-        variant="outline"
-        _hover={{ bg: 'rgba(34, 211, 238, 0.12)', borderColor: '#67e8f9' }}
-      >
-        <RouterLink to="/regions">{vm.copy.detail.backLabel}</RouterLink>
-      </Button>
-
-      <Box mt="4">
-        <RegionCoverVisual
-          climate={vm.climateLabel}
-          image={vm.coverImage}
-          placeholderDescription={vm.coverPlaceholderDescription}
-          placeholderTitle={vm.coverPlaceholderTitle}
-          variant="hero"
-        />
-      </Box>
-
-      <Grid alignItems="start" gap="5" mt="5" templateColumns="minmax(0, 1fr)">
-        <Box minW="0">
-          <Flex gap="2" mb="4" wrap="wrap">
-            <Badge colorPalette="blue" size="lg" variant="subtle">
-              data.regions
-            </Badge>
-            <Badge colorPalette="green" size="lg" variant="subtle">
-              {vm.climateLabel}
-            </Badge>
-            <Badge colorPalette="gray" size="lg" variant="subtle">
-              {vm.copy.detail.backendPending}
-            </Badge>
-          </Flex>
-          <Heading as="h1" fontSize={{ base: '3xl', md: '4xl' }} lineHeight="1.1">
-            {vm.title}
-          </Heading>
-          <Text
-            color="var(--color-text-supporting)"
-            fontSize="lg"
-            lineHeight="1.6"
-            mt="4"
-            maxW="760px"
-          >
-            {vm.description}
+    <Box
+      bg="rgba(18, 24, 32, 0.9)"
+      borderColor="rgba(103, 232, 249, 0.16)"
+      borderRadius="md"
+      borderWidth="1px"
+      minW="0"
+      p="6"
+    >
+      <Flex gap="2" mb="4" wrap="wrap">
+        <Badge colorPalette="green" size="lg" variant="subtle">
+          {vm.climateLabel}
+        </Badge>
+        <Badge colorPalette="blue" size="lg" variant="subtle">
+          {vm.copy.headerBadges[0] ?? 'data.regions'}
+        </Badge>
+        <Badge colorPalette="gray" size="lg" variant="subtle">
+          {vm.copy.detail.backendPending}
+        </Badge>
+      </Flex>
+      <Heading as="h1" fontSize={{ base: '3xl', md: '3xl' }} lineHeight="1.12">
+        {vm.title}
+      </Heading>
+      <Text color="var(--color-text-supporting)" fontSize="md" lineHeight="1.55" mt="4">
+        {vm.description}
+      </Text>
+      <Flex align="center" color="#9aa7b1" gap="3" mt="3" wrap="wrap">
+        <Text fontSize="sm">
+          {vm.copy.detail.localeLabel}:{' '}
+          <Text as="span" fontWeight="bold">
+            {vm.localeLabel}
           </Text>
-          <Text color="#9aa7b1" fontSize="sm" mt="3">
-            {vm.copy.detail.localeLabel}:{' '}
-            <Text as="span" fontWeight="bold">
-              {vm.localeLabel}
-            </Text>
-          </Text>
-        </Box>
-      </Grid>
+        </Text>
+      </Flex>
     </Box>
   );
 });

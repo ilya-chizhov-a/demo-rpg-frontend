@@ -10,18 +10,23 @@ interface RegionCoverImageSource {
   readonly width: number;
 }
 
+export type RegionCoverImageSlot = PreparedImageSlot & {
+  readonly fallbackSrc: string;
+};
+
 export function prepareRegionCardCoverImage(
   source: RegionCoverImageSource | null | undefined,
   title: string,
-): PreparedImageSlot | null {
-  return prepareRegionCoverImage(source, title, 520, 292, false);
+): RegionCoverImageSlot | null {
+  return prepareRegionCoverImage(source, title, 520, 292, 'fill', false);
 }
 
 export function prepareRegionHeroCoverImage(
   source: RegionCoverImageSource | null | undefined,
   title: string,
-): PreparedImageSlot | null {
-  return prepareRegionCoverImage(source, title, 1200, 420, true);
+): RegionCoverImageSlot | null {
+  const size = getBoundedDetailCoverSize(source);
+  return prepareRegionCoverImage(source, title, size.width, size.height, 'fit', true);
 }
 
 export function getRegionCoverImageMetadata(
@@ -45,17 +50,47 @@ function prepareRegionCoverImage(
   title: string,
   width: number,
   height: number,
+  resizeMode: 'fill' | 'fit',
   eager: boolean,
-): PreparedImageSlot | null {
+): RegionCoverImageSlot | null {
+  const sourceUrl = source?.url?.trim();
+  if (!sourceUrl) return null;
   if (!source?.mimeType.startsWith('image/')) return null;
 
-  return prepareImgproxyImageSlot({
+  const image = prepareImgproxyImageSlot({
     alt: `${title} region cover image`,
     eager,
     gravity: 'sm',
     height,
-    resizeMode: 'fill',
-    sourceUrl: source.url,
+    resizeMode,
+    sourceUrl,
     width,
   });
+  if (!image) return null;
+
+  return {
+    ...image,
+    fallbackSrc: sourceUrl,
+  };
+}
+
+function getBoundedDetailCoverSize(
+  source: RegionCoverImageSource | null | undefined,
+): { readonly width: number; readonly height: number } {
+  const fallbackSize = { width: 840, height: 560 };
+  if (!Number.isFinite(source?.width) || !Number.isFinite(source?.height)) return fallbackSize;
+  if (!source || source.width <= 0 || source.height <= 0) return fallbackSize;
+
+  const aspectRatio = source.width / source.height;
+  const maxWidth = 880;
+  const maxHeight = 560;
+  let width = maxWidth;
+  let height = Math.max(1, Math.round(width / aspectRatio));
+
+  if (height > maxHeight) {
+    height = maxHeight;
+    width = Math.max(1, Math.round(height * aspectRatio));
+  }
+
+  return { width, height };
 }

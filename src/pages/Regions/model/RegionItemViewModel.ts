@@ -1,9 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 
-import type { PreparedImageSlot } from 'src/shared/lib';
+import { applyImageFallback, hasAppliedImageFallback } from 'src/shared/lib';
 import { getLocaleNativeLabel, type SupportedLocale } from 'src/shared/model';
 import type { RegionNode } from '../api/RegionsDataSource';
-import { prepareRegionCardCoverImage } from './regionCoverImages';
+import { prepareRegionCardCoverImage, type RegionCoverImageSlot } from './regionCoverImages';
 import {
   getRegionCoverPlaceholderDescription,
   getRegionCoverPlaceholderTitle,
@@ -12,6 +12,9 @@ import {
 export type RegionLocale = SupportedLocale;
 
 export class RegionItemViewModel {
+  private isCoverImageLoadedState = false;
+  private isCoverImageUnavailableState = false;
+
   constructor(
     private readonly node: RegionNode,
     private readonly getLocale: () => RegionLocale,
@@ -26,7 +29,7 @@ export class RegionItemViewModel {
       getLocale: false,
       getNoDescriptionCopy: false,
       getClimateLabel: false,
-    });
+    }, { autoBind: true });
   }
 
   public get id(): string {
@@ -53,7 +56,7 @@ export class RegionItemViewModel {
     return this.getClimateLabel(this.climate);
   }
 
-  public get coverImage(): PreparedImageSlot | null {
+  public get coverImage(): RegionCoverImageSlot | null {
     return prepareRegionCardCoverImage(this.node.data.cover_image, this.title);
   }
 
@@ -63,6 +66,14 @@ export class RegionItemViewModel {
 
   public get coverPlaceholderDescription(): string {
     return getRegionCoverPlaceholderDescription(this.getLocale(), this.title);
+  }
+
+  public get isCoverImageLoaded(): boolean {
+    return this.isCoverImageLoadedState;
+  }
+
+  public get isCoverImageUnavailable(): boolean {
+    return this.isCoverImageUnavailableState;
   }
 
   public get publishedLabel(): string {
@@ -80,6 +91,24 @@ export class RegionItemViewModel {
   public get usesLocaleFallback(): boolean {
     const locale = this.getLocale();
     return !this.node.data.name[locale] || !this.node.data.description[locale];
+  }
+
+  public handleCoverImageLoad(): void {
+    this.isCoverImageLoadedState = true;
+  }
+
+  public handleCoverImageError(image: HTMLImageElement): void {
+    if (hasAppliedImageFallback(image)) {
+      this.isCoverImageLoadedState = false;
+      this.isCoverImageUnavailableState = true;
+      return;
+    }
+
+    this.isCoverImageLoadedState = false;
+    const fallbackApplied = applyImageFallback(image);
+    if (fallbackApplied === false) {
+      this.isCoverImageUnavailableState = true;
+    }
   }
 
   private localized(value: Record<RegionLocale, string>): string {

@@ -24,6 +24,9 @@ export interface RegionsPageCopy {
     readonly errorTitle: string;
     readonly factsTitle: string;
     readonly fieldClimate: string;
+    readonly fieldCoverDimensions: string;
+    readonly fieldCoverFile: string;
+    readonly fieldCoverMimeType: string;
     readonly fieldPublished: string;
     readonly fieldRegionId: string;
     readonly fieldVersion: string;

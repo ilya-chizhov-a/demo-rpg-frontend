@@ -13,7 +13,7 @@ export const RegionList = observer(({ vm }: RegionListProps) => {
     <SimpleGrid
       as="ul"
       aria-busy={vm.showRefreshing}
-      columns={{ base: 1, md: 2, xl: 5 }}
+      columns={{ base: 1, sm: 2, md: 3, xl: 5 }}
       gap="4"
       listStyleType="none"
       m="0"

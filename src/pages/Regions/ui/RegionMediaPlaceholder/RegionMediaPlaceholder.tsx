@@ -2,40 +2,27 @@ import { Box, Flex, Text, type BoxProps } from '@chakra-ui/react';
 
 interface RegionMediaPlaceholderProps {
   readonly title: string;
-  readonly borderColor?: BoxProps['borderColor'];
-  readonly borderRadius?: BoxProps['borderRadius'];
-  readonly borderWidth?: BoxProps['borderWidth'];
-  readonly className?: string;
+  readonly descriptionMaxW?: BoxProps['maxW'];
   readonly description?: string;
   readonly eyebrow?: string;
-  readonly height: BoxProps['h'];
+  readonly height?: BoxProps['h'];
+  readonly titleFontSize?: BoxProps['fontSize'];
 }
 
 export function RegionMediaPlaceholder({
   title,
-  borderColor = 'rgba(103, 232, 249, 0.2)',
-  borderRadius = 'md',
-  borderWidth = '1px',
-  className,
+  descriptionMaxW = '320px',
   description,
   eyebrow,
   height,
+  titleFontSize = { base: 'md', md: 'lg' },
 }: RegionMediaPlaceholderProps) {
   return (
     <Box
-      aria-label={title}
-      bg="#071018"
-      borderColor={borderColor}
-      borderRadius={borderRadius}
-      borderWidth={borderWidth}
-      className={className}
       h={height}
       minW="0"
       overflow="hidden"
       position="relative"
-      role="img"
-      transformOrigin="center"
-      transition="transform 180ms ease"
       w="full"
       _before={{
         bgImage:
@@ -69,11 +56,11 @@ export function RegionMediaPlaceholder({
             {eyebrow}
           </Text>
         ) : null}
-        <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" mt={eyebrow ? '2' : '0'}>
+        <Text fontSize={titleFontSize} fontWeight="bold" mt={eyebrow ? '2' : '0'}>
           {title}
         </Text>
         {description ? (
-          <Text color="#9aa7b1" fontSize="sm" lineHeight="1.5" mt="2" maxW="320px">
+          <Text color="#9aa7b1" fontSize="sm" lineHeight="1.5" mt="2" maxW={descriptionMaxW}>
             {description}
           </Text>
         ) : null}

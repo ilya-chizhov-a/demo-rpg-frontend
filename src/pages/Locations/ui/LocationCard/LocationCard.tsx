@@ -2,7 +2,7 @@ import { Badge, Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react
 import { observer } from 'mobx-react-lite';
 import type { SyntheticEvent } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { CatalogActionButton } from 'src/shared/ui';
+import { CatalogActionButton, CatalogFactRow } from 'src/shared/ui';
 
 import type { LocationItemViewModel } from '../../model/LocationItemViewModel';
 import type { LocationImageSlot } from '../../model/locationImages';
@@ -133,10 +133,10 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
         borderTopWidth="1px"
         mx="5"
       >
-        <LocationFact label={copy.coordinateLabel} value={item.coordinatesLabel} />
-        <LocationFact label={copy.galleryLabel} value={copy.galleryCountLabel(item.galleryCount)} />
-        <LocationFact label={copy.publishedLabel} value={item.publishedLabel} />
-        <LocationFact label={copy.versionLabel} value={item.versionLabel} />
+        <CatalogFactRow label={copy.coordinateLabel} value={item.coordinatesLabel} />
+        <CatalogFactRow label={copy.galleryLabel} value={copy.galleryCountLabel(item.galleryCount)} />
+        <CatalogFactRow label={copy.publishedLabel} value={item.publishedLabel} />
+        <CatalogFactRow label={copy.versionLabel} value={item.versionLabel} />
       </Box>
 
       <Box minW="0" px="5">
@@ -152,42 +152,6 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
     </Box>
   );
 });
-
-interface LocationFactProps {
-  readonly label: string;
-  readonly value: string;
-}
-
-function LocationFact({ label, value }: LocationFactProps) {
-  return (
-    <Flex
-      align="center"
-      as="div"
-      borderBottomColor="rgba(103, 232, 249, 0.14)"
-      borderBottomWidth="1px"
-      gap="3"
-      justify="space-between"
-      py="3"
-    >
-      <Text as="dt" color="#9aa7b1" flexShrink="0" fontSize="xs" lineHeight="1.2">
-        {label}
-      </Text>
-      <Text
-        as="dd"
-        fontSize="sm"
-        fontWeight="bold"
-        lineHeight="1.2"
-        minW="0"
-        overflow="hidden"
-        textAlign="right"
-        textOverflow="ellipsis"
-        whiteSpace="nowrap"
-      >
-        {value}
-      </Text>
-    </Flex>
-  );
-}
 
 interface GalleryPreviewProps {
   readonly emptyLabel: string;

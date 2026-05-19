@@ -1,6 +1,6 @@
-import { Badge, Box, Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import { Badge, Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
-import { CatalogActionButton } from 'src/shared/ui';
+import { CatalogActionButton, CatalogFactRow } from 'src/shared/ui';
 
 import type { RegionItemViewModel } from '../../model/RegionItemViewModel';
 import type { RegionsPageCopy } from '../../model/regionUiCopy';
@@ -21,82 +21,111 @@ export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
       borderRadius="md"
       borderWidth="1px"
       display="grid"
-      gap="5"
+      gap="3"
+      gridTemplateRows="auto auto auto 1fr"
+      minH="440px"
+      minW="0"
       outline="none"
+      overflow="hidden"
       position="relative"
       role="group"
       shadow="0 18px 42px rgba(0, 0, 0, 0.24)"
-      transition="transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease"
-      minH="260px"
-      overflow="hidden"
+      transition="box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease"
       _focusWithin={{
         borderColor: '#67e8f9',
         boxShadow: '0 0 0 3px rgba(34, 211, 238, 0.16), 0 22px 44px rgba(0, 0, 0, 0.32)',
-        transform: 'translateY(-2px)',
       }}
       _hover={{
         bg: '#17212b',
         borderColor: 'rgba(103, 232, 249, 0.58)',
         boxShadow: '0 22px 44px rgba(0, 0, 0, 0.32)',
-        transform: 'translateY(-2px)',
-      }}
-      css={{
-        '&:hover .region-card-visual, &:focus-within .region-card-visual': {
-          transform: 'scale(1.035)',
-        },
       }}
     >
       <RegionCoverVisual
         climate={item.climateLabel}
         image={item.coverImage}
+        isImageLoaded={item.isCoverImageLoaded}
+        isImageUnavailable={item.isCoverImageUnavailable}
+        onImageError={(image) => item.handleCoverImageError(image)}
+        onImageLoad={() => item.handleCoverImageLoad()}
         placeholderDescription={item.coverPlaceholderDescription}
         placeholderTitle={item.coverPlaceholderTitle}
-        zoomOnGroupHover
       />
 
       <Box px="5">
-        <Flex align="center" color="#9aa7b1" fontSize="sm" gap="3" justify="space-between">
-          <Badge colorPalette="green" variant="subtle">
+        <Flex
+          align="center"
+          color="#9aa7b1"
+          fontSize="sm"
+          gap="3"
+          justify="space-between"
+          minH="8"
+        >
+          <Badge
+            colorPalette="green"
+            maxW="60%"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            variant="subtle"
+            whiteSpace="nowrap"
+          >
             {item.climateLabel}
           </Badge>
-          <Text>{item.localeLabel}</Text>
+          <Text flexShrink="0" whiteSpace="nowrap">
+            {item.localeLabel}
+          </Text>
         </Flex>
-        <Heading as="h2" fontSize="xl" lineHeight="1.2" mt="4">
-          {item.title}
+        <Heading
+          alignItems="flex-start"
+          as="h2"
+          display="flex"
+          fontSize="xl"
+          h="2.4em"
+          lineHeight="1.2"
+          mt="4"
+          overflow="hidden"
+        >
+          <Text
+            as="span"
+            minW="0"
+            overflow="hidden"
+            style={{
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 2,
+              display: '-webkit-box',
+            }}
+          >
+            {item.title}
+          </Text>
         </Heading>
-        <Text color="#9aa7b1" lineHeight="1.55" mt="2">
+        <Text
+          color="#9aa7b1"
+          h="4.2em"
+          lineHeight="1.4"
+          mt="1"
+          overflow="hidden"
+          style={{
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 3,
+            display: '-webkit-box',
+          }}
+        >
           {item.description}
         </Text>
       </Box>
 
-      <SimpleGrid
+      <Box
         as="dl"
         borderTopColor="rgba(103, 232, 249, 0.14)"
         borderTopWidth="1px"
-        columns={{ base: 1, sm: 2 }}
-        gap="3"
         mx="5"
-        pt="4"
       >
-        <Box>
-          <Text as="dt" color="#9aa7b1" fontSize="xs">
-            {copy.publishedLabel}
-          </Text>
-          <Text as="dd" fontWeight="bold" mt="1">
-            {item.publishedLabel}
-          </Text>
-        </Box>
-        <Box>
-          <Text as="dt" color="#9aa7b1" fontSize="xs">
-            {copy.versionLabel}
-          </Text>
-          <Text as="dd" fontWeight="bold" mt="1">
-            {item.versionLabel}
-          </Text>
-        </Box>
-      </SimpleGrid>
+        <CatalogFactRow label={copy.detail.fieldClimate} value={item.climateLabel} />
+        <CatalogFactRow label={copy.publishedLabel} value={item.publishedLabel} />
+        <CatalogFactRow label={copy.versionLabel} value={item.versionLabel} />
+      </Box>
 
-      <Box px="5" pb="5">
+      <Box alignSelf="end" px="5" pb="5">
         <CatalogActionButton to={item.detailHref}>{copy.cardOpenAction}</CatalogActionButton>
       </Box>
     </Box>

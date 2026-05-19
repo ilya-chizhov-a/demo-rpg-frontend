@@ -19,6 +19,7 @@ export {
   type ImageSlotRequest,
   type PreparedImageSlot,
 } from './helpers/imageProxy';
+export { applyImageFallback, hasAppliedImageFallback } from './helpers/imageFallback';
 export { isClient } from './helpers/isClient';
 export { renderWhen } from './helpers/renderWhen';
 export { useViewModel } from './hooks/useViewModel';

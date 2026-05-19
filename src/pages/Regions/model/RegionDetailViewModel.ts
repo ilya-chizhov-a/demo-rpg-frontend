@@ -6,17 +6,22 @@ import {
   type IViewModel,
 } from 'src/shared/config';
 import {
+  applyImageFallback,
   container,
+  hasAppliedImageFallback,
   hasRequestError,
   isInitialLoading,
   isRefreshing,
-  type PreparedImageSlot,
 } from 'src/shared/lib';
 import { getLocaleNativeLabel, LocaleService, type UiCopy } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { RegionDetailDataSource, type RegionDetailNode } from '../api/RegionDetailDataSource';
 import type { RegionLocale } from './RegionItemViewModel';
-import { getRegionCoverImageMetadata, prepareRegionHeroCoverImage } from './regionCoverImages';
+import {
+  getRegionCoverImageMetadata,
+  prepareRegionHeroCoverImage,
+  type RegionCoverImageSlot,
+} from './regionCoverImages';
 import {
   getRegionCoverPlaceholderDescription,
   getRegionCoverPlaceholderTitle,
@@ -51,6 +56,8 @@ const REGION_DETAIL_QUERY = `query RegionDetail($id: String!) {
 export class RegionDetailViewModel implements IViewModel {
   private readonly cloudRegionsBaseHref =
     'https://cloud.revisium.io/app/revisium/demo-rpg-data/master/draft/regions';
+  private isCoverImageLoadedState = false;
+  private isCoverImageUnavailableState = false;
   public id = '';
 
   constructor(
@@ -67,7 +74,11 @@ export class RegionDetailViewModel implements IViewModel {
   }
 
   public setup(id?: unknown): void {
-    this.id = typeof id === 'string' ? id : '';
+    const nextId = typeof id === 'string' ? id : '';
+    if (this.id !== nextId) {
+      this.resetCoverImageState();
+    }
+    this.id = nextId;
   }
 
   public async mount(): Promise<void> {
@@ -77,6 +88,7 @@ export class RegionDetailViewModel implements IViewModel {
 
   public unmount(): void {
     this.dataSource.reset();
+    this.resetCoverImageState();
   }
 
   public get item(): RegionDetailNode | null {
@@ -99,9 +111,27 @@ export class RegionDetailViewModel implements IViewModel {
     return this.copy.climateLabel(this.climate);
   }
 
-  public get coverImage(): PreparedImageSlot | null {
+  public get coverImage(): RegionCoverImageSlot | null {
     if (!this.item) return null;
     return prepareRegionHeroCoverImage(this.item.data.cover_image, this.title);
+  }
+
+  public get coverFileName(): string {
+    return this.item?.data.cover_image.fileName ?? this.copy.detail.noDescription;
+  }
+
+  public get coverDimensionsLabel(): string {
+    const cover = this.item?.data.cover_image;
+    if (!cover) return this.copy.detail.noDescription;
+    const { width, height } = cover;
+    if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
+      return this.copy.detail.noDescription;
+    }
+    return `${width.toLocaleString(this.locale)} x ${height.toLocaleString(this.locale)} px`;
+  }
+
+  public get coverMimeType(): string {
+    return this.item?.data.cover_image.mimeType ?? this.copy.detail.noDescription;
   }
 
   public get coverPlaceholderTitle(): string {
@@ -110,6 +140,14 @@ export class RegionDetailViewModel implements IViewModel {
 
   public get coverPlaceholderDescription(): string {
     return getRegionCoverPlaceholderDescription(this.locale, this.title);
+  }
+
+  public get isCoverImageLoaded(): boolean {
+    return this.isCoverImageLoadedState;
+  }
+
+  public get isCoverImageUnavailable(): boolean {
+    return this.isCoverImageUnavailableState;
   }
 
   public get localeLabel(): string {
@@ -201,9 +239,32 @@ export class RegionDetailViewModel implements IViewModel {
     await this.load();
   }
 
+  public handleCoverImageLoad(): void {
+    this.isCoverImageLoadedState = true;
+  }
+
+  public handleCoverImageError(image: HTMLImageElement): void {
+    if (hasAppliedImageFallback(image)) {
+      this.isCoverImageLoadedState = false;
+      this.isCoverImageUnavailableState = true;
+      return;
+    }
+
+    this.isCoverImageLoadedState = false;
+    const fallbackApplied = applyImageFallback(image);
+    if (fallbackApplied === false) {
+      this.isCoverImageUnavailableState = true;
+    }
+  }
+
   private async load(): Promise<void> {
     if (!this.id) return;
     await this.dataSource.request.fetch(this.id);
+  }
+
+  private resetCoverImageState(): void {
+    this.isCoverImageLoadedState = false;
+    this.isCoverImageUnavailableState = false;
   }
 
   private localized(value?: Record<RegionLocale, string>): string {

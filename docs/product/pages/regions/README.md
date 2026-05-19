@@ -25,7 +25,7 @@ reference pattern for readable game-database list pages.
 | ---------------- | --------------------------------------------------------------------------------------------- |
 | Header           | Title, atlas purpose, and chips for `data.regions`, climates, localized lore, and pagination. |
 | Climate filter   | Server-side JSON filter chips with localized climate labels using `data.path = ["climate"]`; no visible result summary text. |
-| Region list      | Cards with name, description, localized climate badge, `cover_image` thumbnail, and detail link. |
+| Region list      | Cards with the same visual rhythm as `/locations`: cover thumbnail, localized climate badge, fixed-height title, three-line description, vertical facts, and detail link. |
 | Pagination       | Shows connection `pageInfo`; load-more fetches the next cursor.                               |
 | Explainer Widget | Required; shows `Regions` operation, variables, response sample, cloud links.                 |
 
@@ -74,21 +74,37 @@ reference pattern for readable game-database list pages.
 
 ## Responsive Rules
 
-- Phone: single column, floating widget trigger, filter bottom sheet, 16px page gutters.
-- Tablet: main content column with floating widget trigger and 24px gutters.
-- Desktop: cards in dense grid/table, floating widget trigger, max content width `1440px`, 32px gutters.
+- Phone: region cards use one column on narrow screens and two columns once
+  the available width can hold compact cards without horizontal page scroll.
+- Tablet: region cards use three columns.
+- Desktop: region cards use five columns on wide viewports, matching
+  `/locations`.
 - Region cards render the required `cover_image` through imgproxy. The climate
   text badge remains the source of meaning when art is unavailable or abstract.
   Climate badges and filter chips render localized labels while GraphQL
   variables keep the raw `data.climate` value. The card reserves space for
   `cover_image` so imgproxy-served art renders without layout shift across
   phone, tablet, and desktop widths.
+- Region cover thumbnails fill the entire card media slot with no empty side or
+  top/bottom gutters. Cropping is acceptable in the catalog preview because the
+  full cover remains inspectable on `/regions/[id]`.
 - If `data.cover_image.url` is missing or invalid, `/regions` renders the
   region media placeholder for the card image slot instead of checked-in
   per-region fallback art. Keep it page-owned until another real page or widget
   needs the same component.
-- Region cards use a restrained hover/focus lift, accent border, and subtle
-  landscape scale to signal clickability without changing card dimensions.
+- Region card titles reserve a fixed two-line height so one-line and two-line
+  names keep descriptions, facts, and actions aligned across the card grid.
+  Names start at the top edge of the reserved slot, and longer names clamp to
+  two lines.
+- Region card descriptions reserve a fixed three-line height. Longer
+  descriptions clamp to three lines with an ellipsis, using compact line spacing
+  instead of changing card rhythm.
+- Region facts render as a single vertical definition list. Each fact occupies
+  its own row with the label and compact value on one line, separated from the
+  next fact by a subtle gray divider. Fact values do not wrap.
+- Region cards use the same stable internal row gaps and non-transforming hover
+  treatment as `/locations` cards, so localized copy cannot shift sibling card
+  content vertically.
 - Region card primary action buttons reuse the world section navigation hover:
   cyan fill, accent border, and on-accent text on hover/focus.
 
@@ -106,6 +122,8 @@ reference pattern for readable game-database list pages.
 - [x] Explainer Widget shows query, variables, response sample, and cloud links.
 - [x] Layout passes phone/tablet/desktop audit.
 - [x] Server-side pagination and climate filtering work through `regionses(data: ...)`.
+- [x] Region cards match the `/locations` card grid, title, description,
+      facts, media, and action rhythm.
 
 ## Open Questions
 

@@ -1,14 +1,12 @@
-import { Box, Stack } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router';
+import { Link as RouterLink, useParams } from 'react-router';
 
 import { renderWhen, useViewModel } from 'src/shared/lib';
 import { PageShell, SectionSubnav, StatePanel } from 'src/shared/ui';
 import { ExplainerWidget } from 'src/widgets/explainer-widget';
 import { RegionDetailViewModel } from '../../model/RegionDetailViewModel';
-import { RegionBackendPanel } from '../RegionBackendPanel/RegionBackendPanel';
-import { RegionDetailHeader } from '../RegionDetailHeader/RegionDetailHeader';
-import { RegionDetailPanel } from '../RegionDetailPanel/RegionDetailPanel';
+import { RegionDetailOverview } from '../RegionDetailOverview/RegionDetailOverview';
 import { RegionDetailSkeleton } from '../RegionDetailSkeleton/RegionDetailSkeleton';
 
 export const RegionDetailPage = observer(() => {
@@ -17,8 +15,23 @@ export const RegionDetailPage = observer(() => {
 
   return (
     <PageShell>
-      <RegionDetailHeader vm={vm} />
-      <SectionSubnav ariaLabel={vm.copy.worldSectionAriaLabel} items={vm.sectionNavItems} />
+      <Button
+        aria-label={vm.copy.detail.backAriaLabel}
+        asChild
+        borderColor="rgba(103, 232, 249, 0.34)"
+        color="#67e8f9"
+        mb="4"
+        minH="44px"
+        size="md"
+        variant="outline"
+        w="fit-content"
+        _hover={{ bg: 'rgba(34, 211, 238, 0.12)', borderColor: '#67e8f9' }}
+      >
+        <RouterLink to="/regions">{vm.copy.detail.backLabel}</RouterLink>
+      </Button>
+      <Box mb="4">
+        <SectionSubnav ariaLabel={vm.copy.worldSectionAriaLabel} items={vm.sectionNavItems} />
+      </Box>
 
       <Box minW="0">
         {renderWhen(vm.showLoading, <RegionDetailSkeleton />)}
@@ -32,13 +45,7 @@ export const RegionDetailPage = observer(() => {
             tone="error"
           />,
         )}
-        {renderWhen(
-          vm.showDetail,
-          <Stack gap="4">
-            <RegionDetailPanel vm={vm} />
-            <RegionBackendPanel copy={vm.copy.detail} />
-          </Stack>,
-        )}
+        {renderWhen(vm.showDetail, <RegionDetailOverview vm={vm} />)}
       </Box>
       <ExplainerWidget
         descriptor={vm.explainer}
