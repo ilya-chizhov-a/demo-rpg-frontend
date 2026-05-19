@@ -35,7 +35,7 @@ export const LocationsPage = observer(() => {
         state.showLoading,
         <CatalogSkeleton
           ariaLabel={vm.copy.loadingAriaLabel}
-          columns={{ base: 1, md: 2, xl: 5 }}
+          columns={{ base: 1, sm: 2, md: 3, xl: 5 }}
           itemCount={6}
         />,
       )}

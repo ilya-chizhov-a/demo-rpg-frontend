@@ -89,6 +89,8 @@ reference pattern for readable game-database list pages.
   needs the same component.
 - Region cards use a restrained hover/focus lift, accent border, and subtle
   landscape scale to signal clickability without changing card dimensions.
+- Region card primary action buttons reuse the world section navigation hover:
+  cyan fill, accent border, and on-accent text on hover/focus.
 
 ## Architecture Notes
 

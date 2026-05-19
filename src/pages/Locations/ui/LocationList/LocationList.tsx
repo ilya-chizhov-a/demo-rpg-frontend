@@ -13,7 +13,7 @@ export const LocationList = observer(({ vm }: LocationListProps) => {
     <SimpleGrid
       as="ul"
       aria-busy={vm.catalogState.showRefreshing}
-      columns={{ base: 1, md: 2, xl: 5 }}
+      columns={{ base: 1, sm: 2, md: 3, xl: 5 }}
       gap="4"
       listStyleType="none"
       m="0"

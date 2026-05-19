@@ -1,5 +1,7 @@
 export { CatalogPageLayout } from './CatalogPageLayout/CatalogPageLayout';
+export { CatalogActionButton } from './CatalogActionButton/CatalogActionButton';
 export { CatalogSkeleton } from './CatalogSkeleton/CatalogSkeleton';
+export { DetailSkeletonPanel } from './DetailSkeletonPanel/DetailSkeletonPanel';
 export {
   PageShell,
   pageShellGutters,

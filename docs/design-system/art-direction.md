@@ -121,6 +121,31 @@ labels, balanced neutral palette with distinct terrain accents, high resolution,
 no decorative border
 ```
 
+### Location Gallery Images
+
+Use for `locations.gallery[]`.
+
+Create one image per gallery role when content is available: establishing
+shot, key landmark, playable area, lore detail, and optional activity shot.
+Gallery images should feel like views inside the location rather than a second
+map.
+
+```text
+Fantasy location scene for {location_name}, {gallery_role}, based on
+{location_description}, set in {region_name}, cinematic but readable
+environment art, clear focal point, grounded RPG exploration tone, consistent
+with the location map palette, no text labels, no UI, no logo, no watermark,
+no decorative border
+```
+
+Recommended role-specific direction:
+
+- establishing shot: wide exterior or interior view that identifies the place;
+- key landmark: the one structure or feature players would remember;
+- playable area: route, room, plaza, tunnel, or camp usable for encounters;
+- lore detail: close but recognizable object, marking, relic, or material cue;
+- activity shot: lived-in moment only when the location is a settlement.
+
 ### Landing Hero Image
 
 Use for `landing_hero.bg_image`.

@@ -1015,6 +1015,13 @@ export type ClassesQueryVariables = Exact<{
 
 export type ClassesQuery = { classeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, icon: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type LocationDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type LocationDetailQuery = { locations: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { kind: string, coordinates: { x: number, y: number }, description: { en: string, ru: string, zh: string }, gallery: Array<{ fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }>, map: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, region_id: { id: string, data: { climate: string, name: { en: string, ru: string, zh: string } } } } } };
+
 export type LocationsQueryVariables = Exact<{
   data?: InputMaybe<Demo_Rpg_DataGetLocationsesInput>;
 }>;
@@ -1086,6 +1093,62 @@ export const ClassesDocument = gql`
       hasNextPage
     }
     totalCount
+  }
+}
+    `;
+export const LocationDetailDocument = gql`
+    query LocationDetail($id: String!) {
+  locations(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      coordinates {
+        x
+        y
+      }
+      description {
+        en
+        ru
+        zh
+      }
+      gallery {
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        url
+        width
+      }
+      kind
+      map {
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        url
+        width
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      region_id {
+        id
+        data {
+          climate
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
   }
 }
     `;
@@ -1262,6 +1325,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     Classes(variables?: ClassesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ClassesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ClassesQuery>({ document: ClassesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Classes', 'query', variables);
+    },
+    LocationDetail(variables: LocationDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LocationDetailQuery>({ document: LocationDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LocationDetail', 'query', variables);
     },
     Locations(variables?: LocationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LocationsQuery>({ document: LocationsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Locations', 'query', variables);

@@ -67,12 +67,14 @@ file fields.
 
 ## Responsive Rules
 
-- Phone: map thumbnails keep fixed aspect ratio.
-- Desktop: same atlas-card arrangement as `/regions`: one column on phone, two
-  on tablet, five on wide desktop. Region filtering remains the primary
-  region affordance.
-- Map previews preserve uploaded map artwork rather than cropping it for
-  decorative hover motion; square maps stay centered inside the atlas-card slot.
+- Phone: location cards use one column on narrow screens and two columns once
+  the available width can hold compact cards without horizontal page scroll.
+- Tablet: location cards use three columns.
+- Desktop: location cards use five columns on wide viewports. Region filtering
+  remains the primary region affordance.
+- Map previews fill the entire card media slot with no empty side or top/bottom
+  gutters. Cropping is acceptable in the catalog preview because the full map
+  remains inspectable on `/locations/[id]`.
 - Location card titles reserve a fixed two-line height so one-line and two-line
   names keep the region link, description, and facts aligned across the card
   grid. Names start at the top edge of the reserved slot, and longer names
@@ -80,6 +82,8 @@ file fields.
 - Location card descriptions reserve a fixed three-line height. Longer
   descriptions clamp to three lines with an ellipsis, using compact line spacing
   instead of changing card rhythm.
+- Location card primary action buttons reuse the world section navigation hover:
+  cyan fill, accent border, and on-accent text on hover/focus.
 - Location cards use compact fixed internal row gaps rather than distributing
   extra height between rows, so localized copy cannot push the badge/title block
   to different vertical positions across sibling cards. Spacing between the
@@ -88,9 +92,13 @@ file fields.
 - Location facts render as a single vertical definition list. Each fact occupies
   its own row with the label and compact value on one line, separated from the
   next fact by a subtle gray divider. Fact values do not wrap.
-- Gallery previews reserve a stable row below card facts. When `gallery[]` is
-  empty or all gallery file metadata is invalid, the row renders a page-owned
+- Gallery previews reserve a stable single row below card facts and render every
+  valid `gallery[]` image. If thumbnails do not fit the card width, the preview
+  row scrolls horizontally instead of wrapping or hiding files. When `gallery[]`
+  is empty or all gallery file metadata is invalid, the row renders a page-owned
   empty-gallery label instead of collapsing.
+- Gallery preview thumbnails use imgproxy derivatives first and fall back to
+  the Revisium file URL if the derivative fails to load.
 
 ## Architecture Notes
 
@@ -105,9 +113,9 @@ file fields.
   attempting to construct an imgproxy URL.
 - Location `kind` remains the raw API value in the response sample, but card and
   map-placeholder badges render localized display labels from the page copy.
-- Use map thumbnails as the primary card media and show up to three gallery
-  thumbnails plus the total `gallery[]` count. Defer the full gallery to
-  `/locations/[id]`.
+- Use map thumbnails as the primary card media and show all valid gallery
+  thumbnails plus the total `gallery[]` count. Defer full-size gallery cards and
+  file metadata to `/locations/[id]`.
 - Include `kind` and `coordinates` from the generated schema when available so
   location cards read as atlas records rather than plain image cards.
 
@@ -116,7 +124,10 @@ file fields.
 - [x] Region labels are query-driven.
 - [x] Map thumbnails render from `data.locations.map` through imgproxy.
 - [x] Map thumbnails do not cause layout shift.
+- [x] Map thumbnails fill the card media slot without empty gutters.
 - [x] Each location card shows gallery preview/count sourced from `gallery[]`.
+- [x] Location card gallery previews show all valid files with horizontal scroll
+      when needed.
 - [x] Gallery metadata is visible in the widget response sample.
 
 ## Future Changes

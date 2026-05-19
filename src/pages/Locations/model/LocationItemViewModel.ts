@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 
-import type { PreparedImageSlot } from 'src/shared/lib';
 import { getLocaleNativeLabel, type SupportedLocale } from 'src/shared/model';
 import type { LocationNode } from '../api/LocationsDataSource';
 import {
@@ -73,11 +72,10 @@ export class LocationItemViewModel {
     return prepareLocationCardMapImage(this.node.data.map, this.title);
   }
 
-  public get galleryPreviewImages(): readonly PreparedImageSlot[] {
+  public get galleryPreviewImages(): readonly LocationImageSlot[] {
     return this.node.data.gallery
-      .slice(0, 3)
       .map((image, index) => prepareLocationGalleryThumbnail(image, this.title, index))
-      .filter((image): image is PreparedImageSlot => image !== null);
+      .filter((image): image is LocationImageSlot => image !== null);
   }
 
   public get galleryCount(): number {

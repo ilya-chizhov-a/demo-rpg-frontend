@@ -1,10 +1,13 @@
 import { Badge, Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
+import type { SyntheticEvent } from 'react';
 import { Link as RouterLink } from 'react-router';
+import { CatalogActionButton } from 'src/shared/ui';
 
-import type { PreparedImageSlot } from 'src/shared/lib';
 import type { LocationItemViewModel } from '../../model/LocationItemViewModel';
+import type { LocationImageSlot } from '../../model/locationImages';
 import type { LocationsPageCopy } from '../../model/locationUiCopy';
+import { applyImageFallback } from '../imageFallback';
 import { LocationMapVisual } from '../LocationMapVisual/LocationMapVisual';
 
 interface LocationCardProps {
@@ -25,6 +28,7 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
       gap="3"
       gridTemplateRows="auto auto auto auto 1fr"
       minH="440px"
+      minW="0"
       outline="none"
       overflow="hidden"
       position="relative"
@@ -135,7 +139,7 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
         <LocationFact label={copy.versionLabel} value={item.versionLabel} />
       </Box>
 
-      <Box px="5">
+      <Box minW="0" px="5">
         <GalleryPreview
           emptyLabel={copy.galleryEmptyPreviewLabel}
           images={item.galleryPreviewImages}
@@ -143,20 +147,7 @@ export const LocationCard = observer(({ copy, item }: LocationCardProps) => {
       </Box>
 
       <Box alignSelf="end" px="5" pb="5">
-        <Button
-          asChild
-          borderColor="rgba(103, 232, 249, 0.34)"
-          color="#67e8f9"
-          size="sm"
-          transition="background-color 160ms ease, color 160ms ease"
-          variant="outline"
-          _groupHover={{
-            bg: '#22d3ee',
-            color: 'var(--color-text-on-accent)',
-          }}
-        >
-          <RouterLink to={item.detailHref}>{copy.cardOpenAction}</RouterLink>
-        </Button>
+        <CatalogActionButton to={item.detailHref}>{copy.cardOpenAction}</CatalogActionButton>
       </Box>
     </Box>
   );
@@ -200,7 +191,7 @@ function LocationFact({ label, value }: LocationFactProps) {
 
 interface GalleryPreviewProps {
   readonly emptyLabel: string;
-  readonly images: readonly PreparedImageSlot[];
+  readonly images: readonly LocationImageSlot[];
 }
 
 function GalleryPreview({ emptyLabel, images }: GalleryPreviewProps) {
@@ -224,13 +215,24 @@ function GalleryPreview({ emptyLabel, images }: GalleryPreviewProps) {
   }
 
   return (
-    <Flex gap="2" minH="48px">
+    <Flex
+      gap="2"
+      maxW="full"
+      minH="48px"
+      minW="0"
+      overflowX="auto"
+      overflowY="hidden"
+      pb="1"
+      w="full"
+      css={{ scrollbarWidth: 'thin' }}
+    >
       {images.map((image) => (
         <Box
           bg="#071018"
           borderColor="rgba(103, 232, 249, 0.2)"
           borderRadius="sm"
           borderWidth="1px"
+          flex="0 0 48px"
           h="48px"
           key={image.src}
           overflow="hidden"
@@ -238,10 +240,14 @@ function GalleryPreview({ emptyLabel, images }: GalleryPreviewProps) {
         >
           <Image
             alt={image.alt}
+            data-fallback-src={image.fallbackSrc}
             draggable={false}
             h="full"
+            htmlHeight={image.height}
+            htmlWidth={image.width}
             loading={image.loading}
             objectFit="cover"
+            onError={handleGalleryPreviewImageError}
             src={image.src}
             srcSet={image.srcSet}
             w="full"
@@ -250,4 +256,8 @@ function GalleryPreview({ emptyLabel, images }: GalleryPreviewProps) {
       ))}
     </Flex>
   );
+}
+
+function handleGalleryPreviewImageError(event: SyntheticEvent<HTMLImageElement>): void {
+  applyImageFallback(event.currentTarget);
 }

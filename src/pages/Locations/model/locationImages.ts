@@ -1,6 +1,6 @@
 import { prepareImgproxyImageSlot, type PreparedImageSlot } from 'src/shared/lib';
 
-interface LocationFileSource {
+export interface LocationFileSource {
   readonly fileId: string;
   readonly fileName: string;
   readonly hash: string;
@@ -38,16 +38,42 @@ export function prepareLocationCardMapImage(
   };
 }
 
+export function prepareLocationDetailMapImage(
+  source: LocationFileSource | null | undefined,
+  title: string,
+): LocationImageSlot | null {
+  const sourceUrl = source?.url?.trim();
+  if (!sourceUrl) return null;
+  if (!source?.mimeType?.startsWith('image/')) return null;
+  const size = getBoundedDetailMapSize(source);
+
+  const image = prepareImgproxyImageSlot({
+    alt: `${title} location map`,
+    eager: true,
+    gravity: 'ce',
+    height: size.height,
+    resizeMode: 'fit',
+    sourceUrl,
+    width: size.width,
+  });
+  if (!image) return null;
+
+  return {
+    ...image,
+    fallbackSrc: sourceUrl,
+  };
+}
+
 export function prepareLocationGalleryThumbnail(
   source: LocationFileSource | null | undefined,
   title: string,
   index: number,
-): PreparedImageSlot | null {
+): LocationImageSlot | null {
   const sourceUrl = source?.url?.trim();
   if (!sourceUrl) return null;
   if (!source?.mimeType?.startsWith('image/')) return null;
 
-  return prepareImgproxyImageSlot({
+  const image = prepareImgproxyImageSlot({
     alt: `${title} gallery image ${index + 1}`,
     gravity: 'ce',
     height: 80,
@@ -55,6 +81,37 @@ export function prepareLocationGalleryThumbnail(
     sourceUrl,
     width: 80,
   });
+  if (!image) return null;
+
+  return {
+    ...image,
+    fallbackSrc: sourceUrl,
+  };
+}
+
+export function prepareLocationDetailGalleryImage(
+  source: LocationFileSource | null | undefined,
+  title: string,
+  index: number,
+): LocationImageSlot | null {
+  const sourceUrl = source?.url?.trim();
+  if (!sourceUrl) return null;
+  if (!source?.mimeType?.startsWith('image/')) return null;
+
+  const image = prepareImgproxyImageSlot({
+    alt: `${title} gallery image ${index + 1}`,
+    gravity: 'ce',
+    height: 220,
+    resizeMode: 'fill',
+    sourceUrl,
+    width: 360,
+  });
+  if (!image) return null;
+
+  return {
+    ...image,
+    fallbackSrc: sourceUrl,
+  };
 }
 
 export function getLocationFileMetadata(
@@ -71,4 +128,23 @@ export function getLocationFileMetadata(
     width: source.width,
     height: source.height,
   };
+}
+
+function getBoundedDetailMapSize(source: LocationFileSource): { readonly width: number; readonly height: number } {
+  const fallbackSize = { width: 840, height: 560 };
+  if (!Number.isFinite(source.width) || !Number.isFinite(source.height)) return fallbackSize;
+  if (source.width <= 0 || source.height <= 0) return fallbackSize;
+
+  const aspectRatio = source.width / source.height;
+  const maxWidth = 880;
+  const maxHeight = 560;
+  let width = maxWidth;
+  let height = Math.max(1, Math.round(width / aspectRatio));
+
+  if (height > maxHeight) {
+    height = maxHeight;
+    width = Math.max(1, Math.round(height * aspectRatio));
+  }
+
+  return { width, height };
 }

@@ -1,6 +1,6 @@
-import { Badge, Box, Button, Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import { Badge, Box, Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
-import { Link as RouterLink } from 'react-router';
+import { CatalogActionButton } from 'src/shared/ui';
 
 import type { RegionItemViewModel } from '../../model/RegionItemViewModel';
 import type { RegionsPageCopy } from '../../model/regionUiCopy';
@@ -97,21 +97,7 @@ export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
       </SimpleGrid>
 
       <Box px="5" pb="5">
-        <Button
-          asChild
-          borderColor="rgba(103, 232, 249, 0.34)"
-          color="#67e8f9"
-          size="sm"
-          transition="background-color 160ms ease, color 160ms ease, transform 160ms ease"
-          variant="outline"
-          _groupHover={{
-            bg: '#22d3ee',
-            color: 'var(--color-text-on-accent)',
-            transform: 'translateX(2px)',
-          }}
-        >
-          <RouterLink to={item.detailHref}>{copy.cardOpenAction}</RouterLink>
-        </Button>
+        <CatalogActionButton to={item.detailHref}>{copy.cardOpenAction}</CatalogActionButton>
       </Box>
     </Box>
   );
