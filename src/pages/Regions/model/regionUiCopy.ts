@@ -11,6 +11,7 @@ export interface RegionsPageCopy {
   readonly allClimateButton: string;
   readonly cardOpenAction: string;
   readonly capabilitiesAriaLabel: string;
+  readonly climateLabel: (climate: string) => string;
   readonly climateButtonsAriaLabel: string;
   readonly detail: {
     readonly backAriaLabel: string;
@@ -61,7 +62,7 @@ interface RegionCoverPlaceholderCopyData {
   readonly descriptionTemplate: string;
 }
 
-type RegionsPageCopyData = Omit<RegionsPageCopy, 'activeFilterLabel'> & {
+type RegionsPageCopyData = Omit<RegionsPageCopy, 'activeFilterLabel' | 'climateLabel'> & {
   readonly activeFilterFallback: string;
 };
 
@@ -71,6 +72,30 @@ interface RegionUiCopyData {
 }
 
 const regionUiData = regionUiCopyData as RegionUiCopyData;
+
+const climateLabelsByLocale: Record<RegionLocale, Record<string, string>> = {
+  en: {
+    alpine: 'Alpine',
+    coastal: 'Coastal',
+    desert: 'Desert',
+    forest: 'Forest',
+    temperate: 'Temperate',
+  },
+  ru: {
+    alpine: 'Горный',
+    coastal: 'Прибрежный',
+    desert: 'Пустынный',
+    forest: 'Лесной',
+    temperate: 'Умеренный',
+  },
+  zh: {
+    alpine: '高山',
+    coastal: '海岸',
+    desert: '沙漠',
+    forest: '森林',
+    temperate: '温带',
+  },
+};
 
 const regionCoverPlaceholderCopy = Object.fromEntries(
   Object.entries(regionUiData.regionCoverPlaceholderCopy).map(([locale, copy]) => [
@@ -85,14 +110,16 @@ const regionCoverPlaceholderCopy = Object.fromEntries(
 
 const regionsPageCopy = Object.fromEntries(
   Object.entries(regionUiData.regionsPageCopy).map(([locale, copy]) => {
+    const copyLocale = locale as RegionLocale;
     const { activeFilterFallback, ...pageCopy } = copy;
 
     return [
       locale,
       {
         ...pageCopy,
+        climateLabel: (climate: string) => getClimateLabel(copyLocale, climate),
         activeFilterLabel: (activeClimate: string | null) =>
-          activeClimate ?? activeFilterFallback,
+          activeClimate ? getClimateLabel(copyLocale, activeClimate) : activeFilterFallback,
       },
     ];
   }),
@@ -115,4 +142,12 @@ export function getRegionsPageCopy(locale: RegionLocale): RegionsPageCopy {
 
 function getRegionCoverPlaceholderCopy(locale: RegionLocale): RegionCoverPlaceholderCopy {
   return regionCoverPlaceholderCopy[locale] ?? regionCoverPlaceholderCopy[fallbackLocale];
+}
+
+function getClimateLabel(locale: RegionLocale, climate: string): string {
+  return (
+    climateLabelsByLocale[locale]?.[climate] ??
+    climateLabelsByLocale[fallbackLocale][climate] ??
+    climate
+  );
 }

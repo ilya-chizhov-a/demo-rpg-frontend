@@ -24,9 +24,8 @@ reference pattern for readable game-database list pages.
 | Block            | Requirement                                                                                   |
 | ---------------- | --------------------------------------------------------------------------------------------- |
 | Header           | Title, atlas purpose, and chips for `data.regions`, climates, localized lore, and pagination. |
-| Result summary   | Shows visible count and `totalCount`.                                                         |
-| Climate filter   | Server-side JSON filter using `data.path = ["climate"]`.                                      |
-| Region list      | Cards with name, description, climate, `cover_image` thumbnail, and detail link.              |
+| Climate filter   | Server-side JSON filter chips with localized climate labels using `data.path = ["climate"]`; no visible result summary text. |
+| Region list      | Cards with name, description, localized climate badge, `cover_image` thumbnail, and detail link. |
 | Pagination       | Shows connection `pageInfo`; load-more fetches the next cursor.                               |
 | Explainer Widget | Required; shows `Regions` operation, variables, response sample, cloud links.                 |
 
@@ -45,7 +44,7 @@ reference pattern for readable game-database list pages.
 | State   | Requirement                                                       |
 | ------- | ----------------------------------------------------------------- |
 | Loading | Show stable list skeleton and widget skeleton.                    |
-| Loaded  | Show cards, count, and widget response.                           |
+| Loaded  | Show cards and widget response.                                   |
 | Empty   | Show "No regions match this filter" plus reset.                   |
 | Error   | Name GraphQL/router failure where possible and keep retry action. |
 
@@ -80,8 +79,10 @@ reference pattern for readable game-database list pages.
 - Desktop: cards in dense grid/table, floating widget trigger, max content width `1440px`, 32px gutters.
 - Region cards render the required `cover_image` through imgproxy. The climate
   text badge remains the source of meaning when art is unavailable or abstract.
-  The card reserves space for `cover_image` so imgproxy-served art renders
-  without layout shift across phone, tablet, and desktop widths.
+  Climate badges and filter chips render localized labels while GraphQL
+  variables keep the raw `data.climate` value. The card reserves space for
+  `cover_image` so imgproxy-served art renders without layout shift across
+  phone, tablet, and desktop widths.
 - If `data.cover_image.url` is missing or invalid, `/regions` renders the
   region media placeholder for the card image slot instead of checked-in
   per-region fallback art. Keep it page-owned until another real page or widget
@@ -97,8 +98,8 @@ reference pattern for readable game-database list pages.
 
 ## Acceptance Criteria
 
-- [x] Shows region name, description, and climate from GraphQL.
-- [x] Shows total count when available.
+- [x] Shows region name, description, and localized climate label from GraphQL.
+- [x] Keeps `totalCount` in the Explainer Widget response sample when available.
 - [x] Handles loading, loaded, empty, and error states.
 - [x] Explainer Widget shows query, variables, response sample, and cloud links.
 - [x] Layout passes phone/tablet/desktop audit.

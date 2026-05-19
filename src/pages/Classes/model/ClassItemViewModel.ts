@@ -1,15 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 
-import type { SupportedLocale } from 'src/shared/model';
+import { getLocaleNativeLabel, type SupportedLocale } from 'src/shared/model';
 import type { ClassNode } from '../api/ClassesDataSource';
 
 export type ClassLocale = SupportedLocale;
-
-const localeNames: Record<ClassLocale, string> = {
-  en: 'English',
-  ru: 'Русский',
-  zh: '中文',
-};
 
 export class ClassItemViewModel {
   constructor(
@@ -58,7 +52,7 @@ export class ClassItemViewModel {
   }
 
   public get localeLabel(): string {
-    return localeNames[this.getLocale()];
+    return getLocaleNativeLabel(this.getLocale());
   }
 
   public get heroesHref(): string {

@@ -22,7 +22,7 @@ export const RegionDetailPanel = observer(({ vm }: RegionDetailPanelProps) => {
       </Heading>
       <SimpleGrid as="dl" columns={{ base: 1, sm: 2 }} gap="5" mt="5">
         <RegionDetailField label={vm.copy.detail.fieldRegionId} value={vm.id} />
-        <RegionDetailField label={vm.copy.detail.fieldClimate} value={vm.climate} />
+        <RegionDetailField label={vm.copy.detail.fieldClimate} value={vm.climateLabel} />
         <RegionDetailField label={vm.copy.detail.fieldPublished} value={vm.publishedLabel} />
         <RegionDetailField label={vm.copy.detail.fieldVersion} value={vm.versionLabel} />
       </SimpleGrid>

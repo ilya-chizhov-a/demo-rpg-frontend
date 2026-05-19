@@ -12,7 +12,7 @@ import {
   isRefreshing,
   type PreparedImageSlot,
 } from 'src/shared/lib';
-import { LocaleService, type UiCopy } from 'src/shared/model';
+import { getLocaleNativeLabel, LocaleService, type UiCopy } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
 import { RegionDetailDataSource, type RegionDetailNode } from '../api/RegionDetailDataSource';
 import type { RegionLocale } from './RegionItemViewModel';
@@ -47,12 +47,6 @@ const REGION_DETAIL_QUERY = `query RegionDetail($id: String!) {
     }
   }
 }`;
-
-const localeNames: Record<RegionLocale, string> = {
-  en: 'English',
-  ru: 'Русский',
-  zh: '中文',
-};
 
 export class RegionDetailViewModel implements IViewModel {
   private readonly cloudRegionsBaseHref =
@@ -101,6 +95,10 @@ export class RegionDetailViewModel implements IViewModel {
     return this.item?.data.climate ?? 'unknown';
   }
 
+  public get climateLabel(): string {
+    return this.copy.climateLabel(this.climate);
+  }
+
   public get coverImage(): PreparedImageSlot | null {
     if (!this.item) return null;
     return prepareRegionHeroCoverImage(this.item.data.cover_image, this.title);
@@ -115,7 +113,7 @@ export class RegionDetailViewModel implements IViewModel {
   }
 
   public get localeLabel(): string {
-    return localeNames[this.locale];
+    return getLocaleNativeLabel(this.locale);
   }
 
   public get publishedLabel(): string {

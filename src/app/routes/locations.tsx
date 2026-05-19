@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { LocationsPage } from 'src/pages/Locations';
 
-export default createPlaceholderRoute('locations');
+export default function LocationsRoute() {
+  return <LocationsPage />;
+}

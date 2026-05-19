@@ -1015,6 +1015,20 @@ export type ClassesQueryVariables = Exact<{
 
 export type ClassesQuery = { classeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type LocationsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetLocationsesInput>;
+}>;
+
+
+export type LocationsQuery = { locationses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { kind: string, coordinates: { x: number, y: number }, description: { en: string, ru: string, zh: string }, gallery: Array<{ fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }>, map: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, region_id: { id: string, data: { climate: string, name: { en: string, ru: string, zh: string } } } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type LocationRegionOptionsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetRegionsesInput>;
+}>;
+
+
+export type LocationRegionOptionsQuery = { regionses: { edges: Array<{ node: { id: string, data: { climate: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type RegionDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1063,6 +1077,95 @@ export const ClassesDocument = gql`
       hasNextPage
     }
     totalCount
+  }
+}
+    `;
+export const LocationsDocument = gql`
+    query Locations($data: Demo_rpg_dataGetLocationsesInput) {
+  locationses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          coordinates {
+            x
+            y
+          }
+          description {
+            en
+            ru
+            zh
+          }
+          gallery {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          kind
+          map {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          name {
+            en
+            ru
+            zh
+          }
+          region_id {
+            id
+            data {
+              climate
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const LocationRegionOptionsDocument = gql`
+    query LocationRegionOptions($data: Demo_rpg_dataGetRegionsesInput) {
+  regionses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          climate
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
 }
     `;
@@ -1150,6 +1253,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     Classes(variables?: ClassesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ClassesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ClassesQuery>({ document: ClassesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Classes', 'query', variables);
+    },
+    Locations(variables?: LocationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LocationsQuery>({ document: LocationsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Locations', 'query', variables);
+    },
+    LocationRegionOptions(variables?: LocationRegionOptionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationRegionOptionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LocationRegionOptionsQuery>({ document: LocationRegionOptionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LocationRegionOptions', 'query', variables);
     },
     RegionDetail(variables: RegionDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RegionDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<RegionDetailQuery>({ document: RegionDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'RegionDetail', 'query', variables);

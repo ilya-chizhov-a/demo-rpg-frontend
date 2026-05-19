@@ -47,7 +47,7 @@ export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
       }}
     >
       <RegionCoverVisual
-        climate={item.climate}
+        climate={item.climateLabel}
         image={item.coverImage}
         placeholderDescription={item.coverPlaceholderDescription}
         placeholderTitle={item.coverPlaceholderTitle}
@@ -57,7 +57,7 @@ export const RegionCard = observer(({ copy, item }: RegionCardProps) => {
       <Box px="5">
         <Flex align="center" color="#9aa7b1" fontSize="sm" gap="3" justify="space-between">
           <Badge colorPalette="green" variant="subtle">
-            {item.climate}
+            {item.climateLabel}
           </Badge>
           <Text>{item.localeLabel}</Text>
         </Flex>

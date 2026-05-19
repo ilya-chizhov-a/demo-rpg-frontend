@@ -27,7 +27,7 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
 
       <Box mt="4">
         <RegionCoverVisual
-          climate={vm.climate}
+          climate={vm.climateLabel}
           image={vm.coverImage}
           placeholderDescription={vm.coverPlaceholderDescription}
           placeholderTitle={vm.coverPlaceholderTitle}
@@ -42,7 +42,7 @@ export const RegionDetailHeader = observer(({ vm }: RegionDetailHeaderProps) => 
               data.regions
             </Badge>
             <Badge colorPalette="green" size="lg" variant="subtle">
-              {vm.climate}
+              {vm.climateLabel}
             </Badge>
             <Badge colorPalette="gray" size="lg" variant="subtle">
               {vm.copy.detail.backendPending}

@@ -1,6 +1,7 @@
 export { container, type Token } from './DIContainer';
 export { ObservableRequest, ok, err, type Either } from './ObservableRequest';
 export {
+  createCatalogViewState,
   hasRequestError,
   isInitialLoading,
   isRefreshing,
@@ -9,6 +10,7 @@ export {
   shouldRequestInitialData,
   totalCatalogCount,
   type CatalogResult,
+  type CatalogViewState,
 } from './helpers/catalogViewModel';
 export {
   prepareImgproxyImageSlot,

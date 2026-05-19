@@ -1,7 +1,6 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 
-import { ResultSummary } from 'src/shared/ui';
 import type { RegionsViewModel } from '../../model/RegionsViewModel';
 
 interface RegionsToolbarProps {
@@ -12,24 +11,10 @@ export const RegionsToolbar = observer(({ vm }: RegionsToolbarProps) => {
   return (
     <Flex align="flex-start" gap="4" mb="5" wrap="wrap">
       <Box>
-        <ResultSummary
-          entityLabel={vm.copy.entityLabel}
-          ofLabel={vm.sharedCopy.resultSummaryOf}
-          showingLabel={vm.sharedCopy.resultSummaryShowing}
-          totalCount={vm.totalCount}
-          visibleCount={vm.visibleCount}
-        />
-        <Text color="#9aa7b1" fontSize="sm" mt="1">
-          {vm.copy.filterLabel}:{' '}
-          <Text as="span" fontWeight="bold">
-            {vm.activeFilterLabel}
-          </Text>
-        </Text>
         {vm.climateButtons.length > 1 ? (
           <Flex
             aria-label={vm.copy.climateButtonsAriaLabel}
             gap="2"
-            mt="2"
             role="group"
             wrap="wrap"
           >

@@ -147,8 +147,9 @@ export class RegionsViewModel implements IViewModel {
   }
 
   public get climates(): readonly string[] {
+    const collator = new Intl.Collator(this.locale);
     return [...new Set(this.loadedItems.map((item) => item.data.climate))].sort((left, right) =>
-      left.localeCompare(right),
+      collator.compare(this.copy.climateLabel(left), this.copy.climateLabel(right)),
     );
   }
 
@@ -156,7 +157,7 @@ export class RegionsViewModel implements IViewModel {
     return [
       this.createClimateButtonDescriptor(null, this.copy.allClimateButton, 'all'),
       ...this.climates.map((climate) =>
-        this.createClimateButtonDescriptor(climate, climate, climate),
+        this.createClimateButtonDescriptor(climate, this.copy.climateLabel(climate), climate),
       ),
     ];
   }
@@ -244,7 +245,12 @@ export class RegionsViewModel implements IViewModel {
     const cached = this.itemCache.get(node.id);
     if (cached) return cached;
 
-    const item = new RegionItemViewModel(node, () => this.locale, () => this.copy.noDescription);
+    const item = new RegionItemViewModel(
+      node,
+      () => this.locale,
+      () => this.copy.noDescription,
+      (climate) => this.copy.climateLabel(climate),
+    );
     this.itemCache.set(node.id, item);
     return item;
   }

@@ -1,0 +1,86 @@
+query Locations($data: Demo_rpg_dataGetLocationsesInput) {
+  locationses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          coordinates {
+            x
+            y
+          }
+          description {
+            en
+            ru
+            zh
+          }
+          gallery {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          kind
+          map {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          name {
+            en
+            ru
+            zh
+          }
+          region_id {
+            id
+            data {
+              climate
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+
+query LocationRegionOptions($data: Demo_rpg_dataGetRegionsesInput) {
+  regionses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          climate
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

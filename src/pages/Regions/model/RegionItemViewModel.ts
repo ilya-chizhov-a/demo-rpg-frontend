@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 import type { PreparedImageSlot } from 'src/shared/lib';
-import type { SupportedLocale } from 'src/shared/model';
+import { getLocaleNativeLabel, type SupportedLocale } from 'src/shared/model';
 import type { RegionNode } from '../api/RegionsDataSource';
 import { prepareRegionCardCoverImage } from './regionCoverImages';
 import {
@@ -11,22 +11,21 @@ import {
 
 export type RegionLocale = SupportedLocale;
 
-const localeNames: Record<RegionLocale, string> = {
-  en: 'English',
-  ru: 'Русский',
-  zh: '中文',
-};
-
 export class RegionItemViewModel {
   constructor(
     private readonly node: RegionNode,
     private readonly getLocale: () => RegionLocale,
     private readonly getNoDescriptionCopy: () => string,
+    private readonly getClimateLabel: (climate: string) => string,
   ) {
-    makeAutoObservable<this, 'node' | 'getLocale' | 'getNoDescriptionCopy'>(this, {
+    makeAutoObservable<
+      this,
+      'node' | 'getLocale' | 'getNoDescriptionCopy' | 'getClimateLabel'
+    >(this, {
       node: false,
       getLocale: false,
       getNoDescriptionCopy: false,
+      getClimateLabel: false,
     });
   }
 
@@ -50,6 +49,10 @@ export class RegionItemViewModel {
     return this.node.data.climate;
   }
 
+  public get climateLabel(): string {
+    return this.getClimateLabel(this.climate);
+  }
+
   public get coverImage(): PreparedImageSlot | null {
     return prepareRegionCardCoverImage(this.node.data.cover_image, this.title);
   }
@@ -71,7 +74,7 @@ export class RegionItemViewModel {
   }
 
   public get localeLabel(): string {
-    return localeNames[this.getLocale()];
+    return getLocaleNativeLabel(this.getLocale());
   }
 
   public get usesLocaleFallback(): boolean {

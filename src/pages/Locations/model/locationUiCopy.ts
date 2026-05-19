@@ -1,0 +1,164 @@
+import type { LocationLocale } from './LocationItemViewModel';
+
+export interface LocationsPageCopy {
+  readonly allRegionsButton: string;
+  readonly capabilitiesAriaLabel: string;
+  readonly cardOpenAction: string;
+  readonly coordinateLabel: string;
+  readonly emptyActionLabel: string;
+  readonly emptyDescription: string;
+  readonly emptyTitle: string;
+  readonly errorDescription: string;
+  readonly errorTitle: string;
+  readonly explainerFooterNote: string;
+  readonly explainerSummary: string;
+  readonly galleryCountLabel: (count: number) => string;
+  readonly galleryLabel: string;
+  readonly headerBadges: readonly string[];
+  readonly headerDescription: string;
+  readonly headerEyebrow: string;
+  readonly headerTitle: string;
+  readonly loadingAriaLabel: string;
+  readonly loadingMoreLabel: string;
+  readonly mapPlaceholderDescription: (locationTitle: string) => string;
+  readonly mapPlaceholderTitle: string;
+  readonly noDescription: string;
+  readonly publishedLabel: string;
+  readonly regionButtonsAriaLabel: string;
+  readonly regionLabel: string;
+  readonly resetFiltersActionLabel: string;
+  readonly retryActionLabel: string;
+  readonly showMoreActionLabel: string;
+  readonly versionLabel: string;
+  readonly worldSectionAriaLabel: string;
+}
+
+const locationsPageCopy: Record<LocationLocale, LocationsPageCopy> = {
+  en: {
+    allRegionsButton: 'All',
+    capabilitiesAriaLabel: 'Capabilities',
+    cardOpenAction: 'Open location',
+    coordinateLabel: 'Coordinates',
+    emptyActionLabel: 'Reset filters',
+    emptyDescription: 'The query completed, but no locations match the current filters.',
+    emptyTitle: 'No locations found',
+    errorDescription: 'The GraphQL router did not return the locations catalog.',
+    errorTitle: 'Failed to load locations',
+    explainerFooterNote:
+      'Location cards render imgproxy derivatives while the widget preserves original Revisium file metadata.',
+    explainerSummary:
+      'Locations show a region foreign key, large map file metadata, coordinates, and a required gallery file array.',
+    galleryCountLabel: (count) => `${count} gallery file${count === 1 ? '' : 's'}`,
+    galleryLabel: 'Gallery',
+    headerBadges: ['data.locations', 'region FK', 'map file', 'gallery[]', 'coordinates'],
+    headerDescription:
+      'Browse places inside each region with map previews, gallery evidence, and atlas coordinates.',
+    headerEyebrow: 'World atlas',
+    headerTitle: 'Locations',
+    loadingAriaLabel: 'Loading locations',
+    loadingMoreLabel: 'Loading...',
+    mapPlaceholderDescription: (locationTitle) => `No map image is available for ${locationTitle}.`,
+    mapPlaceholderTitle: 'Map unavailable',
+    noDescription: 'No description available.',
+    publishedLabel: 'Published',
+    regionButtonsAriaLabel: 'Filter locations by region',
+    regionLabel: 'Region',
+    resetFiltersActionLabel: 'Reset',
+    retryActionLabel: 'Retry',
+    showMoreActionLabel: 'Load more',
+    versionLabel: 'Version',
+    worldSectionAriaLabel: 'World section',
+  },
+  ru: {
+    allRegionsButton: 'Все',
+    capabilitiesAriaLabel: 'Возможности',
+    cardOpenAction: 'Открыть локацию',
+    coordinateLabel: 'Координаты',
+    emptyActionLabel: 'Сбросить фильтры',
+    emptyDescription: 'Запрос выполнен, но локации не подходят под текущие фильтры.',
+    emptyTitle: 'Локации не найдены',
+    errorDescription: 'GraphQL-роутер не вернул каталог локаций.',
+    errorTitle: 'Не удалось загрузить локации',
+    explainerFooterNote:
+      'Карточки используют imgproxy-версии изображений, а виджет сохраняет оригинальные Revisium-метаданные файлов.',
+    explainerSummary:
+      'Локации показывают FK региона, метаданные большой карты, координаты и обязательный массив файлов gallery.',
+    galleryCountLabel: formatRussianGalleryCount,
+    galleryLabel: 'Галерея',
+    headerBadges: ['data.locations', 'FK региона', 'файл карты', 'gallery[]', 'координаты'],
+    headerDescription:
+      'Просматривайте места внутри регионов с превью карт, галереей и координатами атласа.',
+    headerEyebrow: 'Атлас мира',
+    headerTitle: 'Локации',
+    loadingAriaLabel: 'Загрузка локаций',
+    loadingMoreLabel: 'Загрузка...',
+    mapPlaceholderDescription: (locationTitle) => `Для локации ${locationTitle} нет карты.`,
+    mapPlaceholderTitle: 'Карта недоступна',
+    noDescription: 'Описание недоступно.',
+    publishedLabel: 'Опубликовано',
+    regionButtonsAriaLabel: 'Фильтровать локации по региону',
+    regionLabel: 'Регион',
+    resetFiltersActionLabel: 'Сбросить',
+    retryActionLabel: 'Повторить',
+    showMoreActionLabel: 'Загрузить ещё',
+    versionLabel: 'Версия',
+    worldSectionAriaLabel: 'Раздел мира',
+  },
+  zh: {
+    allRegionsButton: '全部',
+    capabilitiesAriaLabel: '能力',
+    cardOpenAction: '打开地点',
+    coordinateLabel: '坐标',
+    emptyActionLabel: '重置筛选',
+    emptyDescription: '查询已完成，但没有地点匹配当前筛选。',
+    emptyTitle: '未找到地点',
+    errorDescription: 'GraphQL router 未返回地点目录。',
+    errorTitle: '地点加载失败',
+    explainerFooterNote:
+      '地点卡片渲染 imgproxy 派生图，widget 保留原始 Revisium 文件元数据。',
+    explainerSummary:
+      '地点展示区域外键、大地图文件元数据、坐标和必填 gallery 文件数组。',
+    galleryCountLabel: (count) => `${count} 个图库文件`,
+    galleryLabel: '图库',
+    headerBadges: ['data.locations', '区域 FK', '地图文件', 'gallery[]', '坐标'],
+    headerDescription: '浏览各区域内的地点，查看地图预览、图库证据和地图集坐标。',
+    headerEyebrow: '世界地图集',
+    headerTitle: '地点',
+    loadingAriaLabel: '正在加载地点',
+    loadingMoreLabel: '加载中...',
+    mapPlaceholderDescription: (locationTitle) => `${locationTitle} 暂无地图图片。`,
+    mapPlaceholderTitle: '地图不可用',
+    noDescription: '暂无描述。',
+    publishedLabel: '发布时间',
+    regionButtonsAriaLabel: '按区域筛选地点',
+    regionLabel: '区域',
+    resetFiltersActionLabel: '重置',
+    retryActionLabel: '重试',
+    showMoreActionLabel: '加载更多',
+    versionLabel: '版本',
+    worldSectionAriaLabel: '世界分区',
+  },
+};
+
+const fallbackLocale: LocationLocale = 'en';
+
+export function getLocationsPageCopy(locale: LocationLocale): LocationsPageCopy {
+  return locationsPageCopy[locale] ?? locationsPageCopy[fallbackLocale];
+}
+
+function formatRussianGalleryCount(count: number): string {
+  const absolute = Math.abs(count);
+  const lastTwoDigits = absolute % 100;
+  const lastDigit = absolute % 10;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return `${count} файлов в галерее`;
+  }
+  if (lastDigit === 1) {
+    return `${count} файл в галерее`;
+  }
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return `${count} файла в галерее`;
+  }
+  return `${count} файлов в галерее`;
+}

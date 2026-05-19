@@ -20,6 +20,13 @@ const localeOptions: readonly LocaleOption[] = [
 ] as const;
 const localeStorageKey = 'branching-tales.locale';
 
+export function getLocaleNativeLabel(locale: SupportedLocale): string {
+  return (
+    localeOptions.find((option) => option.value === locale)?.nativeLabel ??
+    defaultLocaleOption.nativeLabel
+  );
+}
+
 export class LocaleService {
   public locale: SupportedLocale = 'en';
 
