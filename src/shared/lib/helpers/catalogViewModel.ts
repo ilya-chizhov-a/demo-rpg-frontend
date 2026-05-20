@@ -1,7 +1,10 @@
-import type { ObservableRequest } from '../ObservableRequest';
+import type { Either, ObservableRequest } from '../ObservableRequest';
 
 export interface CatalogResult<TNode> {
   readonly items: readonly TNode[];
+  readonly pageInfo?: {
+    readonly hasNextPage?: boolean;
+  };
   readonly totalCount: number;
 }
 
@@ -26,6 +29,8 @@ export interface CatalogViewStateInput {
   readonly visibleCount: number;
 }
 
+type FetchCatalogItems<TNode> = () => Promise<Either<unknown, CatalogResult<TNode>>>;
+
 export function createCatalogViewState(input: CatalogViewStateInput): CatalogViewState {
   const showLoading = input.isLoading && !input.isLoaded;
   const showRefreshing = input.isLoading && input.isLoaded;
@@ -45,6 +50,21 @@ export function createCatalogViewState(input: CatalogViewStateInput): CatalogVie
   };
 }
 
+export function createCatalogViewStateFromRequest<TNode, Args extends unknown[]>(
+  request: ObservableRequest<CatalogResult<TNode>, Args>,
+  loadedItems: readonly TNode[],
+  visibleCount = loadedItems.length,
+): CatalogViewState {
+  return createCatalogViewState({
+    hasError: hasRequestError(request),
+    hasNextPage: request.data?.pageInfo?.hasNextPage,
+    isLoaded: request.isLoaded,
+    isLoading: request.isLoading,
+    totalCount: totalCatalogCount(request, loadedItems),
+    visibleCount,
+  });
+}
+
 export function shouldRequestInitialData<Args extends unknown[]>(
   request: ObservableRequest<unknown, Args>,
 ): boolean {
@@ -59,6 +79,15 @@ export function resetCatalogState<TNode>(
   itemCache.clear();
 }
 
+export function resetCatalogRequestState<TNode>(
+  requestOwner: { reset(): void },
+  loadedItems: TNode[],
+  itemCache: Map<string, unknown>,
+): void {
+  requestOwner.reset();
+  resetCatalogState(loadedItems, itemCache);
+}
+
 export function replaceCatalogItems<TNode>(
   loadedItems: TNode[],
   itemCache: Map<string, unknown>,
@@ -66,6 +95,29 @@ export function replaceCatalogItems<TNode>(
 ): void {
   resetCatalogState(loadedItems, itemCache);
   loadedItems.push(...items);
+}
+
+export async function appendCatalogItemsFromFetch<TNode>(
+  loadedItems: TNode[],
+  canLoadMore: boolean,
+  fetchItems: FetchCatalogItems<TNode>,
+): Promise<void> {
+  if (!canLoadMore) return;
+  const result = await fetchItems();
+  if (result.ok) {
+    loadedItems.push(...result.value.items);
+  }
+}
+
+export async function replaceCatalogItemsFromFetch<TNode>(
+  loadedItems: TNode[],
+  itemCache: Map<string, unknown>,
+  fetchItems: FetchCatalogItems<TNode>,
+): Promise<void> {
+  const result = await fetchItems();
+  if (result.ok) {
+    replaceCatalogItems(loadedItems, itemCache, result.value.items);
+  }
 }
 
 export function totalCatalogCount<TNode, Args extends unknown[]>(

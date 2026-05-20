@@ -3,14 +3,15 @@
 | Field | Value |
 |---|---|
 | Route | `/abilities` |
-| Status | Draft |
+| Status | In delivery |
 | Pattern | Small catalog |
-| Primary capability | SVG icon file catalog |
+| Primary capability | Icon file catalog with localized combat fields |
 
 ## Purpose
 
 Show a compact icon-heavy catalog and serve as a target for hero/monster array
-foreign keys.
+foreign keys. The first frontend pass renders the table rows as a localized
+catalog and keeps reverse usage links for a later detail surface.
 
 ## Context And Entry
 
@@ -22,16 +23,17 @@ foreign keys.
 | Block | Requirement |
 |---|---|
 | Header | Explain abilities as reusable rows. |
-| Ability list | Icon, name, category/type, description. |
-| Related usage | Optional "used by heroes/monsters" links if available. |
+| Ability list | Icon, name, kind, magic school, level, signed power value, cooldown, description, total count, and cursor-backed fetch-more state. |
+| Related usage | Deferred until reverse usage is exposed or a detail route is planned. |
 | Explainer Widget | Required. |
 
 ## Primary Actions
 
 | Action | Result |
 |---|---|
-| Search/filter ability | Updates list where supported. |
-| Open cloud row | Opens ability row. |
+| Review ability stats | Cards expose level, damage/heal, cooldown, kind, and school. |
+| Load more | Requests the next cursor page when `pageInfo.hasNextPage` is true and appends cards without clearing the loaded list. |
+| Open explainer | Shows GraphQL operation, response sample, and source links. |
 
 ## States
 
@@ -46,19 +48,19 @@ foreign keys.
 
 | From | Trigger | To |
 |---|---|---|
-| Catalog loaded | Filter/search changes | Refreshing list |
-| Catalog loaded | Cloud row click | External cloud row |
+| Catalog loaded | Retry after an error | Refreshing list |
+| Catalog loaded | Open explainer | Explainer source view |
 
 ## Data Contract
 
 | Source | Fields |
 |---|---|
-| `data.abilities` | id, localized name/description, icon, category/type if present. |
+| `data.abilities` | id, `name { en, ru, zh }`, `description { en, ru, zh }`, icon, `kind`, `school`, `level_required`, `base_damage`, `cooldown`. `base_damage` is the signed power value shown by the UI; negative values are rendered as healing/restore values rather than a separate `base_heal` field. |
 
 ## Explainer Widget
 
-- Summary: "Abilities show SVG icon file fields and rows reused through array foreign keys."
-- Variables: locale, optional filters.
+- Summary: "Abilities show localized combat rows with icon file metadata and enum-like fields."
+- Variables: locale, cursor/page info (`first`, optional `after`, `endCursor`, `hasNextPage`).
 - Deep links: abilities table/schema.
 - Subgraphs: `data`.
 
@@ -70,12 +72,17 @@ foreign keys.
 
 ## Architecture Notes
 
-- Reuse SVG icon file renderer from items/factions.
+- Reuse the shared imgproxy file preparation helper when Revisium provides
+  renderable icon URLs, and show a stable placeholder when icon rows are empty.
+- Use the DataSource/List/Item ViewModel split from the frontend architecture
+  guide.
 
 ## Acceptance Criteria
 
-- [ ] SVG icons render cleanly at multiple sizes.
-- [ ] Widget links ability rows to array-FK usage.
+- [ ] Localized ability rows render without raw English headings in `ru`/`zh`.
+- [ ] Empty icon rows keep fixed icon placeholders without layout shift.
+- [ ] Pagination shows initial rows, total/visible counts, and a load-more action while `hasNextPage` is true.
+- [ ] Explainer Widget documents the generated GraphQL connection and response sample.
 
 ## Open Questions
 

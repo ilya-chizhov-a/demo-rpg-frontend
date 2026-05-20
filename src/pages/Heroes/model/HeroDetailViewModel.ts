@@ -4,15 +4,13 @@ import type { IViewModel } from 'src/shared/config';
 import { container, hasRequestError, isInitialLoading } from 'src/shared/lib';
 import { getLocaleNativeLabel, LocaleService, type UiCopy } from 'src/shared/model';
 import type { ExplainerDescriptor } from 'src/widgets/explainer-widget';
-import {
-  HeroDetailDataSource,
-  type HeroDetailNode,
-} from '../api/HeroDetailDataSource';
+import { HeroDetailDataSource, type HeroDetailNode } from '../api/HeroDetailDataSource';
 import {
   getHeroPortraitMetadata,
   prepareHeroDetailPortraitImage,
   type HeroPortraitImageSlot,
 } from './heroImages';
+import { getHeroDisplayName } from './heroDisplayName';
 import type { HeroLocale } from './HeroItemViewModel';
 import { getHeroesPageCopy, type HeroDetailCopy, type HeroesPageCopy } from './heroUiCopy';
 
@@ -142,10 +140,13 @@ export class HeroDetailViewModel implements IViewModel {
   }
 
   public get title(): string {
-    const displayName = this.item?.data.display_name_en;
-    if (displayName) return displayName;
-    const localizedName = this.localized(this.item?.data.name);
-    return localizedName === '' ? this.id : localizedName;
+    return getHeroDisplayName({
+      displayNameEn: this.item?.data.display_name_en,
+      epithet: this.item?.data.epithet,
+      fallbackId: this.id,
+      locale: this.locale,
+      name: this.item?.data.name,
+    });
   }
 
   public get epithet(): string {
@@ -224,7 +225,7 @@ export class HeroDetailViewModel implements IViewModel {
     return [
       {
         label: this.detailCopy.primaryStatLabel,
-        value: classData?.primary_stat ?? this.unknownValue,
+        value: this.copy.statLabel(classData?.primary_stat ?? '') || this.unknownValue,
       },
       {
         label: this.detailCopy.classBaseHpLabel,

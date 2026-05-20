@@ -1008,6 +1008,13 @@ export type SignUpInput = {
   username: Scalars['String']['input'];
 };
 
+export type AbilitiesQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetAbilitiesesInput>;
+}>;
+
+
+export type AbilitiesQuery = { abilitieses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_damage: number, cooldown: number, kind: string, level_required: number, school: string, description: { en: string, ru: string, zh: string }, icon: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type ClassesQueryVariables = Exact<{
   data?: InputMaybe<Demo_Rpg_DataGetClassesesInput>;
 }>;
@@ -1044,7 +1051,7 @@ export type HeroesQueryVariables = Exact<{
 }>;
 
 
-export type HeroesQuery = { heroeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { display_name_en: string, is_veteran: boolean, level: number, name: { en: string, ru: string, zh: string }, class_id: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } }, portrait: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } }, classeses: { totalCount: number, edges: Array<{ node: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+export type HeroesQuery = { heroeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { display_name_en: string, is_veteran: boolean, level: number, epithet: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string }, class_id: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } }, portrait: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } }, classeses: { totalCount: number, edges: Array<{ node: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
 export type LocationDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1067,6 +1074,41 @@ export type LocationRegionOptionsQueryVariables = Exact<{
 
 export type LocationRegionOptionsQuery = { regionses: { edges: Array<{ node: { id: string, data: { climate: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type NpcDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type NpcDetailQuery = { npcs: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { display_label_en: string, role: string, description: { en: string, ru: string, zh: string }, location_id: { id: string, data: { kind: string, name: { en: string, ru: string, zh: string } } }, name: { en: string, ru: string, zh: string }, portrait: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, title: { en: string, ru: string, zh: string } } } };
+
+export type NpcsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetNpcsesInput>;
+}>;
+
+
+export type NpcsQuery = { npcses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { display_label_en: string, role: string, description: { en: string, ru: string, zh: string }, location_id: { id: string, data: { name: { en: string, ru: string, zh: string } } }, name: { en: string, ru: string, zh: string }, portrait: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, title: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type NpcLocationOptionsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetLocationsesInput>;
+}>;
+
+
+export type NpcLocationOptionsQuery = { locationses: { edges: Array<{ node: { id: string, data: { name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type PartiesQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetPartiesesInput>;
+}>;
+
+
+export type PartiesQuery = { partieses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { formation: string, is_full: boolean, member_count: number, hero_ids: Array<{ id: string, data: { display_name_en: string, epithet: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string }, portrait: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number } } }>, motto: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type PartyDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type PartyDetailQuery = { parties: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { formation: string, is_full: boolean, member_count: number, hero_ids: Array<{ id: string, data: { display_name_en: string, is_veteran: boolean, level: number, class_id: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } }, epithet: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string }, portrait: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number } } }>, motto: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } };
+
 export type RegionDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1082,6 +1124,52 @@ export type RegionsQueryVariables = Exact<{
 export type RegionsQuery = { regionses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { climate: string, cover_image: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
 
+export const AbilitiesDocument = gql`
+    query Abilities($data: Demo_rpg_dataGetAbilitiesesInput) {
+  abilitieses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          base_damage
+          cooldown
+          description {
+            en
+            ru
+            zh
+          }
+          icon {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          school
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
 export const ClassesDocument = gql`
     query Classes($data: Demo_rpg_dataGetClassesesInput) {
   classeses(data: $data) {
@@ -1395,6 +1483,11 @@ export const HeroesDocument = gql`
         publishedAt
         data {
           display_name_en
+          epithet {
+            en
+            ru
+            zh
+          }
           is_veteran
           level
           name {
@@ -1601,6 +1694,258 @@ export const LocationRegionOptionsDocument = gql`
   }
 }
     `;
+export const NpcDetailDocument = gql`
+    query NpcDetail($id: String!) {
+  npcs(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      description {
+        en
+        ru
+        zh
+      }
+      display_label_en
+      location_id {
+        id
+        data {
+          kind
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      portrait {
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        url
+        width
+      }
+      role
+      title {
+        en
+        ru
+        zh
+      }
+    }
+  }
+}
+    `;
+export const NpcsDocument = gql`
+    query Npcs($data: Demo_rpg_dataGetNpcsesInput) {
+  npcses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          description {
+            en
+            ru
+            zh
+          }
+          display_label_en
+          location_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          name {
+            en
+            ru
+            zh
+          }
+          portrait {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          role
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const NpcLocationOptionsDocument = gql`
+    query NpcLocationOptions($data: Demo_rpg_dataGetLocationsesInput) {
+  locationses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+    `;
+export const PartiesDocument = gql`
+    query Parties($data: Demo_rpg_dataGetPartiesesInput) {
+  partieses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          formation
+          hero_ids {
+            id
+            data {
+              display_name_en
+              epithet {
+                en
+                ru
+                zh
+              }
+              name {
+                en
+                ru
+                zh
+              }
+              portrait {
+                fileId
+                fileName
+                hash
+                height
+                mimeType
+                url
+                width
+              }
+            }
+          }
+          is_full
+          member_count
+          motto {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const PartyDetailDocument = gql`
+    query PartyDetail($id: String!) {
+  parties(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      formation
+      hero_ids {
+        id
+        data {
+          class_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+              primary_stat
+            }
+          }
+          display_name_en
+          epithet {
+            en
+            ru
+            zh
+          }
+          is_veteran
+          level
+          name {
+            en
+            ru
+            zh
+          }
+          portrait {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+        }
+      }
+      is_full
+      member_count
+      motto {
+        en
+        ru
+        zh
+      }
+      name {
+        en
+        ru
+        zh
+      }
+    }
+  }
+}
+    `;
 export const RegionDetailDocument = gql`
     query RegionDetail($id: String!) {
   regions(id: $id) {
@@ -1683,6 +2028,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    Abilities(variables?: AbilitiesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AbilitiesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AbilitiesQuery>({ document: AbilitiesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Abilities', 'query', variables);
+    },
     Classes(variables?: ClassesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ClassesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ClassesQuery>({ document: ClassesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Classes', 'query', variables);
     },
@@ -1706,6 +2054,21 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     LocationRegionOptions(variables?: LocationRegionOptionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationRegionOptionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LocationRegionOptionsQuery>({ document: LocationRegionOptionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LocationRegionOptions', 'query', variables);
+    },
+    NpcDetail(variables: NpcDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<NpcDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<NpcDetailQuery>({ document: NpcDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'NpcDetail', 'query', variables);
+    },
+    Npcs(variables?: NpcsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<NpcsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<NpcsQuery>({ document: NpcsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Npcs', 'query', variables);
+    },
+    NpcLocationOptions(variables?: NpcLocationOptionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<NpcLocationOptionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<NpcLocationOptionsQuery>({ document: NpcLocationOptionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'NpcLocationOptions', 'query', variables);
+    },
+    Parties(variables?: PartiesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<PartiesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<PartiesQuery>({ document: PartiesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Parties', 'query', variables);
+    },
+    PartyDetail(variables: PartyDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<PartyDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<PartyDetailQuery>({ document: PartyDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'PartyDetail', 'query', variables);
     },
     RegionDetail(variables: RegionDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RegionDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<RegionDetailQuery>({ document: RegionDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'RegionDetail', 'query', variables);

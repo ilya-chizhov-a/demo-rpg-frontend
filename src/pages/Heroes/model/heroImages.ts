@@ -21,14 +21,14 @@ export function prepareHeroPortraitImage(
   source: HeroPortraitSource | null | undefined,
   title: string,
 ): HeroPortraitImageSlot | null {
-  return prepareHeroPortraitSlot(source, title, 420, 560, false);
+  return prepareHeroPortraitSlot(source, title, 420, 630, false);
 }
 
 export function prepareHeroDetailPortraitImage(
   source: HeroPortraitSource | null | undefined,
   title: string,
 ): HeroPortraitImageSlot | null {
-  return prepareHeroPortraitSlot(source, title, 560, 720, true);
+  return prepareHeroPortraitSlot(source, title, 560, 840, true);
 }
 
 function prepareHeroPortraitSlot(
@@ -47,7 +47,7 @@ function prepareHeroPortraitSlot(
     eager,
     gravity: 'sm',
     height,
-    resizeMode: 'fill',
+    resizeMode: 'fit',
     sourceUrl,
     width,
   });

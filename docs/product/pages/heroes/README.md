@@ -1,10 +1,10 @@
 # Heroes Catalog
 
-| Field | Value |
-| --- | --- |
-| Route | `/heroes` |
-| Status | In delivery |
-| Pattern | Catalog |
+| Field              | Value                                                                     |
+| ------------------ | ------------------------------------------------------------------------- |
+| Route              | `/heroes`                                                                 |
+| Status             | In delivery                                                               |
+| Pattern            | Catalog                                                                   |
 | Primary capability | Portrait gallery, class FK filter, formula string, filter/sort/pagination |
 
 ## Purpose
@@ -21,46 +21,46 @@ until the API exposes those hero fields.
 
 ## Functional Blocks
 
-| Block | Requirement |
-| --- | --- |
-| Header | Title and capability chips for portrait gallery, formulas, files. |
-| Filters | Class, veteran toggle, level range, name search. |
-| Sort | Level, display name, published date. |
-| Hero list | Portrait tiles with optional display names only. |
-| Explainer Widget | Required; shows class FK filter payload, formula string field, and portrait metadata. |
+| Block            | Requirement                                                                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Header           | Title and capability chips for portrait gallery, formulas, files.                                                                              |
+| Filters          | Class, veteran toggle, level range, name search.                                                                                               |
+| Sort             | Level, display name, published date.                                                                                                           |
+| Hero list        | Portrait-first tiles with localized display names only; wide desktop shows five portrait cards per row without cropping the uploaded portrait. |
+| Explainer Widget | Required; shows class FK filter payload, formula string field, and portrait metadata.                                                          |
 
 ## Primary Actions
 
-| Action | Result |
-| --- | --- |
+| Action             | Result                                      |
+| ------------------ | ------------------------------------------- |
 | Filter by class FK | Updates `where` payload and fetches heroes. |
-| Sort list | Updates `orderBy`. |
-| Open portrait tile | Navigate to `/heroes/[id]`. |
-| Reset filters | Return to default list. |
+| Sort list          | Updates `orderBy`.                          |
+| Open portrait tile | Navigate to `/heroes/[id]`.                 |
+| Reset filters      | Return to default list.                     |
 
 ## States
 
-| State | Requirement |
-| --- | --- |
-| Loading | Preserve filters and show skeleton list. |
-| Loaded | Cards render as clickable portrait/name tiles without stat summaries. |
-| Empty | Reset action and visible filter payload. |
-| Error | Service-aware error with retry. |
+| State   | Requirement                                                           |
+| ------- | --------------------------------------------------------------------- |
+| Loading | Preserve filters and show skeleton list.                              |
+| Loaded  | Cards render as clickable portrait/name tiles without stat summaries. |
+| Empty   | Reset action and visible filter payload.                              |
+| Error   | Service-aware error with retry.                                       |
 
 ## Transitions
 
-| From | Trigger | To |
-| --- | --- | --- |
+| From           | Trigger             | To                 |
+| -------------- | ------------------- | ------------------ |
 | Loaded catalog | Filter/sort changes | Refreshing catalog |
-| Loaded catalog | Open hero | `/heroes/[id]` |
-| Empty | Reset filters | Default catalog |
+| Loaded catalog | Open hero           | `/heroes/[id]`     |
+| Empty          | Reset filters       | Default catalog    |
 
 ## Data Contract
 
-| Source | Fields |
-| --- | --- |
-| `data.heroes` | `id`, `data.name`, `display_name_en`, `level`, `class_id`, `portrait`, `is_veteran`. |
-| `data.classes` | id/name for filters and cards. |
+| Source         | Fields                                                                                               |
+| -------------- | ---------------------------------------------------------------------------------------------------- |
+| `data.heroes`  | `id`, `data.name`, `data.epithet`, `display_name_en`, `level`, `class_id`, `portrait`, `is_veteran`. |
+| `data.classes` | id/name for filters and cards.                                                                       |
 
 ## Explainer Widget
 
@@ -72,7 +72,9 @@ until the API exposes those hero fields.
 ## Responsive Rules
 
 - Phone: filter controls wrap above the list; portrait tiles stay one column.
-- Tablet/Desktop: filter controls stay visible; widget sits near the list.
+- Tablet: portrait tiles move to two or three columns as space allows.
+- Wide desktop: hero gallery uses five columns, and each portrait slot stays
+  taller than it is wide with a stable 2:3 aspect ratio.
 
 ## Architecture Notes
 
@@ -82,8 +84,11 @@ until the API exposes those hero fields.
 ## Acceptance Criteria
 
 - [x] Class FK options use real Revisium rows.
-- [x] Catalog tiles show only portrait and display name.
-- [x] Portraits render with stable dimensions and fallback.
+- [x] Catalog tiles show only portrait and locale-aware display name.
+- [x] Portraits render with stable portrait dimensions, uncropped image fit,
+      and fallback.
+- [x] Wide desktop catalog renders five portrait cards per row.
+- [x] Class filter subtitles localize enum-like primary stat values.
 - [x] Formula-derived display name is called out in the widget.
 - [x] Pagination remains visible when the API returns more than one page.
 

@@ -1,7 +1,4 @@
-query Heroes(
-  $data: Demo_rpg_dataGetHeroesesInput
-  $classesData: Demo_rpg_dataGetClassesesInput
-) {
+query Heroes($data: Demo_rpg_dataGetHeroesesInput, $classesData: Demo_rpg_dataGetClassesesInput) {
   heroeses(data: $data) {
     edges {
       cursor
@@ -12,6 +9,11 @@ query Heroes(
         publishedAt
         data {
           display_name_en
+          epithet {
+            en
+            ru
+            zh
+          }
           is_veteran
           level
           name {

@@ -1,0 +1,44 @@
+query Abilities($data: Demo_rpg_dataGetAbilitiesesInput) {
+  abilitieses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          base_damage
+          cooldown
+          description {
+            en
+            ru
+            zh
+          }
+          icon {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          school
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

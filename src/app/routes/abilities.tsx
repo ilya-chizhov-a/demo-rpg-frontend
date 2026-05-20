@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { AbilitiesPage } from 'src/pages/Abilities';
 
-export default createPlaceholderRoute('abilities');
+export default function AbilitiesRoute() {
+  return <AbilitiesPage />;
+}

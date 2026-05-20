@@ -1,10 +1,10 @@
 # Hero Detail
 
-| Field | Value |
-| --- | --- |
-| Route | `/heroes/[id]` |
-| Status | In delivery |
-| Pattern | Detail |
+| Field              | Value                                                             |
+| ------------------ | ----------------------------------------------------------------- |
+| Route              | `/heroes/[id]`                                                    |
+| Status             | In delivery                                                       |
+| Pattern            | Detail                                                            |
 | Primary capability | Single FK, array FKs, embedded equipment, formulas, portrait file |
 
 ## Purpose
@@ -25,49 +25,49 @@ portrait file metadata.
 
 ## Functional Blocks
 
-| Block | Requirement |
-| --- | --- |
-| Header | Portrait, display name, localized epithet, level, veteran badge. |
-| Identity panel | Class, localized name, published/version metadata, portrait metadata. |
-| Formula panel | `is_veteran`, `total_equipment_modifier`, `equipped_count`. |
-| Abilities panel | Resolved `ability_ids[]` with school, kind, level, cooldown, damage. |
-| Inventory panel | Resolved `inventory_item_ids[]` with rarity, value, weight. |
-| Equipment panel | Embedded `equipment[]` rows with slot, referenced item, modifier. |
+| Block            | Requirement                                                                       |
+| ---------------- | --------------------------------------------------------------------------------- |
+| Header           | Uncropped portrait, display name, localized epithet, level, veteran badge.        |
+| Identity panel   | Class, localized name, published/version metadata, portrait metadata.             |
+| Formula panel    | `is_veteran`, `total_equipment_modifier`, `equipped_count`.                       |
+| Abilities panel  | Resolved `ability_ids[]` with school, kind, level, cooldown, damage.              |
+| Inventory panel  | Resolved `inventory_item_ids[]` with rarity, value, weight.                       |
+| Equipment panel  | Embedded `equipment[]` rows with slot, referenced item, modifier.                 |
 | Explainer Widget | Required with single-FK, array-FK, embedded-array, formula, and file explanation. |
 
 ## Primary Actions
 
-| Action | Result |
-| --- | --- |
-| Back to heroes | Navigate to `/heroes`. |
+| Action           | Result                                               |
+| ---------------- | ---------------------------------------------------- |
+| Back to heroes   | Navigate to `/heroes`.                               |
 | Open related row | Navigate to app route when the related route exists. |
-| View schema | Opens heroes schema from the Explainer Widget. |
+| View schema      | Opens heroes schema from the Explainer Widget.       |
 
 ## States
 
-| State | Requirement |
-| --- | --- |
-| Loading | Stable hero profile skeleton. |
-| Loaded | All panels render; missing optional arrays render as empty panels. |
-| Not found | Missing hero message. |
-| Error | Retry and readable failure. |
+| State     | Requirement                                                        |
+| --------- | ------------------------------------------------------------------ |
+| Loading   | Stable hero profile skeleton.                                      |
+| Loaded    | All panels render; missing optional arrays render as empty panels. |
+| Not found | Missing hero message.                                              |
+| Error     | Retry and readable failure.                                        |
 
 ## Transitions
 
-| From | Trigger | To |
-| --- | --- | --- |
-| Hero catalog | Open portrait tile | Detail loading |
-| Detail loaded | Open related row | Related route or cloud row |
-| Detail loaded | Back action | `/heroes` |
+| From          | Trigger            | To                         |
+| ------------- | ------------------ | -------------------------- |
+| Hero catalog  | Open portrait tile | Detail loading             |
+| Detail loaded | Open related row   | Related route or cloud row |
+| Detail loaded | Back action        | `/heroes`                  |
 
 ## Data Contract
 
-| Source | Fields |
-| --- | --- |
-| `data.heroes` | `id`, localized identity, `class_id`, `ability_ids[]`, `inventory_item_ids[]`, `equipment[]`, `portrait`, `level`, `gold`, `constitution`, `is_veteran`, `total_equipment_modifier`, `equipped_count`. |
-| `data.classes` | Resolved through `class_id` for the class label. |
-| `data.abilities` | Resolved through `ability_ids[]` for related ability cards. |
-| `data.items` | Resolved through inventory and equipment item references. |
+| Source           | Fields                                                                                                                                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data.heroes`    | `id`, `data.name`, `data.epithet`, `class_id`, `ability_ids[]`, `inventory_item_ids[]`, `equipment[]`, `portrait`, `level`, `gold`, `constitution`, `is_veteran`, `total_equipment_modifier`, `equipped_count`. |
+| `data.classes`   | Resolved through `class_id` for the class label.                                                                                                                                                       |
+| `data.abilities` | Resolved through `ability_ids[]` for related ability cards.                                                                                                                                            |
+| `data.items`     | Resolved through inventory and equipment item references.                                                                                                                                              |
 
 ## Explainer Widget
 
@@ -80,7 +80,7 @@ portrait file metadata.
 ## Responsive Rules
 
 - Phone: portrait, identity, formulas, abilities, inventory, equipment.
-- Tablet/Desktop: portrait/identity header followed by dense panels.
+- Tablet/Desktop: uncropped portrait/identity header followed by dense panels.
 
 ## Architecture Notes
 
@@ -95,7 +95,7 @@ portrait file metadata.
 - [x] Array FKs are visible and linked when an app route exists.
 - [x] Embedded equipment is clearly separate from referenced inventory items.
 - [x] Formula outputs are not recomputed in UI.
-- [x] Portrait media uses imgproxy with a stable fallback slot.
+- [x] Portrait media uses imgproxy with an uncropped fit and stable fallback slot.
 
 ## Open Questions
 

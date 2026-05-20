@@ -1,0 +1,61 @@
+query PartyDetail($id: String!) {
+  parties(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      formation
+      hero_ids {
+        id
+        data {
+          class_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+              primary_stat
+            }
+          }
+          display_name_en
+          epithet {
+            en
+            ru
+            zh
+          }
+          is_veteran
+          level
+          name {
+            en
+            ru
+            zh
+          }
+          portrait {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+        }
+      }
+      is_full
+      member_count
+      motto {
+        en
+        ru
+        zh
+      }
+      name {
+        en
+        ru
+        zh
+      }
+    }
+  }
+}

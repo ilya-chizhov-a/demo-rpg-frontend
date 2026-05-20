@@ -29,7 +29,7 @@ export const ClassCard = observer(({ copy, item }: ClassCardProps) => {
         <Box flex="1" minW="0">
           <Flex align="center" color="#9aa7b1" fontSize="sm" gap="3" justify="space-between">
             <Badge colorPalette="purple" variant="subtle">
-              {item.primaryStat}
+              {copy.statLabel(item.primaryStat)}
             </Badge>
             <Text>{item.localeLabel}</Text>
           </Flex>

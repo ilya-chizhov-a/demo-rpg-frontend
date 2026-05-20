@@ -52,6 +52,7 @@ export interface HeroesPageCopy {
   readonly sortButtonsAriaLabel: string;
   readonly sortLabel: string;
   readonly sortOptions: readonly HeroSortCopy[];
+  readonly statLabel: (value: string) => string;
   readonly unknownClass: string;
   readonly veteranLabel: string;
   readonly veteranOnlyButton: string;
@@ -118,7 +119,8 @@ type HeroesPageFormatterKey =
   | 'goldLabel'
   | 'levelLabel'
   | 'openHeroAriaLabel'
-  | 'portraitPlaceholderDescription';
+  | 'portraitPlaceholderDescription'
+  | 'statLabel';
 
 type HeroesPageTextKey = Exclude<
   keyof HeroesPageCopy,
@@ -149,7 +151,11 @@ const pageText = {
     ru: 'GraphQL-роутер не вернул каталог героев.',
     zh: 'GraphQL router 未返回英雄目录。',
   },
-  errorTitle: { en: 'Failed to load heroes', ru: 'Не удалось загрузить героев', zh: '英雄加载失败' },
+  errorTitle: {
+    en: 'Failed to load heroes',
+    ru: 'Не удалось загрузить героев',
+    zh: '英雄加载失败',
+  },
   explainerFooterNote: {
     en: 'This first version follows the current schema: class FK, formula display name, and portrait file metadata.',
     ru: 'Первая версия следует текущей схеме: FK класса, формульное имя и метаданные портрета.',
@@ -170,7 +176,7 @@ const pageText = {
     ru: 'Профили игровых героев с привязкой к классу, портретами, уровнями и ветеранским статусом.',
     zh: '包含职业关系、头像媒体、等级和老兵状态的可玩英雄档案。',
   },
-  headerEyebrow: { en: 'Hero codex', ru: 'Кодекс героев', zh: '英雄 codex' },
+  headerEyebrow: { en: 'Hero codex', ru: 'Кодекс героев', zh: '英雄图鉴' },
   headerTitle: { en: 'Heroes', ru: 'Герои', zh: '英雄' },
   heroesSectionAriaLabel: { en: 'Heroes section', ru: 'Раздел героев', zh: '英雄分区' },
   levelMaxLabel: { en: 'Max level', ru: 'Макс. уровень', zh: '最高等级' },
@@ -226,6 +232,11 @@ const pageFormatters = {
     ru: (heroTitle) => `Портрет для ${heroTitle} недоступен.`,
     zh: (heroTitle) => `${heroTitle} 的头像不可用。`,
   },
+  statLabel: {
+    en: (value) => getPrimaryStatLabel(value, 'en'),
+    ru: (value) => getPrimaryStatLabel(value, 'ru'),
+    zh: (value) => getPrimaryStatLabel(value, 'zh'),
+  },
 } satisfies LocalizedFormatterRecord<HeroesPageFormatterKey>;
 
 const headerBadges = {
@@ -266,7 +277,11 @@ const detailText = {
   abilityEmptyTitle: { en: 'No abilities', ru: 'Нет умений', zh: '无能力' },
   abilityLevelLabel: { en: 'Required level', ru: 'Требуемый уровень', zh: '需求等级' },
   abilitySchoolLabel: { en: 'School', ru: 'Школа', zh: '学派' },
-  backAriaLabel: { en: 'Back to heroes catalog', ru: 'Назад к каталогу героев', zh: '返回英雄目录' },
+  backAriaLabel: {
+    en: 'Back to heroes catalog',
+    ru: 'Назад к каталогу героев',
+    zh: '返回英雄目录',
+  },
   backLabel: { en: 'Back to heroes', ru: 'Назад к героям', zh: '返回英雄' },
   classStatsTitle: { en: 'Class growth', ru: 'Рост класса', zh: '职业成长' },
   classBaseHpLabel: { en: 'Base HP', ru: 'Базовое HP', zh: '基础 HP' },
@@ -379,6 +394,7 @@ export function getHeroesPageCopy(locale: HeroLocale): HeroesPageCopy {
     sortButtonsAriaLabel: getLocalizedText(pageText, 'sortButtonsAriaLabel', locale),
     sortLabel: getLocalizedText(pageText, 'sortLabel', locale),
     sortOptions: sortOptions[locale] ?? sortOptions[fallbackLocale],
+    statLabel: getLocalizedFormatter(pageFormatters, 'statLabel', locale),
     unknownClass: getLocalizedText(pageText, 'unknownClass', locale),
     veteranLabel: getLocalizedText(pageText, 'veteranLabel', locale),
     veteranOnlyButton: getLocalizedText(pageText, 'veteranOnlyButton', locale),
@@ -459,3 +475,16 @@ function getLocalizedText<Key extends string>(
 ): string {
   return source[key][locale] ?? source[key][fallbackLocale];
 }
+
+function getPrimaryStatLabel(value: string, locale: HeroLocale): string {
+  const labels = primaryStatLabels[value];
+  return labels?.[locale] ?? labels?.[fallbackLocale] ?? value;
+}
+
+const primaryStatLabels: Record<string, Record<HeroLocale, string>> = {
+  constitution: { en: 'Constitution', ru: 'Выносливость', zh: '体质' },
+  dexterity: { en: 'Dexterity', ru: 'Ловкость', zh: '敏捷' },
+  intelligence: { en: 'Intelligence', ru: 'Интеллект', zh: '智力' },
+  strength: { en: 'Strength', ru: 'Сила', zh: '力量' },
+  wisdom: { en: 'Wisdom', ru: 'Мудрость', zh: '感知' },
+};

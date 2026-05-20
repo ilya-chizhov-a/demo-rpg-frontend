@@ -1,0 +1,77 @@
+query Npcs($data: Demo_rpg_dataGetNpcsesInput) {
+  npcses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          description {
+            en
+            ru
+            zh
+          }
+          display_label_en
+          location_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          name {
+            en
+            ru
+            zh
+          }
+          portrait {
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            url
+            width
+          }
+          role
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+
+query NpcLocationOptions($data: Demo_rpg_dataGetLocationsesInput) {
+  locationses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

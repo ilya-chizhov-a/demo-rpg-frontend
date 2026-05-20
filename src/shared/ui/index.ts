@@ -6,6 +6,7 @@ export { CatalogHeader } from './CatalogHeader/CatalogHeader';
 export { CatalogSkeleton } from './CatalogSkeleton/CatalogSkeleton';
 export { DetailSkeletonPanel } from './DetailSkeletonPanel/DetailSkeletonPanel';
 export { DetailFactField } from './DetailFactField/DetailFactField';
+export { DetailFactPanel, type DetailFactPanelItem } from './DetailFactPanel/DetailFactPanel';
 export {
   PageShell,
   pageShellGutters,

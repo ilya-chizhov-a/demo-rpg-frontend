@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { NpcsPage } from 'src/pages/Npcs';
 
-export default createPlaceholderRoute('npcs');
+export default function NpcsRoute() {
+  return <NpcsPage />;
+}

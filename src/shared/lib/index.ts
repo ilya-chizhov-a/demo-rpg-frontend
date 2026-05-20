@@ -1,17 +1,27 @@
 export { container, type Token } from './DIContainer';
 export { ObservableRequest, ok, err, type Either } from './ObservableRequest';
 export {
+  appendCatalogItemsFromFetch,
   createCatalogViewState,
+  createCatalogViewStateFromRequest,
   hasRequestError,
   isInitialLoading,
   isRefreshing,
   replaceCatalogItems,
+  replaceCatalogItemsFromFetch,
+  resetCatalogRequestState,
   resetCatalogState,
   shouldRequestInitialData,
   totalCatalogCount,
   type CatalogResult,
   type CatalogViewState,
 } from './helpers/catalogViewModel';
+export { makeAutoBoundObservable } from './helpers/mobx';
+export {
+  createLocaleFallbacks,
+  type LocaleFallbackDescriptor,
+  type LocaleFallbackRecord,
+} from './helpers/localeFallbacks';
 export {
   prepareImgproxyImageSlot,
   type ImageGravity,

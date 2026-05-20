@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { PartyDetailPage } from 'src/pages/Parties';
 
-export default createPlaceholderRoute('partyDetail');
+export default function PartyDetailRoute() {
+  return <PartyDetailPage />;
+}

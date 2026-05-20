@@ -22,6 +22,7 @@ export interface ClassesPageCopy {
   readonly levelUnit: string;
   readonly loadingAriaLabel: string;
   readonly noDescription: string;
+  readonly statLabel: (value: string) => string;
 }
 
 const fallbackLocale: ClassLocale = 'en';
@@ -43,7 +44,8 @@ const classesPageCopy: Record<ClassLocale, ClassesPageCopy> = {
     fieldHpGrowth: 'HP growth',
     fieldMpGrowth: 'MP growth',
     headerBadges: ['class list', 'hero roles', 'stat growth'],
-    headerDescription: 'Compact class profiles for comparing hero roles, base stats, and growth paths.',
+    headerDescription:
+      'Compact class profiles for comparing hero roles, base stats, and growth paths.',
     headerEyebrow: 'Hero codex',
     headerTitle: 'Classes',
     heroesSectionAriaLabel: 'Heroes section',
@@ -51,6 +53,7 @@ const classesPageCopy: Record<ClassLocale, ClassesPageCopy> = {
     levelUnit: 'level',
     loadingAriaLabel: 'Loading classes',
     noDescription: 'No description available.',
+    statLabel: (value) => getPrimaryStatLabel(value, 'en'),
   },
   ru: {
     capabilitiesAriaLabel: 'Возможности',
@@ -77,6 +80,7 @@ const classesPageCopy: Record<ClassLocale, ClassesPageCopy> = {
     levelUnit: 'уровень',
     loadingAriaLabel: 'Загрузка классов',
     noDescription: 'Описание недоступно.',
+    statLabel: (value) => getPrimaryStatLabel(value, 'ru'),
   },
   zh: {
     capabilitiesAriaLabel: '能力',
@@ -93,16 +97,30 @@ const classesPageCopy: Record<ClassLocale, ClassesPageCopy> = {
     fieldMpGrowth: 'MP 成长',
     headerBadges: ['职业列表', '英雄定位', '属性成长'],
     headerDescription: '用于比较英雄定位、基础属性和成长路径的紧凑职业档案。',
-    headerEyebrow: '英雄 codex',
+    headerEyebrow: '英雄图鉴',
     headerTitle: '职业',
     heroesSectionAriaLabel: '英雄分区',
     iconPlaceholderLabel: '无图标',
     levelUnit: '等级',
     loadingAriaLabel: '正在加载职业',
     noDescription: '暂无描述。',
+    statLabel: (value) => getPrimaryStatLabel(value, 'zh'),
   },
 };
 
 export function getClassesPageCopy(locale: ClassLocale): ClassesPageCopy {
   return classesPageCopy[locale] ?? classesPageCopy[fallbackLocale];
 }
+
+function getPrimaryStatLabel(value: string, locale: ClassLocale): string {
+  const labels = primaryStatLabels[value];
+  return labels?.[locale] ?? labels?.[fallbackLocale] ?? value;
+}
+
+const primaryStatLabels: Record<string, Record<ClassLocale, string>> = {
+  constitution: { en: 'Constitution', ru: 'Выносливость', zh: '体质' },
+  dexterity: { en: 'Dexterity', ru: 'Ловкость', zh: '敏捷' },
+  intelligence: { en: 'Intelligence', ru: 'Интеллект', zh: '智力' },
+  strength: { en: 'Strength', ru: 'Сила', zh: '力量' },
+  wisdom: { en: 'Wisdom', ru: 'Мудрость', zh: '感知' },
+};

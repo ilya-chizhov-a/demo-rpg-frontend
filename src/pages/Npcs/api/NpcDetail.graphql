@@ -1,0 +1,47 @@
+query NpcDetail($id: String!) {
+  npcs(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      description {
+        en
+        ru
+        zh
+      }
+      display_label_en
+      location_id {
+        id
+        data {
+          kind
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      portrait {
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        url
+        width
+      }
+      role
+      title {
+        en
+        ru
+        zh
+      }
+    }
+  }
+}

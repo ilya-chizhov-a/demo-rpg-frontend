@@ -3,14 +3,14 @@
 | Field | Value |
 |---|---|
 | Route | `/npcs/[id]` |
-| Status | Draft |
+| Status | In delivery |
 | Pattern | Detail |
 | Primary capability | Portrait file detail and location FK |
 
 ## Purpose
 
-Show NPC portrait metadata, computed label, and location relationship in a
-single-row detail page.
+Show NPC portrait metadata, localized display label, role, description, and
+location relationship in a single-row detail page.
 
 ## Context And Entry
 
@@ -21,9 +21,9 @@ single-row detail page.
 
 | Block | Requirement |
 |---|---|
-| Header | Portrait, display label, title/name. |
+| Header | Portrait, localized display label, role, title/name. |
 | Location | Resolved location card/link. |
-| Description | Localized description. |
+| Description | Localized description resolved as current locale -> English -> empty/no-description copy. The same chain applies to title/name, and the Explainer Widget records fallback fields. |
 | File panel | Portrait metadata. |
 | Explainer Widget | Required. |
 
@@ -56,12 +56,12 @@ single-row detail page.
 
 | Source | Fields |
 |---|---|
-| `data.npcs` | id, title, name, display label, description, portrait, location_id. |
+| `data.npcs` | id, `title { en, ru, zh }`, `name { en, ru, zh }`, `description { en, ru, zh }`, `display_label_en`, `role`, `portrait`, `location_id`. |
 | `data.locations` | location label and link target. |
 
 ## Explainer Widget
 
-- Summary: "NPC detail shows a portrait file, computed display label, and a single foreign key."
+- Summary: "NPC detail shows localized character fields, a portrait file, and a single location foreign key."
 - Variables: npc id and locale.
 - Deep links: NPC row/schema and location row.
 - Subgraphs: `data`.
@@ -76,11 +76,17 @@ single-row detail page.
 
 - This frontend doc is the canonical implementation contract for `/npcs/[id]`;
   keep `page-inventory.md` and `site-map.md` in sync if the route changes.
+- Use `display_label_en` only for English. Russian and other spaced locales
+  render localized labels as `{title} {name}` with one space; Chinese renders
+  `{title}{name}` without a separator.
+- Keep the route in the NPC page slice using the DataSource/Detail ViewModel
+  shape from `docs/architecture/frontend.md`.
 
 ## Acceptance Criteria
 
-- [ ] Portrait metadata appears in widget.
+- [ ] Portrait metadata appears in the detail panel and widget.
 - [ ] Location FK is readable and linked.
+- [ ] Role and display label are localized for `ru` and `zh`.
 
 ## Open Questions
 

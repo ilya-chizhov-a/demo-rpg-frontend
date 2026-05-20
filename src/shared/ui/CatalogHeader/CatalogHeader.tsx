@@ -45,7 +45,9 @@ export function CatalogHeader({
         {badges.map((badge, index) => (
           <Badge
             as="li"
+            borderColor={index === 0 ? undefined : 'rgba(203, 213, 225, 0.62)'}
             colorPalette={index === 0 ? 'blue' : undefined}
+            color={index === 0 ? undefined : '#d8e0e8'}
             key={badge}
             size="lg"
             variant={index === 0 ? 'subtle' : 'outline'}

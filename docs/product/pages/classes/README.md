@@ -20,12 +20,12 @@ comparison, roles, and stat growth.
 
 ## Functional Blocks
 
-| Block            | Requirement                                                     |
-| ---------------- | --------------------------------------------------------------- |
-| Header           | Explain classes as hero roles with compact stat-growth context. |
-| Class list       | Icon, name, description, role/archetype fields if present.      |
-| Related heroes   | Optional count or link to heroes filtered by class.             |
-| Explainer Widget | Required.                                                       |
+| Block            | Requirement                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------- |
+| Header           | Explain classes as hero roles with compact stat-growth context.                                   |
+| Class list       | Icon, localized name/description, localized primary stat label, role/archetype fields if present. |
+| Related heroes   | Optional count or link to heroes filtered by class.                                               |
+| Explainer Widget | Required.                                                                                         |
 
 ## Primary Actions
 
@@ -82,10 +82,12 @@ comparison, roles, and stat growth.
 
 - [x] Class rows are visible and link to hero filters.
 - [x] Class icon slots render as stable 96x96 pixel squares without layout
-  shift and use imgproxy when `icon.url` and `icon.mimeType` are valid image
-  metadata.
+      shift and use imgproxy when `icon.url` and `icon.mimeType` are valid image
+      metadata.
 - [x] Missing or invalid icon metadata keeps the same stable 96x96 pixel icon
-  slot with a page-owned placeholder label.
+      slot with a page-owned placeholder label.
+- [x] Primary stat badges localize enum-like values instead of showing raw
+      source keys.
 - [x] Widget explains FK target role.
 
 ## Open Questions

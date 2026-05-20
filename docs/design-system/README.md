@@ -184,18 +184,18 @@ world feel present while the product UI remains the first read.
 
 ## Components
 
-| Component        | Requirement                                                                                                                                                       |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Buttons          | Text for clear commands; icon buttons only with accessible labels/tooltips.                                                                                       |
-| Links            | Underline or clear affordance in prose; route cards may use block links.                                                                                          |
-| Cards            | Max radius `8px`; no card-inside-card layouts.                                                                                                                    |
-| Catalog cards    | Use restrained hover lift, cyan border shift, and media scale to clarify clickability without changing layout dimensions.                                         |
-| Tables           | Sticky header only when useful; preserve keyboard readability.                                                                                                    |
-| Chips            | Short labels for capabilities, subgraphs, statuses, and enums.                                                                                                    |
-| Tabs             | Used for GraphQL/REST/MCP surfaces and dense view switches.                                                                                                       |
-| Code panels      | Scroll internally, copy action, language label, accessible focus.                                                                                                 |
-| Bottom sheets    | Mobile filters only; must be dismissible by button and Escape.                                                                                                    |
-| Explainer Widget | Uses a compact floating source-reference trigger; expanded panel has tinted surface, strong Revisium header, close control, and explicit cloud/source link block. |
+| Component        | Requirement                                                                                                                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Buttons          | Text for clear commands; icon buttons only with accessible labels/tooltips.                                                                                                                    |
+| Links            | Underline or clear affordance in prose; route cards may use block links.                                                                                                                       |
+| Cards            | Max radius `8px`; no card-inside-card layouts.                                                                                                                                                 |
+| Catalog cards    | Use restrained hover lift, cyan border shift, and media scale to clarify clickability without changing layout dimensions.                                                                      |
+| Tables           | Sticky header only when useful; preserve keyboard readability.                                                                                                                                 |
+| Chips            | Short labels for capabilities, subgraphs, statuses, and enums; outline chips must maintain WCAG 2.2 AA contrast on dark catalog backgrounds: 4.5:1 for text and 3:1 for borders/UI components. |
+| Tabs             | Used for GraphQL/REST/MCP surfaces and dense view switches.                                                                                                                                    |
+| Code panels      | Scroll internally, copy action, language label, accessible focus.                                                                                                                              |
+| Bottom sheets    | Mobile filters only; must be dismissible by button and Escape.                                                                                                                                 |
+| Explainer Widget | Uses a compact floating source-reference trigger; expanded panel has tinted surface, strong Revisium header, close control, and explicit cloud/source link block.                              |
 
 ## Image Delivery And Imgproxy
 
@@ -298,6 +298,9 @@ above.
 - Region catalogs use atlas cards: stable image area, a separate data area,
   climate glyph and source chip visible without opening the detail page.
 - Detail pages group fields by meaning: identity, schema fields, computed fields, related rows, files.
+- Detail fact groups use the shared `DetailFactPanel` frame: two-column
+  responsive grid on desktop, one column on mobile, stable dark panel surface,
+  `h2` section title, and `DetailFactField` rows.
 - File previews reserve stable aspect ratios before images load and render
   slot-sized `imgproxy` derivatives instead of original CDN files.
 - Formula fields are visually labelled as computed.

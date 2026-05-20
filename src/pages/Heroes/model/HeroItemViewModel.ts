@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 import type { SupportedLocale } from 'src/shared/model';
 import type { HeroNode } from '../api/HeroesDataSource';
+import { getHeroDisplayName } from './heroDisplayName';
 import { prepareHeroPortraitImage, type HeroPortraitImageSlot } from './heroImages';
 import type { HeroesPageCopy } from './heroUiCopy';
 
@@ -29,7 +30,13 @@ export class HeroItemViewModel {
   }
 
   public get title(): string {
-    return this.node.data.display_name_en || this.localized(this.node.data.name) || this.node.id;
+    return getHeroDisplayName({
+      displayNameEn: this.node.data.display_name_en,
+      epithet: this.node.data.epithet,
+      fallbackId: this.node.id,
+      locale: this.getLocale(),
+      name: this.node.data.name,
+    });
   }
 
   public get description(): string {
@@ -46,11 +53,14 @@ export class HeroItemViewModel {
 
   public get usesLocaleFallback(): boolean {
     const locale = this.getLocale();
-    return !this.node.data.name[locale] || !this.node.data.class_id.data.name[locale];
+    return (
+      !this.node.data.name[locale] ||
+      (hasLocalizedValue(this.node.data.epithet) && !this.node.data.epithet[locale]) ||
+      !this.node.data.class_id.data.name[locale]
+    );
   }
+}
 
-  private localized(value: Record<HeroLocale, string>): string {
-    return value[this.getLocale()] || value.en;
-  }
-
+function hasLocalizedValue(value: Record<HeroLocale, string>): boolean {
+  return Object.values(value).some((candidate) => candidate.trim() !== '');
 }

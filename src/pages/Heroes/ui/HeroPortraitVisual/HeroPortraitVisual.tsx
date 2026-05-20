@@ -8,9 +8,9 @@ const PORTRAIT_SURFACE_BG = '#071018';
 const PORTRAIT_ACCENT_COLOR = '#67e8f9';
 const PORTRAIT_MUTED_TEXT_COLOR = '#9aa7b1';
 const PORTRAIT_BORDER_COLOR = 'rgba(103, 232, 249, 0.14)';
+const CATALOG_PORTRAIT_ASPECT_RATIO = '2 / 3';
 const PORTRAIT_HEIGHTS = {
-  catalog: { base: '240px', md: '260px' },
-  detail: { base: '340px', md: '520px' },
+  detail: { base: '520px', md: '620px' },
 } as const;
 const PLACEHOLDER_CONTENT_MAX_WIDTH = '260px';
 
@@ -33,11 +33,12 @@ export function HeroPortraitVisual({
     <Box
       alignItems="center"
       aria-label={image ? undefined : placeholderTitle}
+      aspectRatio={size === 'catalog' ? CATALOG_PORTRAIT_ASPECT_RATIO : undefined}
       bg={PORTRAIT_SURFACE_BG}
       borderBottomColor={PORTRAIT_BORDER_COLOR}
       borderBottomWidth="1px"
       display="flex"
-      h={PORTRAIT_HEIGHTS[size]}
+      h={size === 'detail' ? PORTRAIT_HEIGHTS.detail : undefined}
       justifyContent="center"
       minW="0"
       overflow="hidden"
@@ -55,8 +56,8 @@ export function HeroPortraitVisual({
           htmlHeight={image.height}
           htmlWidth={image.width}
           loading={image.loading}
-          objectFit="cover"
-          objectPosition="center top"
+          objectFit="contain"
+          objectPosition="center center"
           onError={handlePortraitImageError}
           src={image.src}
           srcSet={image.srcSet}

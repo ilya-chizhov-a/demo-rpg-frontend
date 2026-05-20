@@ -1,0 +1,58 @@
+query Parties($data: Demo_rpg_dataGetPartiesesInput) {
+  partieses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          formation
+          hero_ids {
+            id
+            data {
+              display_name_en
+              epithet {
+                en
+                ru
+                zh
+              }
+              name {
+                en
+                ru
+                zh
+              }
+              portrait {
+                fileId
+                fileName
+                hash
+                height
+                mimeType
+                url
+                width
+              }
+            }
+          }
+          is_full
+          member_count
+          motto {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

@@ -13,6 +13,7 @@ import {
 } from 'src/shared/config';
 import {
   container,
+  createLocaleFallbacks,
   createCatalogViewState,
   hasRequestError,
   replaceCatalogItems,
@@ -33,11 +34,7 @@ import {
 } from '../api/HeroesDataSource';
 import { getHeroPortraitMetadata } from './heroImages';
 import { HeroItemViewModel, type HeroLocale } from './HeroItemViewModel';
-import {
-  getHeroesPageCopy,
-  type HeroesPageCopy,
-  type HeroSortKey,
-} from './heroUiCopy';
+import { getHeroesPageCopy, type HeroesPageCopy, type HeroSortKey } from './heroUiCopy';
 
 const HEROES_PAGE_SIZE = 24;
 const HEROES_CLASS_PAGE_SIZE = 100;
@@ -84,6 +81,7 @@ const HEROES_QUERY = `query Heroes($data: Demo_rpg_dataGetHeroesesInput, $classe
         publishedAt
         data {
           display_name_en
+          epithet { en ru zh }
           is_veteran
           level
           name { en ru zh }
@@ -171,7 +169,7 @@ export class HeroesViewModel implements IViewModel {
         key: option.id,
         label: this.localized(option.name) || option.id,
         selected: this.activeClassId === option.id,
-        subtitle: option.primaryStat,
+        subtitle: this.copy.statLabel(option.primaryStat),
       })),
     ];
   }
@@ -366,9 +364,21 @@ export class HeroesViewModel implements IViewModel {
   private get currentOrderBy(): NonNullable<HeroesRequestData['orderBy']> {
     switch (this.sortKey) {
       case 'level-asc':
-        return [this.createDataOrderBy('level', Demo_Rpg_DataSortOrder.Asc, Demo_Rpg_DataOrderFieldType.Float)];
+        return [
+          this.createDataOrderBy(
+            'level',
+            Demo_Rpg_DataSortOrder.Asc,
+            Demo_Rpg_DataOrderFieldType.Float,
+          ),
+        ];
       case 'level-desc':
-        return [this.createDataOrderBy('level', Demo_Rpg_DataSortOrder.Desc, Demo_Rpg_DataOrderFieldType.Float)];
+        return [
+          this.createDataOrderBy(
+            'level',
+            Demo_Rpg_DataSortOrder.Desc,
+            Demo_Rpg_DataOrderFieldType.Float,
+          ),
+        ];
       case 'name-asc':
         return [
           this.createDataOrderBy(
@@ -450,24 +460,19 @@ export class HeroesViewModel implements IViewModel {
 
   private get localeFallbacks(): ExplainerDescriptor['localeFallbacks'] {
     return this.loadedItems.flatMap((node) => {
-      const fallbacks: {
-        readonly path: string;
-        readonly requestedLocale: HeroLocale;
-        readonly renderedLocale: HeroLocale;
-      }[] = [];
-      if (!node.data.name[this.locale]) {
-        fallbacks.push({
-          path: `heroes.${node.id}.data.name`,
-          requestedLocale: this.locale,
-          renderedLocale: 'en',
-        });
-      }
-      if (!node.data.class_id.data.name[this.locale]) {
-        fallbacks.push({
-          path: `heroes.${node.id}.data.class_id.data.name`,
-          requestedLocale: this.locale,
-          renderedLocale: 'en',
-        });
+      const fields = [
+        { path: `heroes.${node.id}.data.name`, value: node.data.name },
+        { path: `heroes.${node.id}.data.class_id.data.name`, value: node.data.class_id.data.name },
+      ];
+      const fallbacks = createLocaleFallbacks(this.locale, fields, 'en');
+      if (hasLocalizedValue(node.data.epithet)) {
+        fallbacks.push(
+          ...createLocaleFallbacks(
+            this.locale,
+            [{ path: `heroes.${node.id}.data.epithet`, value: node.data.epithet }],
+            'en',
+          ),
+        );
       }
       return fallbacks;
     });
@@ -476,7 +481,10 @@ export class HeroesViewModel implements IViewModel {
   private get sortedClassOptions(): readonly HeroClassOption[] {
     const collator = new Intl.Collator(this.locale);
     return [...this.classOptions].sort((left, right) =>
-      collator.compare(this.localized(left.name) || left.id, this.localized(right.name) || right.id),
+      collator.compare(
+        this.localized(left.name) || left.id,
+        this.localized(right.name) || right.id,
+      ),
     );
   }
 
@@ -512,6 +520,10 @@ export class HeroesViewModel implements IViewModel {
   private localized(value: Record<HeroLocale, string>): string {
     return value[this.locale] || value.en;
   }
+}
+
+function hasLocalizedValue(value: Record<HeroLocale, string>): boolean {
+  return Object.values(value).some((candidate) => candidate.trim() !== '');
 }
 
 container.register(
