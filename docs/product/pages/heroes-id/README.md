@@ -1,45 +1,52 @@
 # Hero Detail
 
 | Field | Value |
-|---|---|
+| --- | --- |
 | Route | `/heroes/[id]` |
-| Status | Draft |
+| Status | In delivery |
 | Pattern | Detail |
 | Primary capability | Single FK, array FKs, embedded equipment, formulas, portrait file |
 
 ## Purpose
 
-Show the richest single-row schema example for a character-like entity.
+Show the full hero dossier after a user selects a portrait tile from `/heroes`.
+The detail page owns the dense information: identity, class relation, ability
+array FKs, inventory array FKs, embedded equipment rows, formula fields, and
+portrait file metadata.
 
 ## Context And Entry
 
-- Entry from `/heroes`, parties, factions, and search results.
-- Links to class, region, faction, abilities, inventory items, and cloud row.
+- Entry from portrait tiles on `/heroes`, classes, parties, factions, and search
+  results.
+- Links back to `/heroes`.
+- Links to class, abilities, inventory items, and cloud row/schema evidence.
+- Does not show the heroes section subnav; detail navigation stays focused on
+  the back action and related entity panels.
 
 ## Functional Blocks
 
 | Block | Requirement |
-|---|---|
-| Header | Portrait, display name, level, veteran badge. |
-| Identity panel | Class, region, faction, localized bio. |
-| Abilities panel | Resolved `ability_ids[]`. |
-| Inventory panel | Resolved `inventory_item_ids[]`. |
-| Equipment panel | Embedded `equipment[]` rows. |
+| --- | --- |
+| Header | Portrait, display name, localized epithet, level, veteran badge. |
+| Identity panel | Class, localized name, published/version metadata, portrait metadata. |
 | Formula panel | `is_veteran`, `total_equipment_modifier`, `equipped_count`. |
-| Explainer Widget | Required with array-FK and embedded-array explanation. |
+| Abilities panel | Resolved `ability_ids[]` with school, kind, level, cooldown, damage. |
+| Inventory panel | Resolved `inventory_item_ids[]` with rarity, value, weight. |
+| Equipment panel | Embedded `equipment[]` rows with slot, referenced item, modifier. |
+| Explainer Widget | Required with single-FK, array-FK, embedded-array, formula, and file explanation. |
 
 ## Primary Actions
 
 | Action | Result |
-|---|---|
+| --- | --- |
 | Back to heroes | Navigate to `/heroes`. |
-| Open related row | Navigate to app route or cloud row. |
-| View schema | Opens heroes schema. |
+| Open related row | Navigate to app route when the related route exists. |
+| View schema | Opens heroes schema from the Explainer Widget. |
 
 ## States
 
 | State | Requirement |
-|---|---|
+| --- | --- |
 | Loading | Stable hero profile skeleton. |
 | Loaded | All panels render; missing optional arrays render as empty panels. |
 | Not found | Missing hero message. |
@@ -48,17 +55,19 @@ Show the richest single-row schema example for a character-like entity.
 ## Transitions
 
 | From | Trigger | To |
-|---|---|---|
-| Hero catalog | Open hero | Detail loading |
+| --- | --- | --- |
+| Hero catalog | Open portrait tile | Detail loading |
 | Detail loaded | Open related row | Related route or cloud row |
 | Detail loaded | Back action | `/heroes` |
 
 ## Data Contract
 
 | Source | Fields |
-|---|---|
-| `data.heroes` | identity fields, `class_id`, `region_id`, `faction_id`, `ability_ids[]`, `inventory_item_ids[]`, `equipment[]`, `portrait`, formula fields. |
-| `data.classes`, `data.regions`, `data.factions`, `data.abilities`, `data.items` | resolved FK labels and links. |
+| --- | --- |
+| `data.heroes` | `id`, localized identity, `class_id`, `ability_ids[]`, `inventory_item_ids[]`, `equipment[]`, `portrait`, `level`, `gold`, `constitution`, `is_veteran`, `total_equipment_modifier`, `equipped_count`. |
+| `data.classes` | Resolved through `class_id` for the class label. |
+| `data.abilities` | Resolved through `ability_ids[]` for related ability cards. |
+| `data.items` | Resolved through inventory and equipment item references. |
 
 ## Explainer Widget
 
@@ -70,19 +79,25 @@ Show the richest single-row schema example for a character-like entity.
 
 ## Responsive Rules
 
-- Phone: portrait then identity, formulas, related panels.
-- Tablet/Desktop: profile header with portrait left, content middle, widget right.
+- Phone: portrait, identity, formulas, abilities, inventory, equipment.
+- Tablet/Desktop: portrait/identity header followed by dense panels.
 
 ## Architecture Notes
 
-- Resolve FK data through generated GraphQL where possible; avoid client-side joins from static maps.
+- Resolve FK data through generated GraphQL where possible; avoid client-side
+  joins from static maps.
+- Do not recompute formula outputs in the UI; render values from the API.
 
 ## Acceptance Criteria
 
-- [ ] Array FKs are visible and linked.
-- [ ] Embedded equipment is clearly separate from referenced inventory items.
-- [ ] Formula outputs are not recomputed in UI.
+- [x] Catalog portrait tile opens this detail route.
+- [x] Detail page does not render sibling-section switcher buttons.
+- [x] Array FKs are visible and linked when an app route exists.
+- [x] Embedded equipment is clearly separate from referenced inventory items.
+- [x] Formula outputs are not recomputed in UI.
+- [x] Portrait media uses imgproxy with a stable fallback slot.
 
 ## Open Questions
 
-- Confirm whether ability and inventory array FKs are exposed as nested objects.
+- Confirm when hero `region_id` and `faction_id` become available so the
+  identity panel can add those relationships.

@@ -1,0 +1,74 @@
+query Heroes(
+  $data: Demo_rpg_dataGetHeroesesInput
+  $classesData: Demo_rpg_dataGetClassesesInput
+) {
+  heroeses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          display_name_en
+          is_veteran
+          level
+          name {
+            en
+            ru
+            zh
+          }
+          class_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+              primary_stat
+            }
+          }
+          portrait {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+  classeses(data: $classesData) {
+    edges {
+      node {
+        id
+        data {
+          name {
+            en
+            ru
+            zh
+          }
+          primary_stat
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

@@ -1,0 +1,111 @@
+query HeroDetail($id: String!) {
+  heroes(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      ability_ids {
+        id
+        data {
+          base_damage
+          cooldown
+          damage_scaling
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          school
+        }
+      }
+      class_id {
+        id
+        data {
+          base_hp
+          hp_per_level
+          mp_per_level
+          name {
+            en
+            ru
+            zh
+          }
+          primary_stat
+        }
+      }
+      constitution
+      display_name_en
+      equipment {
+        item_id {
+          id
+          data {
+            market_value
+            name {
+              en
+              ru
+              zh
+            }
+            rarity
+            rarity_tag
+            weight
+          }
+        }
+        modifier
+        slot
+      }
+      equipped_count
+      epithet {
+        en
+        ru
+        zh
+      }
+      gold
+      inventory_item_ids {
+        id
+        data {
+          market_value
+          name {
+            en
+            ru
+            zh
+          }
+          rarity
+          rarity_tag
+          type_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          weight
+        }
+      }
+      is_veteran
+      level
+      name {
+        en
+        ru
+        zh
+      }
+      portrait {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      total_equipment_modifier
+    }
+  }
+}

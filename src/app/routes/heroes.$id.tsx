@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { HeroDetailPage } from 'src/pages/Heroes';
 
-export default createPlaceholderRoute('heroDetail');
+export default function HeroDetailRoute() {
+  return <HeroDetailPage />;
+}

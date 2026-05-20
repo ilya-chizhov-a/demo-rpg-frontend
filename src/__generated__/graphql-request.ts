@@ -1031,6 +1031,21 @@ export type FactionsQueryVariables = Exact<{
 
 export type FactionsQuery = { factionses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { alignment: string, crest: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type HeroDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type HeroDetailQuery = { heroes: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { constitution: number, display_name_en: string, equipped_count: number, gold: number, is_veteran: boolean, level: number, total_equipment_modifier: number, ability_ids: Array<{ id: string, data: { base_damage: number, cooldown: number, damage_scaling: number, kind: string, level_required: number, school: string, name: { en: string, ru: string, zh: string } } }>, class_id: { id: string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, name: { en: string, ru: string, zh: string } } }, equipment: Array<{ modifier: number, slot: string, item_id: { id: string, data: { market_value: number, rarity: string, rarity_tag: string, weight: number, name: { en: string, ru: string, zh: string } } } }>, epithet: { en: string, ru: string, zh: string }, inventory_item_ids: Array<{ id: string, data: { market_value: number, rarity: string, rarity_tag: string, weight: number, name: { en: string, ru: string, zh: string }, type_id: { id: string, data: { name: { en: string, ru: string, zh: string } } } } }>, name: { en: string, ru: string, zh: string }, portrait: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number } } } };
+
+export type HeroesQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetHeroesesInput>;
+  classesData?: InputMaybe<Demo_Rpg_DataGetClassesesInput>;
+}>;
+
+
+export type HeroesQuery = { heroeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { display_name_en: string, is_veteran: boolean, level: number, name: { en: string, ru: string, zh: string }, class_id: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } }, portrait: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } }, classeses: { totalCount: number, edges: Array<{ node: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type LocationDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1244,6 +1259,192 @@ export const FactionsDocument = gql`
             ru
             zh
           }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const HeroDetailDocument = gql`
+    query HeroDetail($id: String!) {
+  heroes(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      ability_ids {
+        id
+        data {
+          base_damage
+          cooldown
+          damage_scaling
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          school
+        }
+      }
+      class_id {
+        id
+        data {
+          base_hp
+          hp_per_level
+          mp_per_level
+          name {
+            en
+            ru
+            zh
+          }
+          primary_stat
+        }
+      }
+      constitution
+      display_name_en
+      equipment {
+        item_id {
+          id
+          data {
+            market_value
+            name {
+              en
+              ru
+              zh
+            }
+            rarity
+            rarity_tag
+            weight
+          }
+        }
+        modifier
+        slot
+      }
+      equipped_count
+      epithet {
+        en
+        ru
+        zh
+      }
+      gold
+      inventory_item_ids {
+        id
+        data {
+          market_value
+          name {
+            en
+            ru
+            zh
+          }
+          rarity
+          rarity_tag
+          type_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          weight
+        }
+      }
+      is_veteran
+      level
+      name {
+        en
+        ru
+        zh
+      }
+      portrait {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      total_equipment_modifier
+    }
+  }
+}
+    `;
+export const HeroesDocument = gql`
+    query Heroes($data: Demo_rpg_dataGetHeroesesInput, $classesData: Demo_rpg_dataGetClassesesInput) {
+  heroeses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          display_name_en
+          is_veteran
+          level
+          name {
+            en
+            ru
+            zh
+          }
+          class_id {
+            id
+            data {
+              name {
+                en
+                ru
+                zh
+              }
+              primary_stat
+            }
+          }
+          portrait {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+  classeses(data: $classesData) {
+    edges {
+      node {
+        id
+        data {
+          name {
+            en
+            ru
+            zh
+          }
+          primary_stat
         }
       }
     }
@@ -1490,6 +1691,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Factions(variables?: FactionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FactionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FactionsQuery>({ document: FactionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Factions', 'query', variables);
+    },
+    HeroDetail(variables: HeroDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<HeroDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HeroDetailQuery>({ document: HeroDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'HeroDetail', 'query', variables);
+    },
+    Heroes(variables?: HeroesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<HeroesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HeroesQuery>({ document: HeroesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Heroes', 'query', variables);
     },
     LocationDetail(variables: LocationDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LocationDetailQuery>({ document: LocationDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LocationDetail', 'query', variables);
