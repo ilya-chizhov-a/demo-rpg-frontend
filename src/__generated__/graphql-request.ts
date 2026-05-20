@@ -1112,6 +1112,27 @@ export type LocationRegionOptionsQueryVariables = Exact<{
 
 export type LocationRegionOptionsQuery = { regionses: { edges: Array<{ node: { id: string, data: { climate: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type MonsterDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type MonsterDetailQuery = { monsters: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { avg_drop_chance: number, base_damage: number, drop_count: number, hp: number, kind: string, level: number, ability_ids: Array<{ id: string, data: { base_damage: number, cooldown: number, kind: string, level_required: number, school: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } }>, description: { en: string, ru: string, zh: string }, drops: Array<{ chance: number, quantity_max: number, quantity_min: number, item_id: { id: string, data: { market_value: number, rarity: string, rarity_tag: string, name: { en: string, ru: string, zh: string }, type_id: { id: string, data: { name: { en: string, ru: string, zh: string } } } } } }>, faction_id: { id: string, data: { alignment: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } }, image: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, name: { en: string, ru: string, zh: string } } } };
+
+export type MonstersQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetMonstersesInput>;
+}>;
+
+
+export type MonstersQuery = { monsterses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { avg_drop_chance: number, base_damage: number, drop_count: number, hp: number, kind: string, level: number, description: { en: string, ru: string, zh: string }, drops: Array<{ chance: number, quantity_max: number, quantity_min: number, item_id: { id: string } }>, faction_id: { id: string, data: { alignment: string, name: { en: string, ru: string, zh: string } } }, image: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type MonsterFactionOptionsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetFactionsesInput>;
+}>;
+
+
+export type MonsterFactionOptionsQuery = { factionses: { edges: Array<{ node: { id: string, data: { alignment: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type NpcDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -2004,6 +2025,202 @@ export const LocationRegionOptionsDocument = gql`
   }
 }
     `;
+export const MonsterDetailDocument = gql`
+    query MonsterDetail($id: String!) {
+  monsters(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      ability_ids {
+        id
+        data {
+          base_damage
+          cooldown
+          description {
+            en
+            ru
+            zh
+          }
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          school
+        }
+      }
+      avg_drop_chance
+      base_damage
+      description {
+        en
+        ru
+        zh
+      }
+      drop_count
+      drops {
+        chance
+        item_id {
+          id
+          data {
+            market_value
+            name {
+              en
+              ru
+              zh
+            }
+            rarity
+            rarity_tag
+            type_id {
+              id
+              data {
+                name {
+                  en
+                  ru
+                  zh
+                }
+              }
+            }
+          }
+        }
+        quantity_max
+        quantity_min
+      }
+      faction_id {
+        id
+        data {
+          alignment
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      hp
+      image {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      kind
+      level
+      name {
+        en
+        ru
+        zh
+      }
+    }
+  }
+}
+    `;
+export const MonstersDocument = gql`
+    query Monsters($data: Demo_rpg_dataGetMonstersesInput) {
+  monsterses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          avg_drop_chance
+          base_damage
+          description {
+            en
+            ru
+            zh
+          }
+          drop_count
+          drops {
+            chance
+            item_id {
+              id
+            }
+            quantity_max
+            quantity_min
+          }
+          faction_id {
+            id
+            data {
+              alignment
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          hp
+          image {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+          kind
+          level
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const MonsterFactionOptionsDocument = gql`
+    query MonsterFactionOptions($data: Demo_rpg_dataGetFactionsesInput) {
+  factionses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          alignment
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+    `;
 export const NpcDetailDocument = gql`
     query NpcDetail($id: String!) {
   npcs(id: $id) {
@@ -2413,6 +2630,15 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     LocationRegionOptions(variables?: LocationRegionOptionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationRegionOptionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LocationRegionOptionsQuery>({ document: LocationRegionOptionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LocationRegionOptions', 'query', variables);
+    },
+    MonsterDetail(variables: MonsterDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MonsterDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MonsterDetailQuery>({ document: MonsterDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'MonsterDetail', 'query', variables);
+    },
+    Monsters(variables?: MonstersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MonstersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MonstersQuery>({ document: MonstersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Monsters', 'query', variables);
+    },
+    MonsterFactionOptions(variables?: MonsterFactionOptionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MonsterFactionOptionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MonsterFactionOptionsQuery>({ document: MonsterFactionOptionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'MonsterFactionOptions', 'query', variables);
     },
     NpcDetail(variables: NpcDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<NpcDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<NpcDetailQuery>({ document: NpcDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'NpcDetail', 'query', variables);

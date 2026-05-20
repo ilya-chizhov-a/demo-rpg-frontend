@@ -3,6 +3,10 @@ export { CatalogActionButton } from './CatalogActionButton/CatalogActionButton';
 export { CatalogCardText } from './CatalogCardText/CatalogCardText';
 export { CatalogFactRow } from './CatalogFactRow/CatalogFactRow';
 export { CatalogHeader } from './CatalogHeader/CatalogHeader';
+export {
+  CatalogMediaPlaceholder,
+  CatalogMediaVisual,
+} from './CatalogMediaVisual/CatalogMediaVisual';
 export { CatalogEmptyState } from './CatalogEmptyState/CatalogEmptyState';
 export { CatalogSkeleton } from './CatalogSkeleton/CatalogSkeleton';
 export { DetailSkeletonPanel } from './DetailSkeletonPanel/DetailSkeletonPanel';

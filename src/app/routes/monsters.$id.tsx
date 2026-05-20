@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { MonsterDetailPage } from 'src/pages/Monsters';
 
-export default createPlaceholderRoute('monsterDetail');
+export default function MonsterDetailRoute() {
+  return <MonsterDetailPage />;
+}

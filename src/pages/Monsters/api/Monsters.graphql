@@ -1,0 +1,89 @@
+query Monsters($data: Demo_rpg_dataGetMonstersesInput) {
+  monsterses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          avg_drop_chance
+          base_damage
+          description {
+            en
+            ru
+            zh
+          }
+          drop_count
+          drops {
+            chance
+            item_id {
+              id
+            }
+            quantity_max
+            quantity_min
+          }
+          faction_id {
+            id
+            data {
+              alignment
+              name {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          hp
+          image {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+          kind
+          level
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+
+query MonsterFactionOptions($data: Demo_rpg_dataGetFactionsesInput) {
+  factionses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          alignment
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

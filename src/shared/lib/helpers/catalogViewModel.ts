@@ -20,6 +20,14 @@ export interface CatalogViewState {
   readonly visibleCount: number;
 }
 
+export interface DetailViewState {
+  readonly showDetail: boolean;
+  readonly showError: boolean;
+  readonly showLoading: boolean;
+  readonly showNotFound: boolean;
+  readonly showRefreshing: boolean;
+}
+
 export interface CatalogViewStateInput {
   readonly hasError: boolean;
   readonly hasNextPage?: boolean;
@@ -27,6 +35,14 @@ export interface CatalogViewStateInput {
   readonly isLoading: boolean;
   readonly totalCount: number;
   readonly visibleCount: number;
+}
+
+export interface DetailViewStateInput {
+  readonly hasError: boolean;
+  readonly hasId: boolean;
+  readonly hasItem: boolean;
+  readonly isLoaded: boolean;
+  readonly isLoading: boolean;
 }
 
 type FetchCatalogItems<TNode> = () => Promise<Either<unknown, CatalogResult<TNode>>>;
@@ -48,6 +64,32 @@ export function createCatalogViewState(input: CatalogViewStateInput): CatalogVie
     totalCount: input.totalCount,
     visibleCount: input.visibleCount,
   };
+}
+
+export function createDetailViewState(input: DetailViewStateInput): DetailViewState {
+  const showError = input.hasError || !input.hasId;
+  const showNotFound = input.hasId && input.isLoaded && !input.hasItem && !showError;
+
+  return {
+    showDetail: input.hasItem && !showError && !showNotFound,
+    showError,
+    showLoading: input.isLoading && !input.isLoaded,
+    showNotFound,
+    showRefreshing: input.isLoading && input.isLoaded,
+  };
+}
+
+export function createDetailViewStateFromRequest<Args extends unknown[]>(
+  request: ObservableRequest<unknown, Args>,
+  params: Pick<DetailViewStateInput, 'hasId' | 'hasItem'>,
+): DetailViewState {
+  return createDetailViewState({
+    hasError: hasRequestError(request),
+    hasId: params.hasId,
+    hasItem: params.hasItem,
+    isLoaded: request.isLoaded,
+    isLoading: request.isLoading,
+  });
 }
 
 export function createCatalogViewStateFromRequest<TNode, Args extends unknown[]>(

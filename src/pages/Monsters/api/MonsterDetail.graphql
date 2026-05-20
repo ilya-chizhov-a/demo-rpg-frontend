@@ -1,0 +1,102 @@
+query MonsterDetail($id: String!) {
+  monsters(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      ability_ids {
+        id
+        data {
+          base_damage
+          cooldown
+          description {
+            en
+            ru
+            zh
+          }
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          school
+        }
+      }
+      avg_drop_chance
+      base_damage
+      description {
+        en
+        ru
+        zh
+      }
+      drop_count
+      drops {
+        chance
+        item_id {
+          id
+          data {
+            market_value
+            name {
+              en
+              ru
+              zh
+            }
+            rarity
+            rarity_tag
+            type_id {
+              id
+              data {
+                name {
+                  en
+                  ru
+                  zh
+                }
+              }
+            }
+          }
+        }
+        quantity_max
+        quantity_min
+      }
+      faction_id {
+        id
+        data {
+          alignment
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      hp
+      image {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      kind
+      level
+      name {
+        en
+        ru
+        zh
+      }
+    }
+  }
+}

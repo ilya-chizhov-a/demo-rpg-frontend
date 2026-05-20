@@ -2,6 +2,8 @@ export { container, type Token } from './DIContainer';
 export { ObservableRequest, ok, err, type Either } from './ObservableRequest';
 export {
   appendCatalogItemsFromFetch,
+  createDetailViewState,
+  createDetailViewStateFromRequest,
   createCatalogViewState,
   createCatalogViewStateFromRequest,
   hasRequestError,
@@ -15,6 +17,7 @@ export {
   totalCatalogCount,
   type CatalogResult,
   type CatalogViewState,
+  type DetailViewState,
 } from './helpers/catalogViewModel';
 export { makeAutoBoundObservable } from './helpers/mobx';
 export {
