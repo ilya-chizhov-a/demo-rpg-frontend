@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { StatsPage } from 'src/pages/Stats';
 
-export default createPlaceholderRoute('stats');
+export default function StatsRoute() {
+  return <StatsPage />;
+}

@@ -1,0 +1,118 @@
+query Items($data: Demo_rpg_dataGetItemsesInput, $typesData: Demo_rpg_dataGetItem_typesesInput) {
+  itemses(data: $data) {
+    edges {
+      cursor
+      node {
+        ...ItemCatalogNodeFields
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+  item_typeses(data: $typesData) {
+    edges {
+      node {
+        id
+        data {
+          code
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+
+query ItemsPage($data: Demo_rpg_dataGetItemsesInput) {
+  itemses(data: $data) {
+    edges {
+      cursor
+      node {
+        ...ItemCatalogNodeFields
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+
+fragment ItemCatalogNodeFields on Demo_rpg_dataItemsNode {
+  id
+  versionId
+  createdAt
+  publishedAt
+  data {
+    base_value
+    description {
+      en
+      ru
+      zh
+    }
+    icon {
+      extension
+      fileId
+      fileName
+      hash
+      height
+      mimeType
+      size
+      status
+      url
+      width
+    }
+    market_value
+    modifiers {
+      stat_id {
+        id
+        data {
+          abbreviation
+          code
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      value
+    }
+    name {
+      en
+      ru
+      zh
+    }
+    rarity
+    rarity_tag
+    type_id {
+      id
+      data {
+        code
+        name {
+          en
+          ru
+          zh
+        }
+      }
+    }
+    weight
+  }
+}

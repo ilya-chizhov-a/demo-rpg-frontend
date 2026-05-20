@@ -3,7 +3,7 @@
 | Field              | Value                         |
 | ------------------ | ----------------------------- |
 | Route              | `/item-types`                 |
-| Status             | Draft                         |
+| Status             | In delivery                   |
 | Pattern            | Small reference catalog       |
 | Primary capability | Item taxonomy reference table |
 
@@ -22,15 +22,15 @@ other inventory entities in the item database.
 | Block            | Requirement                                                               |
 | ---------------- | ------------------------------------------------------------------------- |
 | Header           | Explain item types as a game-facing taxonomy.                             |
-| Type list        | Name, description, and optional `items_count` when the query resolves it. |
-| Related items    | Optional link to `/items` filtered by type.                               |
+| Type list        | Name, code, description, and explicit absent marker for `items_count`. |
+| Related items    | Link back to `/items` until shareable type filters are supported.      |
 | Explainer Widget | Required.                                                                 |
 
 ## Primary Actions
 
 | Action               | Result                                                |
 | -------------------- | ----------------------------------------------------- |
-| Filter items by type | Navigate to `/items` with type filter once supported. |
+| Open items catalog   | Navigate to `/items`.                              |
 | Open source row      | Available from the Explainer Widget, not page chrome. |
 
 ## States
@@ -47,21 +47,22 @@ other inventory entities in the item database.
 
 | From           | Trigger              | To                                       |
 | -------------- | -------------------- | ---------------------------------------- |
-| Catalog loaded | Filter items by type | `/items` with type filter when supported |
+| Catalog loaded | Open items catalog | `/items` |
 | Catalog loaded | Source row action    | Explainer Widget external row link       |
 
 ## Data Contract
 
 | Source            | Fields                                                                      |
 | ----------------- | --------------------------------------------------------------------------- |
-| `data.item_types` | `id`, localized `name`/`description`, optional icon, optional `items_count` |
+| `data.item_types` | `id`, localized `name`/`description`, `code` |
 
 ## Explainer Widget
 
 - Summary: "Item Types show the taxonomy used by item cards and detail pages."
 - Variables: locale.
 - GraphQL operation shape: list `data.item_types` rows ordered by display name.
-- Response sample: visible type rows plus optional `items_count`.
+- Response sample: visible type rows with `itemsCount: null` while the API does
+  not expose a reverse count field.
 - Deep links: item types table/schema and selected item type row when a row
   action is present.
 - Subgraphs: `data`.
@@ -74,10 +75,12 @@ other inventory entities in the item database.
 
 ## Architecture Notes
 
-- Implement as a small catalog page before moving status beyond `Draft`.
-- ViewModel owns locale, optional `items_count` display state, and widget descriptor.
+- Implement as a small catalog page before moving status beyond `In delivery`.
+- ViewModel owns locale, absent `items_count` display state, and widget descriptor.
 - DataSource owns the generated GraphQL SDK call, response extraction/mapping,
   and transport-level error mapping once the operation is added.
+- Generated input name is `Demo_rpg_dataGetItem_typesesInput`; v1 orders by
+  localized name through a `data` order field with `path` and `type`.
 
 ## Acceptance Criteria
 
@@ -87,4 +90,5 @@ other inventory entities in the item database.
 
 ## Open Questions
 
-- Confirm whether `items_count` is a formula, reverse lookup, or omitted for v1.
+- Decide whether `/items` should accept shareable `type` query params before
+  item type cards link to filtered item results.

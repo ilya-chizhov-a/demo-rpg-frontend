@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Route | `/items/[id]` |
-| Status | Draft |
+| Status | In delivery |
 | Pattern | Detail |
 | Primary capability | Single FK, embedded modifiers, formulas, SVG file |
 
@@ -59,7 +59,7 @@ arrays, and formula outputs.
 |---|---|
 | `data.items` | `id`, `data.name`, `data.description`, `data.icon`, `data.rarity`, `data.type_id`, `data.modifiers[]`, `base_value`, `rarity_multiplier`, `market_value`, `rarity_tag`. |
 | `data.item_types` | type name and description. |
-| `data.stats` | stat names for modifier rows. |
+| `data.stats` | stat names resolved through `data.items.data.modifiers[].stat_id`. |
 
 ## Explainer Widget
 
@@ -77,6 +77,11 @@ arrays, and formula outputs.
 ## Architecture Notes
 
 - Avoid computing formula values in frontend. Render values from API and show expressions only in explanation.
+- Modifier stat labels are resolved through embedded `stat_id` FK objects in the
+  item detail query; no separate stats query is needed for v1.
+- Current seed rows may return empty `data.icon.url` and `mimeType`; the detail
+  page keeps a stable file preview panel and renders SVG icons through the
+  shared image helper when file URLs are populated.
 
 ## Acceptance Criteria
 
@@ -86,4 +91,5 @@ arrays, and formula outputs.
 
 ## Open Questions
 
-- Confirm whether `stats` are resolved as FK objects or require separate query.
+- Decide whether `/item-types` and `/stats` should support focused reference
+  rows or remain catalog-level links for v1.

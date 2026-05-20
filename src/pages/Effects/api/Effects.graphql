@@ -1,0 +1,33 @@
+query Effects($data: Demo_rpg_dataGetEffectsesInput) {
+  effectses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          code
+          default_duration
+          description {
+            en
+            ru
+            zh
+          }
+          kind
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

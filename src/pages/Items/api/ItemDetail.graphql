@@ -1,0 +1,74 @@
+query ItemDetail($id: String!) {
+  items(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      base_value
+      description {
+        en
+        ru
+        zh
+      }
+      icon {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      market_value
+      modifiers {
+        stat_id {
+          id
+          data {
+            abbreviation
+            code
+            description {
+              en
+              ru
+              zh
+            }
+            name {
+              en
+              ru
+              zh
+            }
+          }
+        }
+        value
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      rarity
+      rarity_multiplier
+      rarity_tag
+      type_id {
+        id
+        data {
+          code
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      weight
+    }
+  }
+}

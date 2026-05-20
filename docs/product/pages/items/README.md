@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Route | `/items` |
-| Status | Draft |
+| Status | In delivery |
 | Pattern | Complex catalog |
 | Primary capability | Complex `where`, multi-field `orderBy`, pagination, SVG icon files |
 
@@ -22,9 +22,9 @@ multi-key sorting, cursor pagination, and file icons.
 | Block | Requirement |
 |---|---|
 | Header | Title, capability chips for filters, sorting, files, formulas. |
-| Filter/sort panel | Name contains, rarity enum, type FK, market value range, multi-key sort. |
-| JSON payload preview | Live `where`, `orderBy`, cursor, page size. |
-| Item results | Icon, name, type, rarity, market value, short description. |
+| Filter/sort panel | Name contains, rarity enum, type FK, market value range, multi-key sort; edits update a draft payload before apply. |
+| JSON payload preview | Live `where`, `orderBy`, cursor, page size; same payload is used by the Explainer Widget. |
+| Item results | Icon, name, type, rarity, market value, rarity tag, short description, modifier preview. |
 | Pagination | Cursor-based load more. |
 | Explainer Widget | Required; mirrors filter payload and response. |
 
@@ -61,9 +61,9 @@ multi-key sorting, cursor pagination, and file icons.
 
 | Source | Fields |
 |---|---|
-| `data.items` | `id`, `data.name`, `data.rarity`, `data.type_id`, `data.icon`, `market_value`, `rarity_tag`, pagination fields. |
+| `data.items` | `id`, `data.name`, `data.description`, `data.rarity`, `data.type_id`, `data.icon`, `data.modifiers[]`, `base_value`, `weight`, `market_value`, `rarity_tag`, pagination fields. |
 | `data.item_types` | id/name for filter dropdown and display. |
-| `data.stats` | stats labels if modifiers are previewed. |
+| `data.stats` | modifier stat labels resolved through `data.items[].data.modifiers[].stat_id`. |
 
 ## Explainer Widget
 
@@ -83,6 +83,16 @@ multi-key sorting, cursor pagination, and file icons.
 
 - This page should establish reusable filter/sort model helpers if duplication appears.
 - Keep JSON payload construction in ViewModel.
+- Generated input names are `Demo_rpg_dataGetItemsesInput` and
+  `Demo_rpg_dataGetItem_typesesInput`; order fields use the generated
+  `data` order field with explicit `path` and `type`.
+- Item type FK can be nested in the list query through `data.type_id`.
+- The initial catalog query fetches item rows and item type filter options
+  together; cursor pagination fetches item rows only and keeps the cached type
+  options stable.
+- Current seed rows may return empty `data.icon.url` and `mimeType`; the catalog
+  still reserves stable icon slots and will render SVG icons through the shared
+  image helper when file URLs are populated.
 
 ## Acceptance Criteria
 
@@ -93,5 +103,5 @@ multi-key sorting, cursor pagination, and file icons.
 
 ## Open Questions
 
-- Confirm exact generated GraphQL input names for `where` and `orderBy`.
-- Confirm whether item type FK can be nested in the same list query.
+- Decide whether item catalog filters should support shareable type/stat query
+  params once `/item-types` and `/stats` move past placeholders.

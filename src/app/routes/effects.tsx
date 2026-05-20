@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { EffectsPage } from 'src/pages/Effects';
 
-export default createPlaceholderRoute('effects');
+export default function EffectsRoute() {
+  return <EffectsPage />;
+}

@@ -18,6 +18,17 @@ export {
 } from './helpers/catalogViewModel';
 export { makeAutoBoundObservable } from './helpers/mobx';
 export {
+  getReferenceCatalogItemDescription,
+  getReferenceCatalogItemTitle,
+  ReferenceCatalogItemViewModelBase,
+  ReferenceCatalogState,
+  ReferenceCatalogViewModelBase,
+  usesReferenceCatalogLocaleFallback,
+  type ReferenceCatalogCodeNode,
+  type ReferenceCatalogLocalizedNode,
+  type ReferenceCatalogRequestOwner,
+} from './helpers/referenceCatalogViewModel';
+export {
   createLocaleFallbacks,
   type LocaleFallbackDescriptor,
   type LocaleFallbackRecord,

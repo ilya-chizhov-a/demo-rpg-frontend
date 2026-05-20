@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { ItemDetailPage } from 'src/pages/Items';
 
-export default createPlaceholderRoute('itemDetail');
+export default function ItemDetailRoute() {
+  return <ItemDetailPage />;
+}

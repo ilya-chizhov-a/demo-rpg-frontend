@@ -1,0 +1,31 @@
+query ItemTypes($data: Demo_rpg_dataGetItem_typesesInput) {
+  item_typeses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          code
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

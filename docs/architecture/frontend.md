@@ -139,6 +139,14 @@ Use an Item ViewModel when an item has any of:
 The page/list ViewModel may cache Item ViewModels by stable row id so refreshes
 preserve item-level state. Avoid creating ad hoc item objects in JSX.
 
+Small reference catalogs with the same shell, empty/error/loading handling, and
+Explainer Widget wiring may use the shared reference catalog helpers:
+`ReferenceCatalogViewModelBase` for common request/list lifecycle and the
+`ReferenceCatalogItemViewModelBase` for localized item title/description/code
+getters, plus the `ReferenceCatalogPage` widget for page composition. Page
+slices still own their copy, request variables, response samples, locale
+fallback attribution, and row/card components.
+
 ## Method Shape And SOLID Rules
 
 Keep methods at one abstraction level.

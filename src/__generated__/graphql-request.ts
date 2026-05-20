@@ -1022,6 +1022,13 @@ export type ClassesQueryVariables = Exact<{
 
 export type ClassesQuery = { classeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, icon: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type EffectsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetEffectsesInput>;
+}>;
+
+
+export type EffectsQuery = { effectses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { code: string, default_duration: number, kind: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type FactionDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
   monstersData?: InputMaybe<Demo_Rpg_DataGetMonstersesInput>;
@@ -1052,6 +1059,37 @@ export type HeroesQueryVariables = Exact<{
 
 
 export type HeroesQuery = { heroeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { display_name_en: string, is_veteran: boolean, level: number, epithet: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string }, class_id: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } }, portrait: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } }, classeses: { totalCount: number, edges: Array<{ node: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type ItemTypesQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetItem_TypesesInput>;
+}>;
+
+
+export type ItemTypesQuery = { item_typeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { code: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type ItemDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type ItemDetailQuery = { items: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_value: number, market_value: number, rarity: string, rarity_multiplier: number, rarity_tag: string, weight: number, description: { en: string, ru: string, zh: string }, icon: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, modifiers: Array<{ value: number, stat_id: { id: string, data: { abbreviation: string, code: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } }>, name: { en: string, ru: string, zh: string }, type_id: { id: string, data: { code: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } } } };
+
+export type ItemsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetItemsesInput>;
+  typesData?: InputMaybe<Demo_Rpg_DataGetItem_TypesesInput>;
+}>;
+
+
+export type ItemsQuery = { itemses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_value: number, market_value: number, rarity: string, rarity_tag: string, weight: number, description: { en: string, ru: string, zh: string }, icon: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, modifiers: Array<{ value: number, stat_id: { id: string, data: { abbreviation: string, code: string, name: { en: string, ru: string, zh: string } } } }>, name: { en: string, ru: string, zh: string }, type_id: { id: string, data: { code: string, name: { en: string, ru: string, zh: string } } } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } }, item_typeses: { totalCount: number, edges: Array<{ node: { id: string, data: { code: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type ItemsPageQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetItemsesInput>;
+}>;
+
+
+export type ItemsPageQuery = { itemses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_value: number, market_value: number, rarity: string, rarity_tag: string, weight: number, description: { en: string, ru: string, zh: string }, icon: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, modifiers: Array<{ value: number, stat_id: { id: string, data: { abbreviation: string, code: string, name: { en: string, ru: string, zh: string } } } }>, name: { en: string, ru: string, zh: string }, type_id: { id: string, data: { code: string, name: { en: string, ru: string, zh: string } } } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type ItemCatalogNodeFieldsFragment = { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_value: number, market_value: number, rarity: string, rarity_tag: string, weight: number, description: { en: string, ru: string, zh: string }, icon: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, modifiers: Array<{ value: number, stat_id: { id: string, data: { abbreviation: string, code: string, name: { en: string, ru: string, zh: string } } } }>, name: { en: string, ru: string, zh: string }, type_id: { id: string, data: { code: string, name: { en: string, ru: string, zh: string } } } } };
 
 export type LocationDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1123,7 +1161,76 @@ export type RegionsQueryVariables = Exact<{
 
 export type RegionsQuery = { regionses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { climate: string, cover_image: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type StatsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetStatsesInput>;
+}>;
 
+
+export type StatsQuery = { statses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { abbreviation: string, code: string, description: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export const ItemCatalogNodeFieldsFragmentDoc = gql`
+    fragment ItemCatalogNodeFields on Demo_rpg_dataItemsNode {
+  id
+  versionId
+  createdAt
+  publishedAt
+  data {
+    base_value
+    description {
+      en
+      ru
+      zh
+    }
+    icon {
+      extension
+      fileId
+      fileName
+      hash
+      height
+      mimeType
+      size
+      status
+      url
+      width
+    }
+    market_value
+    modifiers {
+      stat_id {
+        id
+        data {
+          abbreviation
+          code
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      value
+    }
+    name {
+      en
+      ru
+      zh
+    }
+    rarity
+    rarity_tag
+    type_id {
+      id
+      data {
+        code
+        name {
+          en
+          ru
+          zh
+        }
+      }
+    }
+    weight
+  }
+}
+    `;
 export const AbilitiesDocument = gql`
     query Abilities($data: Demo_rpg_dataGetAbilitiesesInput) {
   abilitieses(data: $data) {
@@ -1200,6 +1307,41 @@ export const ClassesDocument = gql`
             zh
           }
           description {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const EffectsDocument = gql`
+    query Effects($data: Demo_rpg_dataGetEffectsesInput) {
+  effectses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          code
+          default_duration
+          description {
+            en
+            ru
+            zh
+          }
+          kind
+          name {
             en
             ru
             zh
@@ -1549,6 +1691,174 @@ export const HeroesDocument = gql`
   }
 }
     `;
+export const ItemTypesDocument = gql`
+    query ItemTypes($data: Demo_rpg_dataGetItem_typesesInput) {
+  item_typeses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          code
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const ItemDetailDocument = gql`
+    query ItemDetail($id: String!) {
+  items(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      base_value
+      description {
+        en
+        ru
+        zh
+      }
+      icon {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      market_value
+      modifiers {
+        stat_id {
+          id
+          data {
+            abbreviation
+            code
+            description {
+              en
+              ru
+              zh
+            }
+            name {
+              en
+              ru
+              zh
+            }
+          }
+        }
+        value
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      rarity
+      rarity_multiplier
+      rarity_tag
+      type_id {
+        id
+        data {
+          code
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      weight
+    }
+  }
+}
+    `;
+export const ItemsDocument = gql`
+    query Items($data: Demo_rpg_dataGetItemsesInput, $typesData: Demo_rpg_dataGetItem_typesesInput) {
+  itemses(data: $data) {
+    edges {
+      cursor
+      node {
+        ...ItemCatalogNodeFields
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+  item_typeses(data: $typesData) {
+    edges {
+      node {
+        id
+        data {
+          code
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    ${ItemCatalogNodeFieldsFragmentDoc}`;
+export const ItemsPageDocument = gql`
+    query ItemsPage($data: Demo_rpg_dataGetItemsesInput) {
+  itemses(data: $data) {
+    edges {
+      cursor
+      node {
+        ...ItemCatalogNodeFields
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    ${ItemCatalogNodeFieldsFragmentDoc}`;
 export const LocationDetailDocument = gql`
     query LocationDetail($id: String!) {
   locations(id: $id) {
@@ -2020,6 +2330,40 @@ export const RegionsDocument = gql`
   }
 }
     `;
+export const StatsDocument = gql`
+    query Stats($data: Demo_rpg_dataGetStatsesInput) {
+  statses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          abbreviation
+          code
+          description {
+            en
+            ru
+            zh
+          }
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -2034,6 +2378,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     Classes(variables?: ClassesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ClassesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ClassesQuery>({ document: ClassesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Classes', 'query', variables);
     },
+    Effects(variables?: EffectsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<EffectsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<EffectsQuery>({ document: EffectsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Effects', 'query', variables);
+    },
     FactionDetail(variables: FactionDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FactionDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FactionDetailQuery>({ document: FactionDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'FactionDetail', 'query', variables);
     },
@@ -2045,6 +2392,18 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Heroes(variables?: HeroesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<HeroesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HeroesQuery>({ document: HeroesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Heroes', 'query', variables);
+    },
+    ItemTypes(variables?: ItemTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ItemTypesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ItemTypesQuery>({ document: ItemTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ItemTypes', 'query', variables);
+    },
+    ItemDetail(variables: ItemDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ItemDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ItemDetailQuery>({ document: ItemDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ItemDetail', 'query', variables);
+    },
+    Items(variables?: ItemsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ItemsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ItemsQuery>({ document: ItemsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Items', 'query', variables);
+    },
+    ItemsPage(variables?: ItemsPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ItemsPageQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ItemsPageQuery>({ document: ItemsPageDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ItemsPage', 'query', variables);
     },
     LocationDetail(variables: LocationDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LocationDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LocationDetailQuery>({ document: LocationDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LocationDetail', 'query', variables);
@@ -2075,6 +2434,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Regions(variables?: RegionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RegionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<RegionsQuery>({ document: RegionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Regions', 'query', variables);
+    },
+    Stats(variables?: StatsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<StatsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<StatsQuery>({ document: StatsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Stats', 'query', variables);
     }
   };
 }
