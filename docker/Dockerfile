@@ -8,6 +8,7 @@ RUN npm ci --ignore-scripts --no-audit --no-fund
 COPY tsconfig.json tsconfig.node.json ./
 COPY react-router.config.ts vite.config.ts ./
 COPY .env/ ./.env/
+COPY public/ ./public/
 COPY src/ ./src/
 RUN npm run build
 
