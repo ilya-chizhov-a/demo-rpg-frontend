@@ -31,7 +31,7 @@ location relationship in a single-row detail page.
 
 | Action | Result |
 |---|---|
-| Back to NPCs | Navigate to `/npcs`. |
+| Back | Return to the previous in-app page, or `/npcs` when opened directly. |
 | Open location | Navigate to `/locations/[id]`. |
 | Open cloud row | Open NPC row. |
 
@@ -49,8 +49,9 @@ location relationship in a single-row detail page.
 | From | Trigger | To |
 |---|---|---|
 | NPC catalog | Open NPC | Detail loading |
+| Quest detail | Open giver/step NPC | Detail loading |
 | Detail loaded | Open location | `/locations/[id]` |
-| Detail loaded | Back action | `/npcs` |
+| Detail loaded | Back action | Previous in-app page or `/npcs` |
 
 ## Data Contract
 
@@ -81,6 +82,8 @@ location relationship in a single-row detail page.
   `{title}{name}` without a separator.
 - Keep the route in the NPC page slice using the DataSource/Detail ViewModel
   shape from `docs/architecture/frontend.md`.
+- The detail back button uses router history for in-app returns and keeps
+  `/npcs` as the direct-entry fallback; the NPC query still uses the route `id`.
 
 ## Acceptance Criteria
 

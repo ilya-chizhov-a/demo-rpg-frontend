@@ -3,14 +3,14 @@
 | Field | Value |
 |---|---|
 | Route | `/quests` |
-| Status | Draft |
+| Status | In delivery |
 | Pattern | Catalog |
 | Primary capability | FK columns, level filter, repeatable flag |
 
 ## Purpose
 
-Show quest rows as content records with NPC/location relationships, level
-filtering, and repeatable boolean display.
+Show quest rows as content records with NPC and step-location relationships,
+level filtering, and repeatable boolean display.
 
 ## Context And Entry
 
@@ -22,15 +22,15 @@ filtering, and repeatable boolean display.
 | Block | Requirement |
 |---|---|
 | Header | Quest catalog purpose and capability chips. |
-| Filters | Level range, repeatable toggle, NPC, location. |
-| Quest list | Title, giver NPC, location, level, repeatable flag, step count. |
+| Filters | `level_required` range, repeatable-only toggle, giver NPC, primary step location. |
+| Quest list | Title, giver NPC, primary step location, level, repeatable flag, step count. |
 | Explainer Widget | Required. |
 
 ## Primary Actions
 
 | Action | Result |
 |---|---|
-| Filter level/repeatable | Updates query payload. |
+| Filter level/repeatable/NPC/location | Updates query payload. |
 | Open quest | Navigate to `/quests/[id]`. |
 | Reset | Clears filters. |
 
@@ -55,13 +55,13 @@ filtering, and repeatable boolean display.
 
 | Source | Fields |
 |---|---|
-| `data.quests` | `id`, localized title/summary, `npc_id`, `location_id`, `level`, `repeatable`, `step_count`, pagination. |
+| `data.quests` | `id`, localized `name`/`description`, `giver_npc_id`, `steps[].location_id`, `level_required`, `is_repeatable`, `step_count`, pagination. |
 | `data.npcs`, `data.locations` | labels for filters and display. |
 
 ## Explainer Widget
 
 - Summary: "Quests show FK-backed catalog columns and filters plus computed step count."
-- Variables: level range, repeatable, FK filters, locale, cursor.
+- Variables: level range, repeatable-only flag, giver NPC filter, primary step location filter, locale, cursor.
 - Deep links: quests table/schema.
 - Subgraphs: `data`.
 
@@ -73,6 +73,9 @@ filtering, and repeatable boolean display.
 ## Architecture Notes
 
 - Quest catalog may become the reference for boolean filters.
+- The catalog location column and filter use the first authored quest step as
+  the primary step location because the generated quest row has no top-level
+  `location_id`.
 
 ## Acceptance Criteria
 
@@ -81,4 +84,5 @@ filtering, and repeatable boolean display.
 
 ## Open Questions
 
-- Confirm exact quest level field name.
+- None. The generated schema exposes `level_required`, `is_repeatable`,
+  `giver_npc_id`, and nested `steps[].location_id`.

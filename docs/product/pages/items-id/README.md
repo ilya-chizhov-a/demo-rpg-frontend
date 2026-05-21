@@ -15,7 +15,8 @@ arrays, and formula outputs.
 ## Context And Entry
 
 - Entry from `/items`, hero inventory, quest rewards, and monster drops.
-- Links back to `/items` and related type/stat rows where routes exist.
+- Back action returns to the previous in-app page and falls back to `/items`;
+  related type/stat rows link where routes exist.
 
 ## Functional Blocks
 
@@ -32,7 +33,7 @@ arrays, and formula outputs.
 
 | Action | Result |
 |---|---|
-| Back to items | Navigate to `/items`. |
+| Back | Return to the previous in-app page, or `/items` when opened directly. |
 | Open cloud row | Open item row in cloud. |
 | Open type/stat reference | Navigate or deep-link to referenced row. |
 
@@ -51,7 +52,7 @@ arrays, and formula outputs.
 |---|---|---|
 | Items catalog | Open item | Detail loading |
 | Detail loaded | Open related type/stat | Related route or cloud row |
-| Detail loaded | Back action | `/items` |
+| Detail loaded | Back action | Previous in-app page or `/items` |
 
 ## Data Contract
 

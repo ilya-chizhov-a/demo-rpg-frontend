@@ -1,9 +1,9 @@
-import { Button, SimpleGrid, Stack } from '@chakra-ui/react';
+import { SimpleGrid, Stack } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
-import { Link as RouterLink, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import { renderWhen, useViewModel } from 'src/shared/lib';
-import { PageShell, StatePanel } from 'src/shared/ui';
+import { DetailBackButton, PageShell, StatePanel } from 'src/shared/ui';
 import { ExplainerWidget } from 'src/widgets/explainer-widget';
 import { HeroDetailViewModel } from '../../model/HeroDetailViewModel';
 import { HeroDetailHeader } from '../HeroDetailHeader/HeroDetailHeader';
@@ -17,20 +17,11 @@ export const HeroDetailPage = observer(() => {
 
   return (
     <PageShell>
-      <Button
-        aria-label={vm.detailCopy.backAriaLabel}
-        asChild
-        borderColor="rgba(103, 232, 249, 0.34)"
-        color="#67e8f9"
-        mb="4"
-        minH="44px"
-        size="md"
-        variant="outline"
-        w="fit-content"
-        _hover={{ bg: 'rgba(34, 211, 238, 0.12)', borderColor: '#67e8f9' }}
-      >
-        <RouterLink to="/heroes">{vm.detailCopy.backLabel}</RouterLink>
-      </Button>
+      <DetailBackButton
+        ariaLabel={vm.detailCopy.backAriaLabel}
+        fallbackHref="/heroes"
+        label={vm.detailCopy.backLabel}
+      />
 
       {renderWhen(vm.showLoading, <HeroDetailSkeleton />)}
       {renderWhen(

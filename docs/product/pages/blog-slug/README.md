@@ -32,7 +32,7 @@ author reference.
 
 | Action | Result |
 |---|---|
-| Back to blog | Navigate to `/blog`. |
+| Back | Return to the previous in-app page, or `/blog` when opened directly. |
 | Open proof link | Navigate to route from article link. |
 | Open cloud row | Open blog post row. |
 
@@ -50,7 +50,7 @@ author reference.
 | From | Trigger | To |
 |---|---|---|
 | Blog catalog | Open post | Detail loading |
-| Detail loaded | Back action | `/blog` |
+| Detail loaded | Back action | Previous in-app page or `/blog` |
 | Detail loaded | Capability link | Target proof page |
 
 ## Data Contract

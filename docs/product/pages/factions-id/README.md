@@ -22,7 +22,7 @@ related rows that point back to the faction through available schema FKs.
 
 | Block            | Requirement                                                                 |
 | ---------------- | --------------------------------------------------------------------------- |
-| Back action      | Visible link back to `/factions` above the detail body.                     |
+| Back action      | Visible history-aware back button above the detail body with `/factions` fallback. |
 | World navigation | Section links sit directly below the back action.                           |
 | Overview         | Desktop two-column inspector: crest on the left, data panels on the right.  |
 | Header           | Crest, localized name, alignment, locale, and localized description.        |
@@ -35,7 +35,7 @@ related rows that point back to the faction through available schema FKs.
 
 | Action           | Result                                                     |
 | ---------------- | ---------------------------------------------------------- |
-| Back to factions | Navigate to `/factions`.                                  |
+| Back             | Return to the previous in-app page, or `/factions` when opened directly. |
 | Open monster     | Navigate to `/monsters/[id]`.                              |
 | Open NPC         | Navigate to `/npcs/[id]`.                                  |
 | Load more related | Fetch the next cursor for the selected related section.    |
@@ -59,7 +59,7 @@ related rows that point back to the faction through available schema FKs.
 | Factions catalog | Open faction     | Detail loading      |
 | Detail loaded    | Open related row | Related route       |
 | Detail loaded    | Load more related | Appended related rows |
-| Detail loaded    | Back action      | `/factions`         |
+| Detail loaded    | Back action      | Previous in-app page or `/factions` |
 
 ## Data Contract
 

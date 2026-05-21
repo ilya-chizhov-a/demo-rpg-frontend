@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { DialogsPage } from 'src/pages/Dialogs';
 
-export default createPlaceholderRoute('dialogs');
+export default function DialogsRoute() {
+  return <DialogsPage />;
+}

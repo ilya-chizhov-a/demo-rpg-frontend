@@ -1,0 +1,48 @@
+query Dialogs($data: Demo_rpg_dataGetDialogsesInput) {
+  dialogses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          line_count
+          lines {
+            emotion
+            speaker
+            text {
+              en
+              ru
+              zh
+            }
+          }
+          npc_id {
+            id
+            data {
+              display_label_en
+              name {
+                en
+                ru
+                zh
+              }
+              role
+              title {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          slug
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

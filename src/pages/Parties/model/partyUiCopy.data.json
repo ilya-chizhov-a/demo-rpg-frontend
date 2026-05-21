@@ -4,8 +4,8 @@
       "capabilitiesAriaLabel": "Capabilities",
       "cardOpenAction": "Open party",
       "detail": {
-        "backAriaLabel": "Back to parties catalog",
-        "backLabel": "Back to parties",
+        "backAriaLabel": "Go back",
+        "backLabel": "Back",
         "classLabel": "Class",
         "emptyMembersDescription": "This party has no hero references yet.",
         "emptyMembersTitle": "No members",
@@ -64,8 +64,8 @@
       "capabilitiesAriaLabel": "Возможности",
       "cardOpenAction": "Открыть отряд",
       "detail": {
-        "backAriaLabel": "Вернуться к каталогу отрядов",
-        "backLabel": "Назад к отрядам",
+        "backAriaLabel": "Вернуться назад",
+        "backLabel": "Назад",
         "classLabel": "Класс",
         "emptyMembersDescription": "У этого отряда пока нет ссылок на героев.",
         "emptyMembersTitle": "Нет участников",
@@ -125,8 +125,8 @@
       "capabilitiesAriaLabel": "能力",
       "cardOpenAction": "打开队伍",
       "detail": {
-        "backAriaLabel": "返回队伍目录",
-        "backLabel": "返回队伍",
+        "backAriaLabel": "返回上一页",
+        "backLabel": "返回",
         "classLabel": "职业",
         "emptyMembersDescription": "此队伍暂时没有英雄引用。",
         "emptyMembersTitle": "没有成员",

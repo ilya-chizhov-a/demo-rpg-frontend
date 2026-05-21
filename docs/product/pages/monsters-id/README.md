@@ -33,7 +33,7 @@ ability references, embedded drops, and computed drop metrics.
 
 | Action | Result |
 |---|---|
-| Back to monsters | Navigate to `/monsters`. |
+| Back | Return to the previous in-app page, or `/monsters` when opened directly. |
 | Open faction | Navigate to `/factions/[id]`. |
 | Open ability catalog | Navigate to `/abilities`. |
 | Open dropped item | Navigate to `/items/[id]`. |
@@ -54,7 +54,7 @@ ability references, embedded drops, and computed drop metrics.
 |---|---|---|
 | Monsters catalog | Open monster | Detail loading |
 | Detail loaded | Open related row | Related route or cloud row |
-| Detail loaded | Back action | `/monsters` |
+| Detail loaded | Back action | Previous in-app page or `/monsters` |
 
 ## Data Contract
 

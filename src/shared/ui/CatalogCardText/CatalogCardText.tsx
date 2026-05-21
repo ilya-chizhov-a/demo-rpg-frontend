@@ -2,12 +2,13 @@ import { Box, Heading, Text } from '@chakra-ui/react';
 
 interface CatalogCardTextProps {
   readonly description: string;
+  readonly px?: string;
   readonly title: string;
 }
 
-export function CatalogCardText({ description, title }: CatalogCardTextProps) {
+export function CatalogCardText({ description, px = '5', title }: CatalogCardTextProps) {
   return (
-    <Box px="5">
+    <Box px={px}>
       <Heading
         alignItems="flex-start"
         as="h2"

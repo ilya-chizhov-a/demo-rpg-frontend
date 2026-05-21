@@ -5,8 +5,8 @@
       "capabilitiesAriaLabel": "Capabilities",
       "cardOpenAction": "Open NPC",
       "detail": {
-        "backAriaLabel": "Back to NPCs catalog",
-        "backLabel": "Back to NPCs",
+        "backAriaLabel": "Go back",
+        "backLabel": "Back",
         "errorDescription": "The GraphQL router did not return this NPC. Check the URL or return to the catalog.",
         "errorTitle": "NPC unavailable",
         "factsTitle": "NPC facts",
@@ -57,8 +57,8 @@
       "capabilitiesAriaLabel": "Возможности",
       "cardOpenAction": "Открыть NPC",
       "detail": {
-        "backAriaLabel": "Вернуться к каталогу NPC",
-        "backLabel": "Назад к NPC",
+        "backAriaLabel": "Вернуться назад",
+        "backLabel": "Назад",
         "errorDescription": "GraphQL-роутер не вернул этого NPC. Проверьте URL или вернитесь в каталог.",
         "errorTitle": "NPC недоступен",
         "factsTitle": "Факты NPC",
@@ -109,8 +109,8 @@
       "capabilitiesAriaLabel": "能力",
       "cardOpenAction": "打开 NPC",
       "detail": {
-        "backAriaLabel": "返回 NPC 目录",
-        "backLabel": "返回 NPC",
+        "backAriaLabel": "返回上一页",
+        "backLabel": "返回",
         "errorDescription": "GraphQL router 未返回此 NPC。请检查 URL 或返回目录。",
         "errorTitle": "NPC 不可用",
         "factsTitle": "NPC 信息",

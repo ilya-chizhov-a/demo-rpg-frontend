@@ -123,7 +123,7 @@ flowchart LR
 | `/items`          | `/items/[id]`                                                                                    | Open item detail.                            |
 | `/items/[id]`     | `/heroes`, `/quests`, `/monsters`, `/item-types`, `/stats`, `/effects` where reverse links exist | Show where item is used and how it is typed. |
 | `/monsters/[id]`  | `/factions/[id]`, `/abilities`, `/items/[id]`                                                    | Faction, abilities, drops.                   |
-| `/quests/[id]`    | `/npcs/[id]`, `/locations/[id]`, `/items/[id]`, `/dialogs`                                       | Quest giver, location, rewards, dialog.      |
+| `/quests/[id]`    | `/npcs/[id]`, `/locations/[id]`, `/items/[id]`, `/dialogs`                                       | Quest giver, location, rewards, dialog catalog. |
 | `/parties/[id]`   | `/heroes/[id]`                                                                                   | Party member array FK.                       |
 | `/factions/[id]`  | `/heroes/[id]`, `/monsters/[id]`                                                                 | Reverse faction relationships.               |
 | `/npcs/[id]`      | `/locations/[id]`                                                                                | NPC location FK.                             |
@@ -167,9 +167,11 @@ links.
 
 ## Back Behaviour
 
-- Catalog to detail: breadcrumb returns to the catalog route.
-- Filtered catalog to detail: preserve the browser back stack; do not override native back.
-- Detail to related detail: breadcrumb points to that entity's catalog, while browser back returns to source.
+- Detail pages use a visible history-aware Back action.
+- Catalog to detail: Back returns to the previous in-app page and falls back to
+  the owning catalog route when opened directly.
+- Detail to related detail: Back returns to the source detail through the
+  browser stack and falls back to the related entity catalog when opened directly.
 - External cloud/source links open new tabs.
 
 ## URL State

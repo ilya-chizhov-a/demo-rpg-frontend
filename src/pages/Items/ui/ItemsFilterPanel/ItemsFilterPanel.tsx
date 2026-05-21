@@ -1,8 +1,14 @@
-import { Box, Button, Flex, Heading, Input, SimpleGrid, Text } from '@chakra-ui/react';
+import { SimpleGrid, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import { useId } from 'react';
-import type { ChangeEvent, ReactNode } from 'react';
 
+import {
+  CatalogFilterActions,
+  CatalogFilterNumberField,
+  CatalogFilterPanelFrame,
+  CatalogFilterSelectField,
+  CatalogFilterTextField,
+} from 'src/shared/ui';
 import type { ItemsViewModel } from '../../model/ItemsViewModel';
 
 const ITEMS_MARKET_MAX_INPUT_ID = 'items-market-max-input';
@@ -23,7 +29,6 @@ export const ItemsFilterPanel = observer(function ItemsFilterPanel({
   variant = 'panel',
   vm,
 }: ItemsFilterPanelProps) {
-  const isPanel = variant === 'panel';
   const fieldIdPrefix = useId();
   const fieldIds = {
     marketMax: `${fieldIdPrefix}-${ITEMS_MARKET_MAX_INPUT_ID}`,
@@ -35,31 +40,20 @@ export const ItemsFilterPanel = observer(function ItemsFilterPanel({
   } as const;
 
   return (
-    <Box
-      bg={isPanel ? 'rgba(18, 24, 32, 0.9)' : 'transparent'}
-      borderColor={isPanel ? 'rgba(103, 232, 249, 0.16)' : 'transparent'}
-      borderRadius="md"
-      borderWidth={isPanel ? '1px' : '0'}
-      display="grid"
-      gap="4"
-      minW="0"
-      p={isPanel ? '4' : '0'}
+    <CatalogFilterPanelFrame
+      showTitle={showTitle}
+      title={vm.copy.filterPanelTitle}
+      variant={variant}
     >
-      {showTitle ? (
-        <Heading as="h2" color="var(--color-text)" fontSize="lg">
-          {vm.copy.filterPanelTitle}
-        </Heading>
-      ) : null}
-
       <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} gap="3">
-        <TextField
+        <CatalogFilterTextField
           id={fieldIds.name}
           label={vm.copy.nameSearchLabel}
           onChange={(value) => vm.setSearchQuery(value)}
           placeholder={vm.copy.nameSearchPlaceholder}
           value={vm.searchQuery}
         />
-        <SelectField
+        <CatalogFilterSelectField
           id={fieldIds.rarity}
           label={vm.copy.raritySelectLabel}
           onChange={(value) => vm.setRarity(value)}
@@ -71,8 +65,8 @@ export const ItemsFilterPanel = observer(function ItemsFilterPanel({
               {option.label}
             </option>
           ))}
-        </SelectField>
-        <SelectField
+        </CatalogFilterSelectField>
+        <CatalogFilterSelectField
           id={fieldIds.type}
           label={vm.copy.typeSelectLabel}
           onChange={(value) => vm.setTypeId(value)}
@@ -84,20 +78,20 @@ export const ItemsFilterPanel = observer(function ItemsFilterPanel({
               {option.label}
             </option>
           ))}
-        </SelectField>
-        <NumberField
+        </CatalogFilterSelectField>
+        <CatalogFilterNumberField
           id={fieldIds.marketMin}
           label={vm.copy.marketMinLabel}
           onChange={(value) => vm.setMarketMin(value)}
           value={vm.marketMinInputValue}
         />
-        <NumberField
+        <CatalogFilterNumberField
           id={fieldIds.marketMax}
           label={vm.copy.marketMaxLabel}
           onChange={(value) => vm.setMarketMax(value)}
           value={vm.marketMaxInputValue}
         />
-        <SelectField
+        <CatalogFilterSelectField
           id={fieldIds.sort}
           label={vm.copy.sortLabel}
           onChange={(value) => vm.setSortKey(value)}
@@ -108,7 +102,7 @@ export const ItemsFilterPanel = observer(function ItemsFilterPanel({
               {option.label}
             </option>
           ))}
-        </SelectField>
+        </CatalogFilterSelectField>
       </SimpleGrid>
 
       {vm.isMarketRangeValid ? null : (
@@ -117,117 +111,22 @@ export const ItemsFilterPanel = observer(function ItemsFilterPanel({
         </Text>
       )}
 
-      <Flex gap="2" justify="flex-end" wrap="wrap">
-        {vm.hasActiveFilter ? (
-          <Button minH="44px" onClick={() => void vm.resetFilters()} type="button" variant="ghost">
-            {vm.copy.resetFiltersActionLabel}
-          </Button>
-        ) : null}
-        <Button
-          bg="#22d3ee"
-          color="var(--color-text-on-accent)"
-          disabled={!vm.canApplyFilters}
-          minH="44px"
-          onClick={() => void vm.applyFilters()}
-          type="button"
-          _hover={{ bg: '#67e8f9' }}
-        >
-          {vm.copy.applyFiltersActionLabel}
-        </Button>
-      </Flex>
-    </Box>
+      <CatalogFilterActions
+        applyLabel={vm.copy.applyFiltersActionLabel}
+        canApply={vm.canApplyFilters}
+        canReset={vm.hasActiveFilter}
+        onApply={() => {
+          vm.applyFilters().catch(reportFilterActionError);
+        }}
+        onReset={() => {
+          vm.resetFilters().catch(reportFilterActionError);
+        }}
+        resetLabel={vm.copy.resetFiltersActionLabel}
+      />
+    </CatalogFilterPanelFrame>
   );
 });
 
-interface FieldProps {
-  readonly id: string;
-  readonly label: string;
-}
-
-interface TextFieldProps extends FieldProps {
-  readonly onChange: (value: string) => void;
-  readonly placeholder: string;
-  readonly value: string;
-}
-
-function TextField({ id, label, onChange, placeholder, value }: TextFieldProps) {
-  return (
-    <Box minW="0">
-      <FieldLabel id={id} label={label} />
-      <Input
-        bg="rgba(15, 21, 29, 0.82)"
-        borderColor="rgba(103, 232, 249, 0.24)"
-        id={id}
-        minH="44px"
-        onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
-        value={value}
-      />
-    </Box>
-  );
-}
-
-interface NumberFieldProps extends FieldProps {
-  readonly onChange: (value: string) => void;
-  readonly value: string;
-}
-
-function NumberField({ id, label, onChange, value }: NumberFieldProps) {
-  return (
-    <Box minW="0">
-      <FieldLabel id={id} label={label} />
-      <Input
-        bg="rgba(15, 21, 29, 0.82)"
-        borderColor="rgba(103, 232, 249, 0.24)"
-        id={id}
-        min="0"
-        minH="44px"
-        onChange={(event) => onChange(event.target.value)}
-        step="1"
-        type="number"
-        value={value}
-      />
-    </Box>
-  );
-}
-
-interface SelectFieldProps extends FieldProps {
-  readonly children: ReactNode;
-  readonly onChange: (value: string) => void;
-  readonly value: string;
-}
-
-function SelectField({ children, id, label, onChange, value }: SelectFieldProps) {
-  return (
-    <Box minW="0">
-      <FieldLabel id={id} label={label} />
-      <Box
-        asChild
-        bg="rgba(15, 21, 29, 0.82)"
-        borderColor="rgba(103, 232, 249, 0.24)"
-        borderRadius="md"
-        borderWidth="1px"
-        color="var(--color-text)"
-        h="44px"
-        px="3"
-        w="full"
-      >
-        <select
-          id={id}
-          onChange={(event: ChangeEvent<HTMLSelectElement>) => onChange(event.target.value)}
-          value={value}
-        >
-          {children}
-        </select>
-      </Box>
-    </Box>
-  );
-}
-
-function FieldLabel({ id, label }: FieldProps) {
-  return (
-    <Box asChild color="#9aa7b1" display="block" fontSize="xs" mb="1">
-      <label htmlFor={id}>{label}</label>
-    </Box>
-  );
+function reportFilterActionError(error: unknown): void {
+  console.error('[ItemsFilterPanel] filter action failed', error);
 }

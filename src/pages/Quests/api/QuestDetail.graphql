@@ -1,0 +1,133 @@
+query QuestDetail($id: String!) {
+  quests(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      description {
+        en
+        ru
+        zh
+      }
+      giver_npc_id {
+        id
+        data {
+          display_label_en
+          name {
+            en
+            ru
+            zh
+          }
+          role
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      is_repeatable
+      kind
+      level_required
+      map {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      step_count
+      steps {
+        description {
+          en
+          ru
+          zh
+        }
+        image {
+          extension
+          fileId
+          fileName
+          hash
+          height
+          mimeType
+          size
+          status
+          url
+          width
+        }
+        location_id {
+          id
+          data {
+            kind
+            name {
+              en
+              ru
+              zh
+            }
+          }
+        }
+        npc_id {
+          id
+          data {
+            display_label_en
+            name {
+              en
+              ru
+              zh
+            }
+            role
+            title {
+              en
+              ru
+              zh
+            }
+          }
+        }
+        rewards {
+          bonus_xp
+          item_id {
+            id
+            data {
+              base_value
+              market_value
+              name {
+                en
+                ru
+                zh
+              }
+              rarity
+              rarity_tag
+              type_id {
+                id
+                data {
+                  code
+                  name {
+                    en
+                    ru
+                    zh
+                  }
+                }
+              }
+            }
+          }
+          quantity
+        }
+        step_number
+        xp
+      }
+      total_loot_xp
+      total_xp
+    }
+  }
+}

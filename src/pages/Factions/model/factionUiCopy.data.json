@@ -66,8 +66,8 @@
       "cardOpenAction": "Open faction",
       "crestPlaceholderTitle": "Crest unavailable",
       "detail": {
-        "backAriaLabel": "Back to factions catalog",
-        "backLabel": "Back to factions catalog",
+        "backAriaLabel": "Go back",
+        "backLabel": "Back",
         "datasetLabel": "data.factions",
         "errorDescription": "The GraphQL router did not return this faction. Check the URL or return to the catalog.",
         "errorTitle": "Faction unavailable",
@@ -132,8 +132,8 @@
       "cardOpenAction": "Открыть фракцию",
       "crestPlaceholderTitle": "Герб недоступен",
       "detail": {
-        "backAriaLabel": "Вернуться к каталогу фракций",
-        "backLabel": "Назад к каталогу фракций",
+        "backAriaLabel": "Вернуться назад",
+        "backLabel": "Назад",
         "datasetLabel": "data.factions",
         "errorDescription": "GraphQL-роутер не вернул эту фракцию. Проверьте URL или вернитесь в каталог.",
         "errorTitle": "Фракция недоступна",
@@ -198,8 +198,8 @@
       "cardOpenAction": "打开阵营",
       "crestPlaceholderTitle": "徽记不可用",
       "detail": {
-        "backAriaLabel": "返回阵营目录",
-        "backLabel": "返回阵营目录",
+        "backAriaLabel": "返回上一页",
+        "backLabel": "返回",
         "datasetLabel": "data.factions",
         "errorDescription": "GraphQL router 未返回此阵营。请检查 URL 或返回目录。",
         "errorTitle": "阵营不可用",

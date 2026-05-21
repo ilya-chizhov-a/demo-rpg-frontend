@@ -18,7 +18,7 @@ portrait file metadata.
 
 - Entry from portrait tiles on `/heroes`, classes, parties, factions, and search
   results.
-- Links back to `/heroes`.
+- Back action returns to the previous in-app page and falls back to `/heroes`.
 - Links to class, abilities, inventory items, and cloud row/schema evidence.
 - Does not show the heroes section subnav; detail navigation stays focused on
   the back action and related entity panels.
@@ -39,7 +39,7 @@ portrait file metadata.
 
 | Action           | Result                                               |
 | ---------------- | ---------------------------------------------------- |
-| Back to heroes   | Navigate to `/heroes`.                               |
+| Back             | Return to the previous in-app page, or `/heroes` when opened directly. |
 | Open related row | Navigate to app route when the related route exists. |
 | View schema      | Opens heroes schema from the Explainer Widget.       |
 
@@ -58,7 +58,7 @@ portrait file metadata.
 | ------------- | ------------------ | -------------------------- |
 | Hero catalog  | Open portrait tile | Detail loading             |
 | Detail loaded | Open related row   | Related route or cloud row |
-| Detail loaded | Back action        | `/heroes`                  |
+| Detail loaded | Back action        | Previous in-app page or `/heroes` |
 
 ## Data Contract
 

@@ -1,0 +1,132 @@
+query Quests($data: Demo_rpg_dataGetQuestsesInput) {
+  questses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          description {
+            en
+            ru
+            zh
+          }
+          giver_npc_id {
+            id
+            data {
+              display_label_en
+              name {
+                en
+                ru
+                zh
+              }
+              title {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          is_repeatable
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          step_count
+          steps {
+            location_id {
+              id
+              data {
+                kind
+                name {
+                  en
+                  ru
+                  zh
+                }
+              }
+            }
+            npc_id {
+              id
+              data {
+                display_label_en
+                name {
+                  en
+                  ru
+                  zh
+                }
+                title {
+                  en
+                  ru
+                  zh
+                }
+              }
+            }
+            step_number
+            xp
+          }
+          total_loot_xp
+          total_xp
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+
+query QuestLocationOptions($data: Demo_rpg_dataGetLocationsesInput) {
+  locationses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          kind
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+
+query QuestNpcOptions($data: Demo_rpg_dataGetNpcsesInput) {
+  npcses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          display_label_en
+          name {
+            en
+            ru
+            zh
+          }
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

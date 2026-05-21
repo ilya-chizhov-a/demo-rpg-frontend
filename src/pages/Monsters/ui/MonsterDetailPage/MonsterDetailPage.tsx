@@ -1,9 +1,9 @@
-import { Box, Button, Stack } from '@chakra-ui/react';
+import { Box, Stack } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
-import { Link as RouterLink, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import { useViewModel } from 'src/shared/lib';
-import { PageShell, StatePanel } from 'src/shared/ui';
+import { DetailBackButton, PageShell, StatePanel } from 'src/shared/ui';
 import { ExplainerWidget } from 'src/widgets/explainer-widget';
 import { MonsterDetailViewModel } from '../../model/MonsterDetailViewModel';
 import { MonsterDetailOverview } from '../MonsterDetailOverview/MonsterDetailOverview';
@@ -15,20 +15,11 @@ export const MonsterDetailPage = observer(() => {
 
   return (
     <PageShell>
-      <Button
-        aria-label={vm.copy.detail.backAriaLabel}
-        asChild
-        borderColor="rgba(103, 232, 249, 0.34)"
-        color="#67e8f9"
-        mb="4"
-        minH="44px"
-        size="md"
-        variant="outline"
-        w="fit-content"
-        _hover={{ bg: 'rgba(34, 211, 238, 0.12)', borderColor: '#67e8f9' }}
-      >
-        <RouterLink to={vm.backHref}>{vm.copy.detail.backLabel}</RouterLink>
-      </Button>
+      <DetailBackButton
+        ariaLabel={vm.copy.detail.backAriaLabel}
+        fallbackHref={vm.backHref}
+        label={vm.copy.detail.backLabel}
+      />
 
       <Box minW="0">{renderMonsterDetailBody(vm)}</Box>
       <ExplainerWidget

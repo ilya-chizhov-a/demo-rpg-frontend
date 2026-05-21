@@ -32,7 +32,7 @@ federated entity after region detail.
 
 | Action                  | Result                                                           |
 | ----------------------- | ---------------------------------------------------------------- |
-| Back to news            | Navigate to `/news`.                                             |
+| Back                    | Return to the previous in-app page, or `/news` when opened directly. |
 | Open related proof page | Navigate to linked route from content.                           |
 | Open source row         | Available from the Explainer Widget once the news source exists. |
 
@@ -50,7 +50,7 @@ federated entity after region detail.
 | From          | Trigger        | To                 |
 | ------------- | -------------- | ------------------ |
 | News catalog  | Open post      | Detail loading     |
-| Detail loaded | Back action    | `/news`            |
+| Detail loaded | Back action    | Previous in-app page or `/news` |
 | Detail loaded | Capability CTA | Related proof page |
 
 ## Data Contract

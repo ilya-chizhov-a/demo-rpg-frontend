@@ -23,7 +23,7 @@ file metadata, and the required gallery file array.
 
 | Block            | Requirement                                                           |
 | ---------------- | --------------------------------------------------------------------- |
-| Back action      | Visible link back to `/locations` above the detail body.                               |
+| Back action      | Visible history-aware back button above the detail body with `/locations` fallback.     |
 | World navigation | Section links sit directly below the back action.                                     |
 | Overview         | Desktop two-column inspector: real-ratio map on the left, data panels on the right.    |
 | Header           | Localized location name, kind badge, region link, locale, and description.             |
@@ -37,7 +37,7 @@ file metadata, and the required gallery file array.
 
 | Action            | Result                       |
 | ----------------- | ---------------------------- |
-| Back to locations | Navigate to `/locations`.                       |
+| Back              | Return to the previous in-app page, or `/locations` when opened directly. |
 | Open region       | Navigate to `/regions/[id]`.                    |
 | Open cloud row    | Open location row from the Explainer Widget.    |
 | Open cloud schema | Open locations schema from the Explainer Widget. |
@@ -56,8 +56,9 @@ file metadata, and the required gallery file array.
 | From              | Trigger       | To              |
 | ----------------- | ------------- | --------------- |
 | Locations catalog | Open location | Detail loading  |
+| Quest detail      | Open quest step location | Detail loading |
 | Detail loaded     | Open region   | `/regions/[id]` |
-| Detail loaded     | Back action   | `/locations`    |
+| Detail loaded     | Back action   | Previous in-app page or `/locations` |
 
 ## Data Contract
 
@@ -101,6 +102,9 @@ file metadata, and the required gallery file array.
   `LocationDetailDataSource` -> `LocationDetailViewModel` -> detail UI.
 - Reuse imgproxy derivatives for map and gallery media, with the original
   Revisium URL as the map/gallery fallback when the derivative fails.
+- The detail back button uses router history for in-app returns and keeps
+  `/locations` as the direct-entry fallback without changing the location data
+  query.
 
 ## Visual Assets
 

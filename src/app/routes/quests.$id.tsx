@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { QuestDetailPage } from 'src/pages/Quests';
 
-export default createPlaceholderRoute('questDetail');
+export default function QuestDetailRoute() {
+  return <QuestDetailPage />;
+}

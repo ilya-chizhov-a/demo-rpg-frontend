@@ -3,7 +3,7 @@
 | Field              | Value                                                |
 | ------------------ | ---------------------------------------------------- |
 | Route              | `/quests/[id]`                                       |
-| Status             | Draft                                                |
+| Status             | In delivery                                          |
 | Pattern            | Detail                                               |
 | Primary capability | Two-level embedded arrays, step images, and formulas |
 
@@ -23,7 +23,7 @@ across both levels.
 | Block            | Requirement                                      |
 | ---------------- | ------------------------------------------------ |
 | Header           | Quest title, level, repeatable flag.             |
-| Context          | NPC giver and location.                          |
+| Context          | NPC giver, quest kind, and step locations.       |
 | Steps timeline   | Ordered `steps[]` with required `steps[].image`. |
 | Rewards          | Nested `steps[].rewards[]` with item/XP details. |
 | Formula panel    | `total_xp`, `total_loot_xp`, `step_count`.       |
@@ -33,8 +33,8 @@ across both levels.
 
 | Action                 | Result                       |
 | ---------------------- | ---------------------------- |
-| Back to quests         | Navigate to `/quests`.       |
-| Open NPC/location/item | Navigate or cloud deep-link. |
+| Back                   | Return to the previous in-app page, or `/quests` when opened directly. |
+| Open NPC/location/item | Navigate to the related detail; that page's back action returns here through history. |
 | View schema            | Open quest schema.           |
 
 ## States
@@ -53,13 +53,13 @@ across both levels.
 | -------------- | ---------------- | -------------------------- |
 | Quests catalog | Open quest       | Detail loading             |
 | Detail loaded  | Open related row | Related route or cloud row |
-| Detail loaded  | Back action      | `/quests`                  |
+| Detail loaded  | Back action      | Previous in-app page or `/quests` |
 
 ## Data Contract
 
 | Source                                      | Fields                                                                                                                                                              |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.quests`                               | localized title/summary, `npc_id`, `location_id`, `steps[]`, `steps[].image.{fileId,url,hash,fileName,mimeType,width,height}`, `steps[].rewards[]`, formula fields. |
+| `data.quests`                               | localized `name`/`description`, `giver_npc_id`, `kind`, `level_required`, `is_repeatable`, `steps[]`, `steps[].location_id`, `steps[].npc_id`, `steps[].image.{fileId,url,hash,fileName,mimeType,width,height}`, `steps[].rewards[]`, formula fields. |
 | `data.npcs`, `data.locations`, `data.items` | resolved labels and links.                                                                                                                                          |
 
 ## Explainer Widget
@@ -90,4 +90,5 @@ across both levels.
 
 ## Open Questions
 
-- Confirm reward item reference shape and resolution.
+- None. Reward rows resolve `steps[].rewards[].item_id` to `data.items`
+  nodes with localized names and item metadata.

@@ -177,8 +177,8 @@ const detailText = {
   abilityKindLabel: { en: 'Kind', ru: 'Тип', zh: '类型' },
   abilityLevelLabel: { en: 'Required level', ru: 'Уровень', zh: '需求等级' },
   abilitySchoolLabel: { en: 'School', ru: 'Школа', zh: '学派' },
-  backAriaLabel: { en: 'Back to monsters catalog', ru: 'Вернуться к каталогу монстров', zh: '返回怪物目录' },
-  backLabel: { en: 'Back to monsters', ru: 'Назад к монстрам', zh: '返回怪物' },
+  backAriaLabel: { en: 'Go back', ru: 'Вернуться назад', zh: '返回上一页' },
+  backLabel: { en: 'Back', ru: 'Назад', zh: '返回' },
   computedBadge: { en: 'computed', ru: 'вычислено', zh: '计算值' },
   dropsEmptyDescription: {
     en: 'No embedded drop rows are present for this monster.',

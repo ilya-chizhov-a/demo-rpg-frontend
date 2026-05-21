@@ -30,7 +30,7 @@ length, using localized party and hero labels.
 
 | Action | Result |
 |---|---|
-| Back to parties | Navigate to `/parties`. |
+| Back | Return to the previous in-app page, or `/parties` when opened directly. |
 | Open hero | Navigate to `/heroes/[id]`. |
 | Open cloud row | Open party row. |
 
@@ -50,7 +50,7 @@ length, using localized party and hero labels.
 |---|---|---|
 | Parties catalog | Open party | Detail loading |
 | Detail loaded | Open hero | `/heroes/[id]` |
-| Detail loaded | Back action | `/parties` |
+| Detail loaded | Back action | Previous in-app page or `/parties` |
 
 ## Data Contract
 

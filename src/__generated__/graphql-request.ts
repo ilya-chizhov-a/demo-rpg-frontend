@@ -1022,6 +1022,13 @@ export type ClassesQueryVariables = Exact<{
 
 export type ClassesQuery = { classeses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { base_hp: number, hp_per_level: number, mp_per_level: number, primary_stat: string, icon: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type DialogsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetDialogsesInput>;
+}>;
+
+
+export type DialogsQuery = { dialogses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { line_count: number, slug: string, lines: Array<{ emotion: string, speaker: string, text: { en: string, ru: string, zh: string } }>, npc_id: { id: string, data: { display_label_en: string, role: string, name: { en: string, ru: string, zh: string }, title: { en: string, ru: string, zh: string } } } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type EffectsQueryVariables = Exact<{
   data?: InputMaybe<Demo_Rpg_DataGetEffectsesInput>;
 }>;
@@ -1167,6 +1174,34 @@ export type PartyDetailQueryVariables = Exact<{
 
 
 export type PartyDetailQuery = { parties: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { formation: string, is_full: boolean, member_count: number, hero_ids: Array<{ id: string, data: { display_name_en: string, is_veteran: boolean, level: number, class_id: { id: string, data: { primary_stat: string, name: { en: string, ru: string, zh: string } } }, epithet: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string }, portrait: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number } } }>, motto: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } } };
+
+export type QuestDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type QuestDetailQuery = { quests: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { is_repeatable: boolean, kind: string, level_required: number, step_count: number, total_loot_xp: number, total_xp: number, description: { en: string, ru: string, zh: string }, giver_npc_id: { id: string, data: { display_label_en: string, role: string, name: { en: string, ru: string, zh: string }, title: { en: string, ru: string, zh: string } } }, map: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, steps: Array<{ step_number: number, xp: number, description: { en: string, ru: string, zh: string }, image: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, location_id: { id: string, data: { kind: string, name: { en: string, ru: string, zh: string } } }, npc_id: { id: string, data: { display_label_en: string, role: string, name: { en: string, ru: string, zh: string }, title: { en: string, ru: string, zh: string } } }, rewards: Array<{ bonus_xp: number, quantity: number, item_id: { id: string, data: { base_value: number, market_value: number, rarity: string, rarity_tag: string, name: { en: string, ru: string, zh: string }, type_id: { id: string, data: { code: string, name: { en: string, ru: string, zh: string } } } } } }> }> } } };
+
+export type QuestsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetQuestsesInput>;
+}>;
+
+
+export type QuestsQuery = { questses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { is_repeatable: boolean, kind: string, level_required: number, step_count: number, total_loot_xp: number, total_xp: number, description: { en: string, ru: string, zh: string }, giver_npc_id: { id: string, data: { display_label_en: string, name: { en: string, ru: string, zh: string }, title: { en: string, ru: string, zh: string } } }, name: { en: string, ru: string, zh: string }, steps: Array<{ step_number: number, xp: number, location_id: { id: string, data: { kind: string, name: { en: string, ru: string, zh: string } } }, npc_id: { id: string, data: { display_label_en: string, name: { en: string, ru: string, zh: string }, title: { en: string, ru: string, zh: string } } } }> } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type QuestLocationOptionsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetLocationsesInput>;
+}>;
+
+
+export type QuestLocationOptionsQuery = { locationses: { edges: Array<{ node: { id: string, data: { kind: string, name: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type QuestNpcOptionsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_DataGetNpcsesInput>;
+}>;
+
+
+export type QuestNpcOptionsQuery = { npcses: { edges: Array<{ node: { id: string, data: { display_label_en: string, name: { en: string, ru: string, zh: string }, title: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
 export type RegionDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1332,6 +1367,56 @@ export const ClassesDocument = gql`
             ru
             zh
           }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const DialogsDocument = gql`
+    query Dialogs($data: Demo_rpg_dataGetDialogsesInput) {
+  dialogses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          line_count
+          lines {
+            emotion
+            speaker
+            text {
+              en
+              ru
+              zh
+            }
+          }
+          npc_id {
+            id
+            data {
+              display_label_en
+              name {
+                en
+                ru
+                zh
+              }
+              role
+              title {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          slug
         }
       }
     }
@@ -2473,6 +2558,277 @@ export const PartyDetailDocument = gql`
   }
 }
     `;
+export const QuestDetailDocument = gql`
+    query QuestDetail($id: String!) {
+  quests(id: $id) {
+    id
+    versionId
+    createdAt
+    publishedAt
+    data {
+      description {
+        en
+        ru
+        zh
+      }
+      giver_npc_id {
+        id
+        data {
+          display_label_en
+          name {
+            en
+            ru
+            zh
+          }
+          role
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+      is_repeatable
+      kind
+      level_required
+      map {
+        extension
+        fileId
+        fileName
+        hash
+        height
+        mimeType
+        size
+        status
+        url
+        width
+      }
+      name {
+        en
+        ru
+        zh
+      }
+      step_count
+      steps {
+        description {
+          en
+          ru
+          zh
+        }
+        image {
+          extension
+          fileId
+          fileName
+          hash
+          height
+          mimeType
+          size
+          status
+          url
+          width
+        }
+        location_id {
+          id
+          data {
+            kind
+            name {
+              en
+              ru
+              zh
+            }
+          }
+        }
+        npc_id {
+          id
+          data {
+            display_label_en
+            name {
+              en
+              ru
+              zh
+            }
+            role
+            title {
+              en
+              ru
+              zh
+            }
+          }
+        }
+        rewards {
+          bonus_xp
+          item_id {
+            id
+            data {
+              base_value
+              market_value
+              name {
+                en
+                ru
+                zh
+              }
+              rarity
+              rarity_tag
+              type_id {
+                id
+                data {
+                  code
+                  name {
+                    en
+                    ru
+                    zh
+                  }
+                }
+              }
+            }
+          }
+          quantity
+        }
+        step_number
+        xp
+      }
+      total_loot_xp
+      total_xp
+    }
+  }
+}
+    `;
+export const QuestsDocument = gql`
+    query Quests($data: Demo_rpg_dataGetQuestsesInput) {
+  questses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          description {
+            en
+            ru
+            zh
+          }
+          giver_npc_id {
+            id
+            data {
+              display_label_en
+              name {
+                en
+                ru
+                zh
+              }
+              title {
+                en
+                ru
+                zh
+              }
+            }
+          }
+          is_repeatable
+          kind
+          level_required
+          name {
+            en
+            ru
+            zh
+          }
+          step_count
+          steps {
+            location_id {
+              id
+              data {
+                kind
+                name {
+                  en
+                  ru
+                  zh
+                }
+              }
+            }
+            npc_id {
+              id
+              data {
+                display_label_en
+                name {
+                  en
+                  ru
+                  zh
+                }
+                title {
+                  en
+                  ru
+                  zh
+                }
+              }
+            }
+            step_number
+            xp
+          }
+          total_loot_xp
+          total_xp
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const QuestLocationOptionsDocument = gql`
+    query QuestLocationOptions($data: Demo_rpg_dataGetLocationsesInput) {
+  locationses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          kind
+          name {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+    `;
+export const QuestNpcOptionsDocument = gql`
+    query QuestNpcOptions($data: Demo_rpg_dataGetNpcsesInput) {
+  npcses(data: $data) {
+    edges {
+      node {
+        id
+        data {
+          display_label_en
+          name {
+            en
+            ru
+            zh
+          }
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+    `;
 export const RegionDetailDocument = gql`
     query RegionDetail($id: String!) {
   regions(id: $id) {
@@ -2595,6 +2951,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     Classes(variables?: ClassesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ClassesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ClassesQuery>({ document: ClassesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Classes', 'query', variables);
     },
+    Dialogs(variables?: DialogsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DialogsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DialogsQuery>({ document: DialogsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Dialogs', 'query', variables);
+    },
     Effects(variables?: EffectsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<EffectsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<EffectsQuery>({ document: EffectsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Effects', 'query', variables);
     },
@@ -2654,6 +3013,18 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     PartyDetail(variables: PartyDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<PartyDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PartyDetailQuery>({ document: PartyDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'PartyDetail', 'query', variables);
+    },
+    QuestDetail(variables: QuestDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<QuestDetailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<QuestDetailQuery>({ document: QuestDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'QuestDetail', 'query', variables);
+    },
+    Quests(variables?: QuestsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<QuestsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<QuestsQuery>({ document: QuestsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Quests', 'query', variables);
+    },
+    QuestLocationOptions(variables?: QuestLocationOptionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<QuestLocationOptionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<QuestLocationOptionsQuery>({ document: QuestLocationOptionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'QuestLocationOptions', 'query', variables);
+    },
+    QuestNpcOptions(variables?: QuestNpcOptionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<QuestNpcOptionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<QuestNpcOptionsQuery>({ document: QuestNpcOptionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'QuestNpcOptions', 'query', variables);
     },
     RegionDetail(variables: RegionDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RegionDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<RegionDetailQuery>({ document: RegionDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'RegionDetail', 'query', variables);

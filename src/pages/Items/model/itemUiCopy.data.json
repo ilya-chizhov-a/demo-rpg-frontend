@@ -6,8 +6,8 @@
       "capabilitiesAriaLabel": "Item catalog capabilities",
       "cardOpenAction": "Open item",
       "detail": {
-        "backAriaLabel": "Back to items",
-        "backLabel": "Back to items",
+        "backAriaLabel": "Go back",
+        "backLabel": "Back",
         "computedBadge": "computed",
         "errorDescription": "The GraphQL router did not return this item row.",
         "errorTitle": "Failed to load item",
@@ -104,8 +104,8 @@
       "capabilitiesAriaLabel": "Возможности каталога предметов",
       "cardOpenAction": "Открыть предмет",
       "detail": {
-        "backAriaLabel": "Назад к предметам",
-        "backLabel": "Назад к предметам",
+        "backAriaLabel": "Вернуться назад",
+        "backLabel": "Назад",
         "computedBadge": "вычислено",
         "errorDescription": "GraphQL-роутер не вернул строку предмета.",
         "errorTitle": "Не удалось загрузить предмет",
@@ -202,8 +202,8 @@
       "capabilitiesAriaLabel": "物品目录能力",
       "cardOpenAction": "打开物品",
       "detail": {
-        "backAriaLabel": "返回物品",
-        "backLabel": "返回物品",
+        "backAriaLabel": "返回上一页",
+        "backLabel": "返回",
         "computedBadge": "已计算",
         "errorDescription": "GraphQL router 未返回此物品行。",
         "errorTitle": "物品加载失败",

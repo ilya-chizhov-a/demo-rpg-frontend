@@ -128,7 +128,7 @@ Used by entity detail routes.
 
 Functional blocks:
 
-- breadcrumb back to catalog;
+- history-aware back action with a catalog fallback;
 - entity hero/header with name, type/category, and key badges;
 - primary data panel;
 - related entities panel for FKs and reverse joins;
@@ -140,6 +140,8 @@ Functional blocks:
 Rules:
 
 - Every rendered field must come from the query or a documented derived display helper.
+- The detail back action returns to the previous in-app history entry and falls
+  back to the owning catalog route when no app history exists.
 - Detail headers may use a strong art panel or atlas hero only when the
   underlying entity owns meaningful art, map, file, or generated visual context.
 - Detail heroes, maps, portraits, and file previews must request dimensions

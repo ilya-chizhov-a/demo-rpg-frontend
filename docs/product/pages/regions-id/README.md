@@ -15,14 +15,14 @@ Federation once backend enrichment fields are present in the composed schema.
 ## Context And Entry
 
 - Entry from `/regions` cards.
-- Links back to `/regions`.
+- Back action returns to the previous in-app page and falls back to `/regions`.
 - Links to related heroes, locations, factions, or monsters if reverse relations are available.
 
 ## Functional Blocks
 
 | Block                  | Requirement                                                                                |
 | ---------------------- | ------------------------------------------------------------------------------------------ |
-| Back action            | Visible link back to `/regions` above the detail body.                                     |
+| Back action            | Visible history-aware back button above the detail body with `/regions` fallback.          |
 | World navigation       | Section links sit directly below the back action.                                          |
 | Overview               | Desktop two-column inspector: real-ratio cover image on the left, data panels on the right. |
 | Region header          | Name, climate, description, source chips, and locale.                                      |
@@ -36,7 +36,7 @@ Federation once backend enrichment fields are present in the composed schema.
 
 | Action                 | Result                                                   |
 | ---------------------- | -------------------------------------------------------- |
-| Back to catalog        | Navigate to `/regions` from a visible back button.       |
+| Back                   | Return to the previous in-app page, or `/regions` when opened directly. |
 | Open source row        | Available from the Explainer Widget, not page chrome.    |
 | View federation source | Opens backend source/SDL link once available.            |
 
@@ -55,7 +55,7 @@ Federation once backend enrichment fields are present in the composed schema.
 | From          | Trigger    | To             |
 | ------------- | ---------- | -------------- |
 | Catalog       | Card click | Detail loading |
-| Detail loaded | Back click | Catalog        |
+| Detail loaded | Back click | Previous in-app page or `/regions` |
 
 ## Data Contract
 
