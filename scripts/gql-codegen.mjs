@@ -1,13 +1,16 @@
 /* eslint-disable no-console */
-/* Thin wrapper around `graphql-codegen --config codegen.ts` that:
+/* Thin wrapper around the project-local `@graphql-codegen/cli` binary that:
  *   - skips when src/ has no *.graphql documents (avoids spurious errors on fresh clones)
  *   - forwards extra flags (e.g. --download) so codegen.ts can branch
  */
 import { spawn } from 'node:child_process';
+import { createRequire } from 'node:module';
+import { dirname, resolve } from 'node:path';
 import { glob } from 'glob';
 import process from 'node:process';
 
 const args = process.argv.slice(2);
+const require = createRequire(import.meta.url);
 
 const documents = await glob('src/**/*.graphql', { ignore: ['src/__generated__/**'] });
 
@@ -16,7 +19,10 @@ if (documents.length === 0 && !args.includes('--download')) {
   process.exit(0);
 }
 
-const child = spawn('npx', ['graphql-codegen', '--config', 'codegen.ts', ...args], {
+const codegenPackagePath = require.resolve('@graphql-codegen/cli/package.json');
+const codegenBinPath = resolve(dirname(codegenPackagePath), 'cjs/bin.js');
+
+const child = spawn(process.execPath, [codegenBinPath, '--config', 'codegen.ts', ...args], {
   stdio: 'inherit',
 });
 

@@ -1231,6 +1231,13 @@ export type RegionsQueryVariables = Exact<{
 
 export type RegionsQuery = { regionses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { climate: string, cover_image: { fileId: string, fileName: string, hash: string, height: number, mimeType: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type SearchPageQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type SearchPageQuery = { abilities: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, blogAuthors: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, blogPosts: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, classes: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, dialogs: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, effects: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, factions: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, heroes: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, itemTypes: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, items: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, landingFeatures: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, landingHero: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, landingTestimonials: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, locations: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, monsters: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, npcs: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, parties: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, quests: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, regions: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> }, stats: { totalCount: number, edges: Array<{ node: { id: string, json: unknown, publishedAt: number | string, updatedAt: number | string } }> } };
+
 export type StatsQueryVariables = Exact<{
   data?: InputMaybe<Demo_Rpg_DataGetStatsesInput>;
 }>;
@@ -3074,6 +3081,230 @@ export const RegionsDocument = gql`
   }
 }
     `;
+export const SearchPageDocument = gql`
+    query SearchPage($first: Int!) {
+  abilities: abilitieses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  blogAuthors: blog_authorses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  blogPosts: blog_postses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  classes: classeses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  dialogs: dialogses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  effects: effectses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  factions: factionses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  heroes: heroeses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  itemTypes: item_typeses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  items: itemses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  landingFeatures: landing_featureses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  landingHero: landing_heros(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  landingTestimonials: landing_testimonialses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  locations: locationses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  monsters: monsterses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  npcs: npcses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  parties: partieses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  quests: questses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  regions: regionses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+  stats: statses(data: {first: $first}) {
+    edges {
+      node {
+        id
+        json
+        publishedAt
+        updatedAt
+      }
+    }
+    totalCount
+  }
+}
+    `;
 export const StatsDocument = gql`
     query Stats($data: Demo_rpg_dataGetStatsesInput) {
   statses(data: $data) {
@@ -3208,6 +3439,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Regions(variables?: RegionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RegionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<RegionsQuery>({ document: RegionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Regions', 'query', variables);
+    },
+    SearchPage(variables: SearchPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchPageQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SearchPageQuery>({ document: SearchPageDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'SearchPage', 'query', variables);
     },
     Stats(variables?: StatsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<StatsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<StatsQuery>({ document: StatsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Stats', 'query', variables);

@@ -3,14 +3,14 @@
 | Field              | Value                                     |
 | ------------------ | ----------------------------------------- |
 | Route              | `/search`                                 |
-| Status             | Blocked                                   |
+| Status             | In delivery                               |
 | Pattern            | Search                                    |
-| Primary capability | Full-text search across game data and CMS |
+| Primary capability | Search across game data and CMS           |
 
 ## Purpose
 
-Demonstrate full-text search across all fields and multiple tables, grouped
-into useful frontend results.
+Demonstrate search across returned JSON fields and multiple tables, grouped into
+useful frontend results.
 
 ## Context And Entry
 
@@ -22,10 +22,10 @@ into useful frontend results.
 | Block            | Requirement                                               |
 | ---------------- | --------------------------------------------------------- |
 | Header           | Search purpose and capability chips.                      |
-| Search input     | Query text, submit, clear.                                |
-| Results groups   | Group by project/table/domain.                            |
-| Match snippets   | Highlight matched field/value from compact match payload. |
-| Explainer Widget | Required; shows `search_rows` equivalent.                 |
+| Search input     | Query text, submit, clear, and shareable `q` URL state.     |
+| Results groups   | Group by project/table/domain.                              |
+| Match snippets   | Highlight or show matched field/value derived from returned `json`. |
+| Explainer Widget | Required; shows the multi-table GraphQL catalog read.        |
 
 ## Primary Actions
 
@@ -57,15 +57,17 @@ into useful frontend results.
 
 | Source               | Fields                                                    |
 | -------------------- | --------------------------------------------------------- |
-| `search_rows`        | row id, table id, matches, optional row data when needed. |
-| Search route mapping | table id to app route and display label.                  |
+| `data.*` tables      | row id, published/update metadata, and raw `json` from generated catalog reads. |
+| `cms.*` tables       | row id, published/update metadata, and raw `json` from generated catalog reads. |
+| Search route mapping | table id to app route, cloud row, domain label, and display label.             |
 
 ## Explainer Widget
 
-- Summary: "Search shows full-text lookup across all fields and tables."
-- Surfaces: REST/MCP/GraphQL depending on backend exposure; show exact search call used.
-- Variables: query string, projects, limit.
-- Response sample: grouped compact matches.
+- Summary: "Search shows lookup across data and CMS JSON fields."
+- Surfaces: generated GraphQL catalog reads; REST/MCP links remain absent until
+  a direct `search_rows` endpoint is exposed to the frontend.
+- Variables: query string, client JSON scan mode, locale, projects, and per-table limit.
+- Response sample: grouped compact row matches with derived snippets.
 - Deep links: cloud rows for results.
 - Subgraphs: `data`, `cms` when both searched.
 
@@ -76,15 +78,23 @@ into useful frontend results.
 
 ## Architecture Notes
 
-- Blocked until frontend-accessible search API path is confirmed.
-- Result route mapping belongs in ViewModel or a small shared domain helper, not in JSX.
+- Generated GraphQL exposes `where.data.search`, but the current router returns
+  server errors for that filter. V1 therefore reads catalog row `json` through
+  generated GraphQL and performs a client-side token scan.
+- Until a compact match payload is exposed, the ViewModel derives readable
+  snippets by scanning returned row `json` values for query tokens. The scan
+  checks all localized string variants and allows one-character fuzzy matching
+  inside words of at least four characters so common Russian inflection and
+  near-stem searches such as `берег` -> `побережье` still surface results.
+- Result route mapping belongs in ViewModel or a small page-local domain helper, not in JSX.
 
 ## Acceptance Criteria
 
-- [ ] Results are grouped by table/domain.
-- [ ] Match snippets are readable and link to row sources.
-- [ ] Empty and no-result states are distinct.
+- [x] Results are grouped by table/domain.
+- [x] Match snippets are readable and link to row sources.
+- [x] Empty and no-result states are distinct.
 
 ## Open Questions
 
-- Confirm whether search is called through backend GraphQL, REST, or direct Revisium public API.
+- Confirm whether a future compact `search_rows` payload should replace
+  client-derived snippets and the client-side scan.

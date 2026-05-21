@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { SearchPage } from 'src/pages/Search';
 
-export default createPlaceholderRoute('search');
+export default function SearchRoute() {
+  return <SearchPage />;
+}
