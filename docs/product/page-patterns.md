@@ -33,7 +33,7 @@ requirements, but should not silently weaken these patterns.
 ## Game Database Section Pattern
 
 Used by catalog and detail pages that belong to a game database family:
-Heroes, Items, Monsters, World, and Quests.
+Heroes, Items, Monsters, World, Quests, and Guides.
 
 Functional blocks:
 
@@ -48,6 +48,9 @@ Rules:
 - Section subnav uses links, chips, or tabs. Do not use dropdowns in v1.
 - Monsters is a section family even when it has only one v1 route; in that case
   the subnav may be omitted until related monster routes are added.
+- Guides uses the same section subnav pattern for `/blog`, `/news`,
+  `/balance-patch`, and `/about`; blocked guide-family routes should render a
+  route-specific blocked surface instead of a generic placeholder.
 - Related entities render as named game-facing sections, not raw foreign-key
   fields.
 - Detail pages should group relationships by meaning, for example:

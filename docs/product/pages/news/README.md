@@ -23,6 +23,7 @@ filtering, enum categories, and the pinned launch message.
 | Block            | Requirement                                            |
 | ---------------- | ------------------------------------------------------ |
 | Header           | News purpose and capability chips.                     |
+| Guide section subnav | Links to Guides, News, Balance Patch, and About.   |
 | Pinned post      | First result when `pinned = true`.                     |
 | News list        | Category, title, excerpt, `published_at`, cover image. |
 | Category filter  | `patch`, `event`, `spotlight`, `release`.              |
@@ -76,6 +77,9 @@ filtering, enum categories, and the pinned launch message.
 ## Architecture Notes
 
 - Blocked until news table location is decided and schema is seeded.
+- While blocked, the route renders a route-specific blocked surface inside the
+  Guides section so visitors can see the planned source, filters, and transition
+  target without a dead generic placeholder.
 
 ## Acceptance Criteria
 

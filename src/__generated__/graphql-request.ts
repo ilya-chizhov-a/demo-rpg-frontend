@@ -1052,6 +1052,20 @@ export type FactionsQueryVariables = Exact<{
 
 export type FactionsQuery = { factionses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { alignment: string, crest: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, name: { en: string, ru: string, zh: string }, description: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
 
+export type BlogPostsQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_CmsGetBlog_PostsesInput>;
+}>;
+
+
+export type BlogPostsQuery = { blog_postses: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { published_at: string, slug: string, author_id: { id: string, data: { slug: string, avatar: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, bio: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } }, body: { en: string, ru: string, zh: string }, excerpt: { en: string, ru: string, zh: string }, hero_image: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, title: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
+export type BlogPostBySlugQueryVariables = Exact<{
+  data?: InputMaybe<Demo_Rpg_CmsGetBlog_PostsesInput>;
+}>;
+
+
+export type BlogPostBySlugQuery = { blog_postses: { totalCount: number, edges: Array<{ node: { id: string, versionId: string, createdAt: number | string, publishedAt: number | string, data: { published_at: string, slug: string, author_id: { id: string, data: { slug: string, avatar: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, bio: { en: string, ru: string, zh: string }, name: { en: string, ru: string, zh: string } } }, body: { en: string, ru: string, zh: string }, excerpt: { en: string, ru: string, zh: string }, hero_image: { extension: string, fileId: string, fileName: string, hash: string, height: number, mimeType: string, size: number, status: string, url: string, width: number }, title: { en: string, ru: string, zh: string } } } }>, pageInfo: { endCursor?: string | null, hasNextPage: boolean } } };
+
 export type HeroDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1591,6 +1605,163 @@ export const FactionsDocument = gql`
             zh
           }
           description {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const BlogPostsDocument = gql`
+    query BlogPosts($data: Demo_rpg_cmsGetBlog_postsesInput) {
+  blog_postses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          author_id {
+            id
+            data {
+              avatar {
+                extension
+                fileId
+                fileName
+                hash
+                height
+                mimeType
+                size
+                status
+                url
+                width
+              }
+              bio {
+                en
+                ru
+                zh
+              }
+              name {
+                en
+                ru
+                zh
+              }
+              slug
+            }
+          }
+          body {
+            en
+            ru
+            zh
+          }
+          excerpt {
+            en
+            ru
+            zh
+          }
+          hero_image {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+          published_at
+          slug
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+    `;
+export const BlogPostBySlugDocument = gql`
+    query BlogPostBySlug($data: Demo_rpg_cmsGetBlog_postsesInput) {
+  blog_postses(data: $data) {
+    edges {
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          author_id {
+            id
+            data {
+              avatar {
+                extension
+                fileId
+                fileName
+                hash
+                height
+                mimeType
+                size
+                status
+                url
+                width
+              }
+              bio {
+                en
+                ru
+                zh
+              }
+              name {
+                en
+                ru
+                zh
+              }
+              slug
+            }
+          }
+          body {
+            en
+            ru
+            zh
+          }
+          excerpt {
+            en
+            ru
+            zh
+          }
+          hero_image {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+          published_at
+          slug
+          title {
             en
             ru
             zh
@@ -2962,6 +3133,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Factions(variables?: FactionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FactionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FactionsQuery>({ document: FactionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Factions', 'query', variables);
+    },
+    BlogPosts(variables?: BlogPostsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<BlogPostsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BlogPostsQuery>({ document: BlogPostsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'BlogPosts', 'query', variables);
+    },
+    BlogPostBySlug(variables?: BlogPostBySlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<BlogPostBySlugQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BlogPostBySlugQuery>({ document: BlogPostBySlugDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'BlogPostBySlug', 'query', variables);
     },
     HeroDetail(variables: HeroDetailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<HeroDetailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HeroDetailQuery>({ document: HeroDetailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'HeroDetail', 'query', variables);

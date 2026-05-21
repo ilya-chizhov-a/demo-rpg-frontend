@@ -23,6 +23,7 @@ federated entity after region detail.
 | Block                  | Requirement                                                 |
 | ---------------------- | ----------------------------------------------------------- |
 | Header                 | Category, title, `published_at`, pinned marker if relevant. |
+| Guide section subnav   | Links to Guides, News, Balance Patch, and About.            |
 | Cover image            | Revisium file field.                                        |
 | Body                   | Markdown or structured rich text depending on schema.       |
 | Optional backend stats | Likes/viewCount/comments if `NewsNode` federation ships.    |
@@ -77,6 +78,8 @@ federated entity after region detail.
 ## Architecture Notes
 
 - Blocked until news schema and route source are confirmed.
+- While blocked, the route renders a route-specific blocked surface inside the
+  Guides section and does not claim a slug was resolved from CMS/data.
 
 ## Acceptance Criteria
 

@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { GuideBlockedPage } from 'src/pages/Guides';
 
-export default createPlaceholderRoute('balancePatch');
+export default function BalancePatchRoute() {
+  return <GuideBlockedPage kind="balancePatch" pathname="/balance-patch" />;
+}

@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { BlogPage } from 'src/pages/Guides';
 
-export default createPlaceholderRoute('blog');
+export default function BlogRoute() {
+  return <BlogPage />;
+}

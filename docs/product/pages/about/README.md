@@ -3,7 +3,7 @@
 | Field              | Value                                            |
 | ------------------ | ------------------------------------------------ |
 | Route              | `/about`                                         |
-| Status             | Draft                                            |
+| Status             | In delivery                                      |
 | Pattern            | Narrative architecture page                      |
 | Primary capability | Long-form system design and implementation split |
 
@@ -22,6 +22,7 @@ together without making the main product UI feel like a developer console.
 | Block                | Requirement                                                                                     |
 | -------------------- | ----------------------------------------------------------------------------------------------- |
 | Intro                | Repeat the short Branching Tales 80/20 framing.                                                 |
+| Guide section subnav | Links to Guides, News, Balance Patch, and About.                                                 |
 | Architecture diagram | Render the current frontend/router/backend/Revisium topology.                                   |
 | What Revisium did    | Table for schemas, content, files, formulas, branching, search, APIs, federation participation. |
 | What we wrote        | Table for backend counters/comments/recommendations/runtime logic and frontend UI.              |
@@ -75,10 +76,11 @@ together without making the main product UI feel like a developer console.
 
 ## Acceptance Criteria
 
-- [ ] Page answers "what did Revisium generate and what did we write?"
-- [ ] Architecture diagram or fallback is understandable without reading source.
-- [ ] Links route visitors to the main proof pages.
+- [x] Page answers "what did Revisium generate and what did we write?"
+- [x] Architecture diagram or fallback is understandable without reading source.
+- [x] Links route visitors to the main proof pages.
 
 ## Open Questions
 
-- Decide whether architecture diagram is copied from docs or generated from a shared markdown/source asset.
+- Decide whether architecture diagram should later be generated from a shared
+  markdown/source asset; v1 keeps the route copy local to the page slice.

@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Route | `/blog/[slug]` |
-| Status | Draft |
+| Status | In delivery |
 | Pattern | CMS detail |
 | Primary capability | Markdown body, hero image, author avatar |
 
@@ -22,9 +22,10 @@ author reference.
 | Block | Requirement |
 |---|---|
 | Header | Title, excerpt, date, author. |
+| Guide section subnav | Links to Guides, News, Balance Patch, and About. |
 | Hero image | CMS file field when present. |
-| Author panel | Author avatar/name/role. |
-| Article body | Markdown content. |
+| Author panel | Author avatar/name/bio. |
+| Article body | Trusted markdown subset rendered as semantic headings, paragraphs, and lists without raw HTML injection. |
 | Related links | About page, source docs, relevant proof pages. |
 | Explainer Widget | Required. |
 
@@ -58,7 +59,7 @@ author reference.
 | Source | Fields |
 |---|---|
 | `cms.blog_posts` | slug, title, excerpt, body markdown, hero_image, author_id, published_at, og metadata. |
-| `cms.blog_authors` | name, avatar, role, bio. |
+| `cms.blog_authors` | localized name, avatar, localized bio, slug. |
 
 ## Explainer Widget
 
@@ -79,10 +80,11 @@ author reference.
 
 ## Acceptance Criteria
 
-- [ ] Article body renders from CMS markdown.
-- [ ] Hero image and author avatar use Revisium file fields.
-- [ ] Not-found handles unknown slug.
+- [x] Article body renders from CMS markdown.
+- [x] Hero image and author avatar use Revisium file fields.
+- [x] Not-found handles unknown slug.
 
 ## Open Questions
 
-- Confirm slug uniqueness and query shape.
+- Slug lookup uses a CMS JSON `data.slug` filter until a dedicated slug field
+  resolver is introduced.

@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { GuideBlockedPage } from 'src/pages/Guides';
 
-export default createPlaceholderRoute('news');
+export default function NewsRoute() {
+  return <GuideBlockedPage kind="news" pathname="/news" />;
+}

@@ -22,6 +22,7 @@ values and explaining the revision URI/diff.
 | Block | Requirement |
 |---|---|
 | Header | Explain head vs draft in product language. |
+| Guide section subnav | Links to Guides, News, Balance Patch, and About. |
 | Revision toggle | `master:head` and `master:draft`. |
 | Diff summary | Added/modified/removed rows and changed fields. |
 | Item comparison | Side-by-side values for changed items. |
@@ -77,6 +78,8 @@ values and explaining the revision URI/diff.
 
 - Blocked until draft data contains meaningful balance differences.
 - Decide whether data comes through GraphQL revision variables, REST, or backend proxy.
+- While blocked, the route renders a route-specific blocked surface inside the
+  Guides section with disabled revision controls and planned diff rows.
 
 ## Acceptance Criteria
 

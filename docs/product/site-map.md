@@ -14,7 +14,7 @@ the pages connect.
 | Game database details  | `/regions/[id]`, `/heroes/[id]`, `/items/[id]`, `/monsters/[id]`, `/quests/[id]`, `/parties/[id]`, `/factions/[id]`, `/npcs/[id]`, `/locations/[id]`                               | Inspect rich entities, related content, files, formulas, and federation. |
 | Discovery              | `/search`                                                                                                                                                                          | Search across data and CMS.                                              |
 | Revision story         | `/balance-patch`                                                                                                                                                                   | Compare `head` and `draft`.                                              |
-| Guides and updates     | `/blog`, `/blog/[slug]`                                                                                                                                                            | Show guide/article content from `cms.blog_posts` and `cms.blog_authors`. |
+| Guides and updates     | `/blog`, `/blog/[slug]`, `/about`, `/balance-patch`                                                                                                                                | Show guide/article content from `cms.blog_posts` and `cms.blog_authors`, plus guide-family narrative and revision-story routes. |
 | News                   | `/news`, `/news/[slug]`                                                                                                                                                            | Blocked until a news data source is confirmed.                           |
 
 ## Primary Navigation
@@ -65,6 +65,7 @@ direct-link only.
 | Monsters | `/monsters`                                              |
 | World    | `/regions`, `/locations`, `/factions`                    |
 | Quests   | `/quests`, `/dialogs`                                    |
+| Guides   | `/blog`, `/news`, `/balance-patch`, `/about`             |
 
 When a target route is not wired yet, the subnav item stays documented but is
 not rendered as a dead internal link. When a target route exists only as a stub,
@@ -140,6 +141,7 @@ links.
 | `/blog`        | Open blog card  | `/blog/[slug]`                                  |
 | `/blog/[slug]` | Back action     | `/blog`                                         |
 | `/about`       | Read deeper CTA | `/blog/[slug]` or source repo                   |
+| `/balance-patch` | Revision CTA  | `/items` while revision diff remains blocked    |
 | `/news`        | Open news card  | Blocked until a news table/source is confirmed. |
 | `/news/[slug]` | Capability CTA  | Blocked until a news table/source is confirmed. |
 

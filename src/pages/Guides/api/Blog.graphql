@@ -1,0 +1,154 @@
+query BlogPosts($data: Demo_rpg_cmsGetBlog_postsesInput) {
+  blog_postses(data: $data) {
+    edges {
+      cursor
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          author_id {
+            id
+            data {
+              avatar {
+                extension
+                fileId
+                fileName
+                hash
+                height
+                mimeType
+                size
+                status
+                url
+                width
+              }
+              bio {
+                en
+                ru
+                zh
+              }
+              name {
+                en
+                ru
+                zh
+              }
+              slug
+            }
+          }
+          body {
+            en
+            ru
+            zh
+          }
+          excerpt {
+            en
+            ru
+            zh
+          }
+          hero_image {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+          published_at
+          slug
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}
+
+query BlogPostBySlug($data: Demo_rpg_cmsGetBlog_postsesInput) {
+  blog_postses(data: $data) {
+    edges {
+      node {
+        id
+        versionId
+        createdAt
+        publishedAt
+        data {
+          author_id {
+            id
+            data {
+              avatar {
+                extension
+                fileId
+                fileName
+                hash
+                height
+                mimeType
+                size
+                status
+                url
+                width
+              }
+              bio {
+                en
+                ru
+                zh
+              }
+              name {
+                en
+                ru
+                zh
+              }
+              slug
+            }
+          }
+          body {
+            en
+            ru
+            zh
+          }
+          excerpt {
+            en
+            ru
+            zh
+          }
+          hero_image {
+            extension
+            fileId
+            fileName
+            hash
+            height
+            mimeType
+            size
+            status
+            url
+            width
+          }
+          published_at
+          slug
+          title {
+            en
+            ru
+            zh
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

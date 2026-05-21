@@ -1,3 +1,5 @@
-import { createPlaceholderRoute } from 'src/app/route-stubs/createPlaceholderRoute';
+import { AboutPage } from 'src/pages/Guides';
 
-export default createPlaceholderRoute('about');
+export default function AboutRoute() {
+  return <AboutPage />;
+}
