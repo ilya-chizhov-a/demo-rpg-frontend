@@ -8,6 +8,8 @@ requirements, but should not silently weaken these patterns.
 - Persistent top navigation with a brand link to `/` and direct `Home` link to `/`.
 - The brand link must not show a rectangular mouse-click focus outline; keyboard
   focus may use a non-framed text/icon state.
+- Primary route links must not show a restored mouse focus outline after
+  returning to the tab; keyboard focus remains visible with a cyan focus state.
 - Primary navigation exposes eight direct icon-labelled route links:
   Home, World, Heroes, Items, Monsters, Quests, Guides, and Search.
 - At `<= 1200px`, the shell keeps brand, language, source/schema, and burger

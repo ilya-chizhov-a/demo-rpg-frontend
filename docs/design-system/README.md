@@ -68,6 +68,14 @@ The language menu controls the global site locale. Shell labels, route labels,
 footer text, shared states, placeholder pages, Explainer Widget chrome, and UI
 copy on implemented pages use frontend i18n for `en`, `ru`, and `zh`; entity
 names and descriptions still come from Revisium localized fields.
+The persisted locale is read before the first client render so refreshes do not
+flash the English fallback before restoring the selected language. Because the
+server cannot read browser storage, the root document also runs a tiny
+pre-hydration guard that hides a mismatched non-English fallback until React has
+committed the persisted locale. `LocaleService` owns the document `lang`,
+`data-persisted-locale`, and `data-locale-ready` mutations; the pre-hydration
+guard uses the same supported-locale constants and releases the hidden fallback
+after a short timeout if client hydration never completes.
 At `<= 1200px`, the top nav switches to compact shell navigation: brand on the
 left; language, source/schema, and burger controls on the right; and direct route
 links in a fullscreen dialog. Dialog route rows are unframed, separated by `1px`
@@ -76,10 +84,15 @@ The page keeps native scrolling and browser scrollbar affordance. Internal code
 and JSON panels may expose their own scroll affordance when needed.
 The app shell uses a dark midnight surface over the page atlas background.
 Active navigation uses a cyan underline or outlined pill, with no layout shift
-between active and inactive states.
+between active and inactive states. Primary nav links suppress restored or
+pointer focus outlines with `:focus:not(:focus-visible)` while keeping an
+explicit cyan `:focus-visible` ring for keyboard navigation.
 All route content uses the shared `PageShell` wrapper so gutters and max width
 stay identical between home, catalog, detail, and placeholder pages. Every
-route-level page is centered at max width `1440px`.
+route-level page is centered at max width `1440px`. The shell uses a
+sticky-footer column layout: `main` grows to fill short viewports, and the
+footer remains at the bottom of the page without becoming fixed over route
+content.
 
 Current implementation order:
 
@@ -159,10 +172,15 @@ red errors. Yellow/gold is not part of the system palette.
 The default page background is a dark atlas field:
 
 - Base fill uses `--color-bg`.
-- `AppLayout` owns a fixed starry-sky image asset behind all routes.
-- The star-map image starts immediately below the sticky header, stays centered
-  horizontally, is pinned to the top of the content viewport, and uses
+- `AppLayout` owns a route-aware fixed image asset behind route content.
+- Non-Home routes use the fixed starry-sky image asset.
+- The default star-map image starts immediately below the sticky header, stays
+  centered horizontally, is pinned to the top of the content viewport, and uses
   `100% auto` sizing so it always spans the full viewport width.
+- Home replaces the default star-map with its page-owned generated atlas artwork.
+  The Home background starts immediately below the sticky header, stays fixed
+  behind the whole route, and uses cover sizing so it fills the available
+  content viewport.
 - A subtle star-map layer may add tiny points, faint constellation lines, and
   low-opacity map/grid marks.
 - The atlas layer must never reduce text contrast or compete with data panels.

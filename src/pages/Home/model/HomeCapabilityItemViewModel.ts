@@ -1,50 +1,58 @@
-export type HomeCapabilityStatus = 'live' | 'next' | 'blocked';
-export type HomeCapabilityStatusPalette = 'gray' | 'green' | 'purple';
+export type HomeCapabilityArtworkKind =
+  | 'guides'
+  | 'heroes'
+  | 'items'
+  | 'monsters'
+  | 'quests'
+  | 'world';
+
+const artworkKindByHref: Record<string, HomeCapabilityArtworkKind> = {
+  '/blog': 'guides',
+  '/heroes': 'heroes',
+  '/items': 'items',
+  '/monsters': 'monsters',
+  '/quests': 'quests',
+  '/regions': 'world',
+};
+
+const artworkImageSrcByHref: Partial<Record<string, string>> = {
+  '/blog': '/assets/home/cards/guides-codex-notes.png',
+  '/heroes': '/assets/home/cards/heroes-class-web.png',
+  '/items': '/assets/home/cards/items-gear-schematic.png',
+  '/monsters': '/assets/home/cards/monsters-bestiary-threats.png',
+  '/quests': '/assets/home/cards/quests-branching-paths.png',
+  '/regions': '/assets/home/cards/world-atlas-routes.png',
+};
 
 interface HomeCapabilityItemParams {
   readonly title: string;
   readonly actionLabel: string;
   readonly description: string;
-  readonly label: string;
   readonly href: string;
-  readonly status: HomeCapabilityStatus;
-  readonly statusLabel: string;
 }
-
-const statusPalette: Record<HomeCapabilityStatus, HomeCapabilityStatusPalette> = {
-  blocked: 'gray',
-  live: 'green',
-  next: 'purple',
-};
 
 export class HomeCapabilityItemViewModel {
   public readonly title: string;
   public readonly actionLabel: string;
   public readonly description: string;
-  public readonly label: string;
   public readonly href: string;
-  public readonly status: HomeCapabilityStatus;
-  private readonly statusLabelValue: string;
 
   constructor(params: HomeCapabilityItemParams) {
     this.title = params.title;
     this.actionLabel = params.actionLabel;
     this.description = params.description;
-    this.label = params.label;
     this.href = params.href;
-    this.status = params.status;
-    this.statusLabelValue = params.statusLabel;
   }
 
   public get key(): string {
     return this.href;
   }
 
-  public get statusLabel(): string {
-    return this.statusLabelValue;
+  public get artworkKind(): HomeCapabilityArtworkKind {
+    return artworkKindByHref[this.href] ?? 'world';
   }
 
-  public get statusPalette(): HomeCapabilityStatusPalette {
-    return statusPalette[this.status];
+  public get artworkImageSrc(): string | null {
+    return artworkImageSrcByHref[this.href] ?? null;
   }
 }

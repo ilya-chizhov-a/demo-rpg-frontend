@@ -92,11 +92,11 @@ export class AppLayoutViewModel implements IViewModel {
   }
 
   public setup(): void {
-    // App shell state is shared through services and has no route setup.
+    this.localeService.hydrateFromClientStorage();
   }
 
   public mount(): void {
-    this.localeService.hydrateFromClientStorage();
+    this.localeService.syncDocumentLocale();
   }
 
   public unmount(): void {

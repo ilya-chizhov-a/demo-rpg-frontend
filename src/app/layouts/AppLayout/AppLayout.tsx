@@ -15,8 +15,16 @@ interface AppLayoutProps {
   readonly children: React.ReactNode;
 }
 
+const defaultAtlasBackground = '/assets/star-map.png';
+const homeAtlasBackground = '/assets/home/branching-tales-atlas.png';
+const activePrimaryNavShadow = 'inset 0 -2px 0 #22d3ee, 0 0 22px rgba(34, 211, 238, 0.12)';
+const activePrimaryNavFocusShadow =
+  'inset 0 -2px 0 #22d3ee, 0 0 0 3px rgba(34, 211, 238, 0.2), 0 0 22px rgba(34, 211, 238, 0.12)';
+const inactivePrimaryNavFocusShadow = '0 0 0 3px rgba(34, 211, 238, 0.2)';
+
 export const AppLayout = observer(function AppLayout({ children }: AppLayoutProps) {
   const location = useLocation();
+  const isHomeRoute = location.pathname === '/';
   const vm = useViewModel(AppLayoutViewModel);
   const primaryNavItems = vm.getPrimaryNavItems(location.pathname);
 
@@ -24,12 +32,15 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
     <Box
       bg="#0b1118"
       color="#f4f7f8"
+      display="flex"
+      flexDirection="column"
       minH="100dvh"
       overflowX="clip"
       position="relative"
       _after={{
-        bgImage:
-          'linear-gradient(180deg, rgba(7, 11, 16, 0.12), rgba(7, 11, 16, 0.38) 42%, rgba(7, 11, 16, 0.82) 100%)',
+        bgImage: isHomeRoute
+          ? 'none'
+          : 'linear-gradient(180deg, rgba(7, 11, 16, 0.12), rgba(7, 11, 16, 0.38) 42%, rgba(7, 11, 16, 0.82) 100%)',
         bottom: '0',
         content: '""',
         left: '0',
@@ -140,24 +151,44 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
                 minW="max-content"
               >
                 {primaryNavItems.map((item) => {
+                  const idleBoxShadow = item.isActive ? activePrimaryNavShadow : 'none';
+                  const focusVisibleBoxShadow = item.isActive
+                    ? activePrimaryNavFocusShadow
+                    : inactivePrimaryNavFocusShadow;
+
                   return (
                     <Button
                       asChild
                       bg={item.isActive ? 'rgba(34, 211, 238, 0.13)' : 'transparent'}
                       borderColor={item.isActive ? 'rgba(34, 211, 238, 0.55)' : 'transparent'}
                       borderWidth="1px"
-                      boxShadow={
-                        item.isActive
-                          ? 'inset 0 -2px 0 #22d3ee, 0 0 22px rgba(34, 211, 238, 0.12)'
-                          : 'none'
-                      }
+                      boxShadow={idleBoxShadow}
                       color={item.isActive ? '#67e8f9' : '#9aa7b1'}
+                      css={{
+                        '&:focus:not(:focus-visible)': {
+                          boxShadow: idleBoxShadow,
+                          outline: 'none',
+                        },
+                      }}
                       h="40px"
                       key={item.id}
                       minW="0"
                       px={{ base: '2', '2xl': '3' }}
                       size="sm"
                       variant="ghost"
+                      _focus={{
+                        boxShadow: idleBoxShadow,
+                        outline: 'none',
+                      }}
+                      _focusVisible={{
+                        bg: item.isActive
+                          ? 'rgba(34, 211, 238, 0.18)'
+                          : 'rgba(23, 33, 43, 0.72)',
+                        borderColor: '#67e8f9',
+                        boxShadow: focusVisibleBoxShadow,
+                        color: '#f4f7f8',
+                        outline: 'none',
+                      }}
                       _hover={{
                         bg: item.isActive ? 'rgba(34, 211, 238, 0.18)' : 'rgba(23, 33, 43, 0.72)',
                         borderColor: 'rgba(103, 232, 249, 0.4)',
@@ -221,21 +252,21 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         aria-hidden="true"
         bottom="0"
         left="0"
-        opacity="0.82"
+        opacity={isHomeRoute ? '0.94' : '0.82'}
         pointerEvents="none"
         position="fixed"
         right="0"
         top="var(--app-header-height)"
         zIndex="0"
         css={{
-          backgroundImage: 'url("/assets/star-map.png")',
-          backgroundPosition: 'top center',
+          backgroundImage: `url("${isHomeRoute ? homeAtlasBackground : defaultAtlasBackground}")`,
+          backgroundPosition: isHomeRoute ? 'center center' : 'top center',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% auto',
+          backgroundSize: isHomeRoute ? 'cover' : '100% auto',
         }}
       />
 
-      <Box id="app-content" position="relative" zIndex="1">
+      <Box flex="1 0 auto" id="app-content" position="relative" zIndex="1">
         {children}
       </Box>
 
@@ -244,6 +275,7 @@ export const AppLayout = observer(function AppLayout({ children }: AppLayoutProp
         bg="rgba(7, 11, 16, 0.86)"
         borderTopColor="rgba(103, 232, 249, 0.14)"
         borderTopWidth="1px"
+        flexShrink="0"
         position="relative"
         zIndex="1"
       >

@@ -11,14 +11,23 @@ export interface LocaleOption {
   readonly nativeLabel: string;
 }
 
-const defaultLocaleOption: LocaleOption = { value: 'en', label: 'EN', nativeLabel: 'English' };
+export const defaultLocale: SupportedLocale = 'en';
+
+const defaultLocaleOption: LocaleOption = {
+  value: defaultLocale,
+  label: 'EN',
+  nativeLabel: 'English',
+};
 
 const localeOptions: readonly LocaleOption[] = [
   defaultLocaleOption,
   { value: 'ru', label: 'RU', nativeLabel: 'Русский' },
   { value: 'zh', label: 'ZH', nativeLabel: '中文' },
 ] as const;
-const localeStorageKey = 'branching-tales.locale';
+export const supportedLocaleValues: readonly SupportedLocale[] = localeOptions.map(
+  (option) => option.value,
+);
+export const localeStorageKey = 'branching-tales.locale';
 
 export function getLocaleNativeLabel(locale: SupportedLocale): string {
   return (
@@ -28,10 +37,18 @@ export function getLocaleNativeLabel(locale: SupportedLocale): string {
 }
 
 export class LocaleService {
-  public locale: SupportedLocale = 'en';
+  public locale: SupportedLocale = getInitialLocale();
 
   constructor() {
-    makeAutoObservable(this, {}, { autoBind: true });
+    makeAutoObservable<this, 'applyLocale' | 'persistLocale'>(
+      this,
+      {
+        applyLocale: false,
+        persistLocale: false,
+      },
+      { autoBind: true },
+    );
+    this.syncDocumentLocale();
   }
 
   public get options(): readonly LocaleOption[] {
@@ -51,13 +68,32 @@ export class LocaleService {
 
     const storedLocale = readStoredLocale();
     if (isSupportedLocale(storedLocale)) {
-      this.locale = storedLocale;
+      this.applyLocale(storedLocale);
     }
   }
 
   public setLocale(locale: SupportedLocale): void {
-    this.locale = locale;
+    this.applyLocale(locale);
     this.persistLocale(locale);
+  }
+
+  public syncDocumentLocale(): void {
+    if (!isClient()) return;
+
+    const root = globalThis.document.documentElement;
+
+    root.lang = this.locale;
+    root.dataset.localeReady = 'true';
+    if (this.locale === defaultLocale) {
+      delete root.dataset.persistedLocale;
+    } else {
+      root.dataset.persistedLocale = this.locale;
+    }
+  }
+
+  private applyLocale(locale: SupportedLocale): void {
+    this.locale = locale;
+    this.syncDocumentLocale();
   }
 
   private persistLocale(locale: SupportedLocale): void {
@@ -69,12 +105,13 @@ export class LocaleService {
       // Ignore blocked storage; the in-memory locale still updates.
     }
   }
+
 }
 
 container.register(LocaleService, () => new LocaleService(), { scope: 'clientSingleton' });
 
 function isSupportedLocale(value: string | null): value is SupportedLocale {
-  return localeOptions.some((option) => option.value === value);
+  return supportedLocaleValues.some((locale) => locale === value);
 }
 
 function readStoredLocale(): string | null {
@@ -83,4 +120,12 @@ function readStoredLocale(): string | null {
   } catch {
     return null;
   }
+}
+
+function getInitialLocale(): SupportedLocale {
+  if (!isClient()) return defaultLocale;
+
+  const storedLocale = readStoredLocale();
+
+  return isSupportedLocale(storedLocale) ? storedLocale : defaultLocaleOption.value;
 }

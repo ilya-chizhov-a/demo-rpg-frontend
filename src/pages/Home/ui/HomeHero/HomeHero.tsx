@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Heading, Link, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import { Link as RouterLink } from 'react-router';
 
@@ -8,6 +8,11 @@ interface HomeHeroProps {
   readonly vm: HomeViewModel;
 }
 
+const heroVerticalPadding = {
+  base: 'clamp(72px, 14svh, 132px)',
+  md: 'clamp(84px, 15svh, 150px)',
+} as const;
+
 export const HomeHero = observer(({ vm }: HomeHeroProps) => {
   const { hero } = vm;
 
@@ -15,20 +20,25 @@ export const HomeHero = observer(({ vm }: HomeHeroProps) => {
     <Box
       as="section"
       aria-labelledby="home-title"
-      pb={{ base: '8', lg: '10' }}
-      pt={{ base: '2', lg: '4' }}
+      alignItems="flex-start"
+      display="flex"
+      mx="calc(var(--page-shell-gutter) * -1)"
+      overflow="hidden"
+      px={{ base: 'var(--page-shell-gutter)', md: 'var(--page-shell-gutter)' }}
+      pb={heroVerticalPadding}
+      pt={heroVerticalPadding}
+      position="relative"
     >
-      <Stack align="flex-start" gap="6" maxW="960px">
-        <Flex aria-label={vm.heroBadgesAriaLabel} gap="2" wrap="wrap">
-          {hero.badges.map((badge) => (
-            <Badge colorPalette={badge.palette} key={badge.label} size="lg" variant="subtle">
-              {badge.label}
-            </Badge>
-          ))}
-        </Flex>
-
+      <Stack align="flex-start" gap="6" maxW="840px" position="relative" zIndex="2">
         <Box>
-          <Heading as="h1" fontSize={{ base: '4xl', md: '5xl' }} id="home-title" lineHeight="1.02">
+          <Heading
+            as="h1"
+            fontSize={{ base: '4xl', md: '5xl', xl: '6xl' }}
+            id="home-title"
+            lineHeight="1.02"
+            maxW="760px"
+            textShadow="0 3px 24px rgba(0, 0, 0, 0.74)"
+          >
             {hero.title}
           </Heading>
           <Text
@@ -37,6 +47,7 @@ export const HomeHero = observer(({ vm }: HomeHeroProps) => {
             lineHeight="1.6"
             maxW="820px"
             mt="5"
+            textShadow="0 2px 18px rgba(0, 0, 0, 0.72)"
           >
             {hero.subtitle}
           </Text>
@@ -63,13 +74,6 @@ export const HomeHero = observer(({ vm }: HomeHeroProps) => {
             <RouterLink to={hero.secondaryCta.href}>{hero.secondaryCta.label}</RouterLink>
           </Button>
         </Flex>
-
-        <Text color="#9aa7b1" fontSize="sm" lineHeight="1.6" maxW="720px">
-          {hero.fallbackNote}{' '}
-          <Link asChild color="#67e8f9" fontWeight="medium">
-            <RouterLink to={hero.fallbackLink.href}>{hero.fallbackLink.label}</RouterLink>
-          </Link>
-        </Text>
       </Stack>
     </Box>
   );
