@@ -44,6 +44,12 @@ export {
   type PreparedImageSlot,
 } from './helpers/imageProxy';
 export { applyImageFallback, hasAppliedImageFallback } from './helpers/imageFallback';
+export {
+  createNullableGraphQLDetailRequest,
+  hasLoadedNullGraphQLDetail,
+  readNullableGraphQLResult,
+  type NullableGraphQLDetailResult,
+} from './helpers/graphqlErrors';
 export { isClient } from './helpers/isClient';
 export { renderWhen } from './helpers/renderWhen';
 export { useViewModel } from './hooks/useViewModel';

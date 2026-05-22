@@ -9,6 +9,7 @@ import {
   applyImageFallback,
   container,
   hasAppliedImageFallback,
+  hasLoadedNullGraphQLDetail,
   hasRequestError,
   isInitialLoading,
   isRefreshing,
@@ -175,8 +176,10 @@ export class RegionDetailViewModel implements IViewModel {
     return hasRequestError(this.dataSource.request) || !this.id;
   }
 
+  public get showNotFound(): boolean { return hasLoadedNullGraphQLDetail(this.dataSource.request, this.id) && !this.showError; }
+
   public get showDetail(): boolean {
-    return Boolean(this.item) && !this.showError;
+    return Boolean(this.item) && !this.showError && !this.showNotFound;
   }
 
   public get cloudRowHref(): string {

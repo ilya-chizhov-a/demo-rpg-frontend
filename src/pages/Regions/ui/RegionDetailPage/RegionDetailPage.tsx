@@ -36,6 +36,7 @@ export const RegionDetailPage = observer(() => {
             tone="error"
           />,
         )}
+        {renderWhen(vm.showNotFound, <StatePanel description={vm.copy.detail.errorDescription} title={vm.copy.detail.errorTitle} />)}
         {renderWhen(vm.showDetail, <RegionDetailOverview vm={vm} />)}
       </Box>
       <ExplainerWidget

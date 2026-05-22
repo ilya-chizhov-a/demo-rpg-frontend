@@ -1,28 +1,28 @@
 import type { ItemDetailQuery } from 'src/__generated__/graphql-request';
-import { container, ObservableRequest } from 'src/shared/lib';
+import {
+  container,
+  createNullableGraphQLDetailRequest,
+  type NullableGraphQLDetailResult,
+  ObservableRequest,
+} from 'src/shared/lib';
 import { ApiService } from 'src/shared/model';
 
-export type ItemDetailNode = ItemDetailQuery['items'];
+export type ItemDetailNode = NonNullable<ItemDetailQuery['items']>;
 export type ItemDetailModifierNode = ItemDetailNode['data']['modifiers'][number];
-
-export interface ItemDetailResult {
-  readonly item: ItemDetailNode;
-}
+export type ItemDetailResult = NullableGraphQLDetailResult<ItemDetailNode>;
 
 export class ItemDetailDataSource {
   public readonly request: ObservableRequest<ItemDetailResult, [string]>;
 
   constructor(private readonly api: ApiService) {
-    this.request = ObservableRequest.of((signal, id) => this.fetchItem(signal, id));
+    this.request = createNullableGraphQLDetailRequest(
+      (signal, id) => this.api.sdk.ItemDetail({ id }, undefined, signal),
+      (response) => response.items,
+    );
   }
 
   public reset(): void {
     this.request.reset();
-  }
-
-  private async fetchItem(signal: AbortSignal, id: string): Promise<ItemDetailResult> {
-    const response = await this.api.sdk.ItemDetail({ id }, undefined, signal);
-    return { item: response.items };
   }
 }
 
